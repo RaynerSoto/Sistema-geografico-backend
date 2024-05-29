@@ -2,23 +2,37 @@ package cu.edu.cujae.core.dto;
 
 import cu.edu.cujae.core.enums.Estado;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.NonNull;
 
 public class Registro {
-    @NonNull
+    @NotNull(message = "El identificador no puede ser null")
+    @NotBlank(message = "El identificador no puede estar vacío")
     private String uuid;
-    @NonNull
+
+    @NotNull(message = "El usuario no puede ser null")
+    @NotBlank(message = "El usuario no puede estar vacío")
     private Usuario usuario;
-    @NonNull
-    @Size(min = 1,message = "La actividad no puede estar vacía")
+
+    @NotNull(message = "La actividad no puede ser null")
+    @NotBlank(message = "La actividad no puede estar vacío")
+    @Size(min = 6,max = 50,message = "La actividad dedbe estar entre 6 y 50 caracteres")
     private String actividad;
-    @NonNull
-    @Size(min = 7,message = "La dirección IP es demasiado corta")
+
+    @NotNull(message = "El IP no puede ser null")
+    @NotBlank(message = "El IP no puede estar vacío")
+    @Size(min = 7,max = 15,message = "La dirección IP con formato XXX.XXX.XXX es incorrecta")
     private String ip;
-    @NonNull
-    @Size(min = 1,message = "El nombre del PC no puede estar vacío")
+
+    @NotNull(message = "El nombre del PC no puede ser null")
+    @NotBlank(message = "El identificador no puede estar vacío")
+    @Size(min = 1,message = "El nombre del PC debe tener mínimo 1 caracter")
     private String nombrePC;
-    @NonNull
+
+
+    @NotNull(message = "El estado no puede ser null")
+    @NotBlank(message = "El estado no puede estar vacío")
     private Estado estado;
 }

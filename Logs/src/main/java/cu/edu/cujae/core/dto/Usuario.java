@@ -1,5 +1,7 @@
 package cu.edu.cujae.core.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
@@ -7,18 +9,21 @@ import lombok.NonNull;
 @Data
 @AllArgsConstructor
 public class Usuario {
-    @NonNull
+    @NotBlank
     private String uuid;
-    @NonNull
+
+    @NotBlank
     private String username;
-    @NonNull
+    @NotBlank
     private String name;
-    @NonNull
+    @NotBlank
     private String lastName; //Apellido
-    @NonNull
+
+    @NotBlank
+    @Email(message = "Correo no válido")
     private String email;
-    @NonNull
+    @NotBlank
     private Rol rol;
-    @NonNull
+    @NotBlank
     private Sexo sexo;
 }
