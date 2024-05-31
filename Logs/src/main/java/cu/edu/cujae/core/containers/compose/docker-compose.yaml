@@ -5,14 +5,17 @@ services:
     image: openjdk:23
     ports:
       - "8888:8888"
-    links:
-      - db_postgres
+    depends_on:
+      - dbpostgres
 
-  db_postgres:
-    container_name: db_postgres
+  dbpostgres:
+    container_name: dbpostgres
     image: postgis/postgis:16-3.4
     environment:
       DATABASE_USER : postgres
       POSTGRES_PASSWORD: 0000
     volumes:
-      - leologs:/var/lib/postgresql/data
+      - logs:/var/lib/postgresql/data
+
+volumes:
+  logs:
