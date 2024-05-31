@@ -2,6 +2,8 @@ package cu.edu.cujae.core.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
@@ -9,21 +11,30 @@ import lombok.NonNull;
 @Data
 @AllArgsConstructor
 public class Usuario {
-    @NotBlank
+    @NotNull(message = "El id no puede ser nulo")
+    @NotBlank(message = "El id no puede ser vacío")
     private String uuid;
 
-    @NotBlank
+    @NotNull(message = "El nombre de usuario no puede ser nulo")
+    @NotBlank(message = "El nombre de usuario no puede ser vacío")
+    @Size(min = 4,max = 50,message = "El nombre de usuario se encuentra en un rango de 4 y 50 caracteres")
     private String username;
-    @NotBlank
-    private String name;
-    @NotBlank
-    private String lastName; //Apellido
 
-    @NotBlank
+    @NotNull(message = "El nombre completo no puede ser nulo")
+    @NotBlank(message = "El nombre completo no puede ser vacío")
+    @Size(min = 2,max = 100,message = "El nombre completo debe tener entre 2 y 100 caracteres")
+    private String name;
+
+    @NotNull(message = "El correo no puede ser nulo")
+    @NotBlank(message = "El correo no puede ser vacío")
     @Email(message = "Correo no válido")
     private String email;
-    @NotBlank
+
+    @NotNull(message = "El rol no puede ser nulo")
+    @NotBlank(message = "El rol no puede ser vacío")
     private Rol rol;
-    @NotBlank
+
+    @NotNull(message = "El sexo no puede ser nulo")
+    @NotBlank(message = "El sexo no puede ser vacío")
     private Sexo sexo;
 }
