@@ -1,2 +1,0 @@
-package cu.edu.cujae.core.dto;public class Posicion {
-}

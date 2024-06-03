@@ -1,18 +1,14 @@
-package cu.edu.cujae.core.dto;
+package cu.edu.cujae.core.clases;
 
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.ValidatorFactory;
-import jakarta.validation.constraints.AssertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.Set;
 import java.util.UUID;
 
-import org.junit.*;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import javax.xml.validation.Validator;
 
 import static junit.framework.TestCase.fail;
 

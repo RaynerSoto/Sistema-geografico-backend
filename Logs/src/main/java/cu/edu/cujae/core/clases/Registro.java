@@ -1,11 +1,9 @@
-package cu.edu.cujae.core.dto;
+package cu.edu.cujae.core.clases;
 
 import cu.edu.cujae.core.enums.Estado;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.NonNull;
 
 public class Registro {
     @NotNull(message = "El identificador no puede ser null")
