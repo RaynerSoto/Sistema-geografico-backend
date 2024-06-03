@@ -28,24 +28,4 @@ public class GeoIPService implements GeoIP {
             throw new RuntimeException("Error en petición HTTP, compruebe conexión a internet o llamar al servicio técnico");
         }
     }
-
-    public String leer_archivo(){
-        try {
-            File file = new File("config.dat");
-            if (!file.exists()){
-               throw new Exception("Error al cargar fichero de configuración");
-            }
-            FileReader fileReader = new FileReader(file);
-            BufferedReader br = new BufferedReader(fileReader);
-            String value = br.readLine();
-            fileReader.close();
-            br.close();
-            return new Base64Cifrado().descifrarBase64(value);
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

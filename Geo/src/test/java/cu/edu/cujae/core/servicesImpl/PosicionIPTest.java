@@ -1,5 +1,6 @@
 package cu.edu.cujae.core.servicesImpl;
 
+import cu.edu.cujae.core.file.Dat;
 import cu.edu.cujae.core.file.Propierties;
 import cu.edu.cujae.core.services.GeoIPService;
 import org.junit.Test;
@@ -20,6 +21,6 @@ public class PosicionIPTest {
 
     @Test
     public void leer_archivo(){
-        System.out.println(new GeoIPService().leer_archivo());
+        System.out.println(new Dat().leer_archivo(new Dat().getFile()));
     }
 }
