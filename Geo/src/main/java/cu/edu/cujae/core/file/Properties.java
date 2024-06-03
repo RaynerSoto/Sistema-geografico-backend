@@ -7,11 +7,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Properties;
 
 @Data
 @AllArgsConstructor
-public class Propierties {
+public class Properties {
     private static final String aplication = "src/main/resources/application.properties";
 
     public String getAplication(){
@@ -21,7 +20,7 @@ public class Propierties {
     //Cargar la llave de las propiedadades
     public String getKeyPropierties(String url,String key){
         try {
-            Properties properties = new Properties();
+            java.util.Properties properties = new java.util.Properties();
             File file = new File(url);
             FileReader fileReader = new FileReader(file);
             properties.load(fileReader);
