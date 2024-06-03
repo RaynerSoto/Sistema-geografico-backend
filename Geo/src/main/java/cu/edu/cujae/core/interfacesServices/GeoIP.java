@@ -1,4 +1,4 @@
-package cu.edu.cujae.core.interfaces;
+package cu.edu.cujae.core.interfacesServices;
 
 import cu.edu.cujae.core.dto.CoordenadasIp;
 

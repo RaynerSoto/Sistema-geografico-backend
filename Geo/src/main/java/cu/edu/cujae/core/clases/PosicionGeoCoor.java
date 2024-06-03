@@ -1,10 +1,9 @@
-package cu.edu.cujae.core.dto;
+package cu.edu.cujae.core.clases;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
 
 @Data
 @AllArgsConstructor
