@@ -3,7 +3,7 @@ package cu.edu.cujae.core.services;
 import com.google.gson.Gson;
 import cu.edu.cujae.core.dto.CoordenadasIp;
 import cu.edu.cujae.core.interfacesServices.GeoIP;
-import cu.edu.cujae.core.security.CifradoBasico;
+import cu.edu.cujae.core.security.Base64Cifrado;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -29,21 +29,6 @@ public class GeoIPService implements GeoIP {
         }
     }
 
-    //Cargar la llave de las propiedadades
-    public String getKeyPropierties(){
-        try {
-            Properties properties = new Properties();
-            File file = new File("src/main/resources/application.properties");
-            FileReader fileReader = new FileReader(file);
-            properties.load(fileReader);
-            return properties.getProperty("ip_key");
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("Archivo no encontrado");
-        } catch (IOException e) {
-            throw new RuntimeException("Archivo no encontrado, corrupto o no se puede leer");
-        }
-    }
-
     public String leer_archivo(){
         try {
             File file = new File("config.dat");
@@ -55,7 +40,7 @@ public class GeoIPService implements GeoIP {
             String value = br.readLine();
             fileReader.close();
             br.close();
-            return new CifradoBasico().descifrarBase64(value);
+            return new Base64Cifrado().descifrarBase64(value);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
