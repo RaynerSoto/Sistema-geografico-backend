@@ -2,9 +2,8 @@ package cu.edu.cujae.core.services;
 
 import com.google.gson.Gson;
 import cu.edu.cujae.core.dto.CoordenadasIp;
-import cu.edu.cujae.core.file.Properties;
+import cu.edu.cujae.core.file.Propertie;
 import cu.edu.cujae.core.interfacesServices.GeoIP;
-import cu.edu.cujae.core.security.Base64Cifrado;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -19,7 +18,7 @@ public class GeoIPService implements GeoIP {
     public CoordenadasIp findMyIp(String ip,String key) {
         Gson gson = new Gson();
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(URI.create(new Properties().getKeyPropierties(new Properties().getAplication(),"url_ip")+key+"&ip="+ip)).build();
+        HttpRequest request = HttpRequest.newBuilder(URI.create(new Propertie().getKeyPropierties(new Propertie().getAplication(),"url_ip")+key+"&ip="+ip)).build();
         try {
             HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
             CoordenadasIp coordenadasIp = gson.fromJson((String) response.body(),CoordenadasIp.class);
