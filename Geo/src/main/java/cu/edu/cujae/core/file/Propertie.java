@@ -21,9 +21,8 @@ public class Propertie {
     //Cargar la llave de las propiedadades
     public String getKeyPropierties(String url,String key){
         try {
-            FileReader fileReader = new FileReader(new File(url));
             Properties properties = new Properties();
-            properties.load(fileReader);
+            properties.load(new FileReader(new File(url)));
             return properties.getProperty(key);
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Archivo no encontrado");
@@ -35,9 +34,8 @@ public class Propertie {
 
     public Double getKeyPropiertiesDouble(String url,String key){
         try {
-            FileReader fileReader = new FileReader(new File(url));
             Properties properties = new Properties();
-            properties.load(fileReader);
+            properties.load(new FileReader(new File(url)));
             return Double.parseDouble(properties.getProperty(key));
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Archivo no encontrado");
@@ -48,9 +46,8 @@ public class Propertie {
 
     public Integer getKeyPropiertiesInteger(String url,String key){
         try {
-            FileReader fileReader = new FileReader(new File(url));
             Properties properties = new Properties();
-            properties.load(fileReader);
+            properties.load(new FileReader(new File(url)));
             return Integer.parseInt(properties.getProperty(key));
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Archivo no encontrado");

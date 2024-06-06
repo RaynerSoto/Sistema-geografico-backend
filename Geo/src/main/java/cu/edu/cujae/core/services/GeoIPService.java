@@ -16,12 +16,10 @@ import java.net.http.HttpResponse;
 public class GeoIPService implements GeoIP {
     @Override
     public CoordenadasIp findMyIp(String ip,String key) {
-        Gson gson = new Gson();
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder(URI.create(new Propertie().getKeyPropierties(new Propertie().getAplication(),"url_ip")+key+"&ip="+ip)).build();
         try {
-            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            CoordenadasIp coordenadasIp = gson.fromJson((String) response.body(),CoordenadasIp.class);
+            HttpRequest request = HttpRequest.newBuilder(URI.create(new Propertie().getKeyPropierties(new Propertie().getAplication(),"url_ip")+key+"&ip="+ip)).build();
+            HttpResponse response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
+            CoordenadasIp coordenadasIp = new Gson().fromJson((String) response.body(),CoordenadasIp.class);
             return coordenadasIp;
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException("Error en petición HTTP, compruebe conexión a internet o llamar al servicio técnico");
