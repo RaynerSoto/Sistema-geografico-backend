@@ -1,19 +1,25 @@
 package cu.edu.cujae.core.enums;
 
 public enum Estado {
-    ACTIVO("Usuario acaba de loguearse en el sistema"),
-    OPERATIVO("Usuario acaba de cerrar sesión en el sistema"),
-    CERRADO("Error en la operación"),
-    ERROR("El usuario no tiene autorización para la tarea actual"),
-    NO_AUTORIZADO("El usuario ha realizado una acción en el sistema");
-
+    ACTIVO("Activo","Usuario acaba de loguearse en el sistema"),
+    OPERATIVO("Operativo","El usuario ha realizado una acción en el sistema"),
+    CERRADO("Cerrado","Usuario acaba de cerrar sesión en el sistema"),
+    ERROR("Error","Error en la operación"),
+    NO_AUTORIZADO("No Autorizado","El usuario no tiene autorización para la tarea actual");
+    
+    private String nombre;
     private String descripcion;
 
-    private Estado(String descripcion) {
+    private Estado(String nombre,String descripcion) {
+        this.nombre = nombre;
         this.descripcion = descripcion;
     }
-
-    private String getDescripcion() {
+    
+    public String getNombre() {
+        return nombre;
+    }
+    
+    public String getDescripcion() {
         return descripcion;
     }
 
