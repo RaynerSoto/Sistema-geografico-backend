@@ -16,8 +16,5 @@ public class RolController {
     @Autowired
     private RolServiceInterface rolServiceInterface;
 
-    @GetMapping("/")
-    public ResponseEntity<Rol> prueba() {
-        return ResponseEntity.ok(rolServiceInterface.hola());
-    }
+
 }
