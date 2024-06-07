@@ -1,12 +1,13 @@
 package cu.edu.cujae.core.clases;
 
+import cu.edu.cujae.core.enums.Estado;
+import cu.edu.cujae.core.enums.Sexo;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.ValidatorFactory;
 import org.junit.Before;
 import org.junit.Test;
 import java.util.Set;
-import java.util.UUID;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -25,8 +26,8 @@ public class sexoTest {
 
     @Test
     public void crear_sexo(){
-        Sexo sex = new Sexo("ASD","Ma","                  ");
-        Set<ConstraintViolation<Sexo>> violations = validator.validate(sex);
+        Sexo sexo = cu.edu.cujae.core.enums.Sexo.MASCULINO;
+        Set<ConstraintViolation<Sexo>> violations = validator.validate(sexo);
         if (violations.size() == 0){
             System.out.println("Prueba con éxito");
         }else {
@@ -39,26 +40,12 @@ public class sexoTest {
 
     @Test
     public void crear_sexo2(){
-        Sexo sex = new Sexo("ASD","Masculino","Masc");
+        Sexo sex = Sexo.FEMININO;
         Set<ConstraintViolation<Sexo>> violations = validator.validate(sex);
         if (violations.size() == 0){
             System.out.println("Prueba con éxito");
         }else {
             for (ConstraintViolation con :violations ){
-                System.out.println(con.getMessage());
-            }
-            fail("La prueba ha fallado en la creación del sexo");
-        }
-    }
-
-    @Test
-    public void crear_sexo3(){
-        Sexo sex = new Sexo(new UUID(5,5).toString(),"Masculino","M");
-        Sexo sex1 = new Sexo(new UUID(5,5).toString(),"Femenino","F");
-        if (validator.validate(sex).size() == 0  ) {
-            System.out.println("Prueba con éxito");
-        }else {
-            for (ConstraintViolation con :validator.validate(sex)){
                 System.out.println(con.getMessage());
             }
             fail("La prueba ha fallado en la creación del sexo");
