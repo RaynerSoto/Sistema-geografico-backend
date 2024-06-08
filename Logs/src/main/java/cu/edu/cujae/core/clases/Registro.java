@@ -10,9 +10,9 @@ public class Registro {
     @NotBlank(message = "El identificador no puede estar vacío")
     private String uuid;
 
-    @NotNull(message = "El usuario no puede ser null")
-    @NotBlank(message = "El usuario no puede estar vacío")
-    private Usuario usuario;
+    @NotNull(message = "El id de usuario  no puede ser null")
+    @NotBlank(message = "El id de usuario no puede estar vacío")
+    private String usuario;
 
     @NotNull(message = "La actividad no puede ser null")
     @NotBlank(message = "La actividad no puede estar vacío")
