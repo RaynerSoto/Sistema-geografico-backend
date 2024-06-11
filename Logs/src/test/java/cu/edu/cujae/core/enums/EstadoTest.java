@@ -1,9 +1,8 @@
 package cu.edu.cujae.core.enums;
 
+import cu.edu.cujae.logs.core.enums.Estado;
 import org.junit.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class EstadoTest {

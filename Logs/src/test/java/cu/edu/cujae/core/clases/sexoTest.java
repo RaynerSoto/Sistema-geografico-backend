@@ -1,7 +1,6 @@
 package cu.edu.cujae.core.clases;
 
-import cu.edu.cujae.core.enums.Estado;
-import cu.edu.cujae.core.enums.Sexo;
+import cu.edu.cujae.logs.core.enums.Sexo;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.ValidatorFactory;
@@ -26,7 +25,7 @@ public class sexoTest {
 
     @Test
     public void crear_sexo(){
-        Sexo sexo = cu.edu.cujae.core.enums.Sexo.MASCULINO;
+        Sexo sexo = Sexo.MASCULINO;
         Set<ConstraintViolation<Sexo>> violations = validator.validate(sexo);
         if (violations.size() == 0){
             System.out.println("Prueba con éxito");
