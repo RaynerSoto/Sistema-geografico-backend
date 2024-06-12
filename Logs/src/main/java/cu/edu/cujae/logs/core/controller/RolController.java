@@ -2,10 +2,8 @@ package cu.edu.cujae.logs.core.controller;
 
 
 import cu.edu.cujae.logs.core.clases.Rol;
-import cu.edu.cujae.logs.core.clases.Validacion;
-import cu.edu.cujae.logs.core.repository.RolRepository;
+import cu.edu.cujae.logs.core.utils.Validacion;
 import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
-import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

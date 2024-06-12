@@ -1,12 +1,9 @@
-package cu.edu.cujae.logs.core.clases;
+package cu.edu.cujae.logs.core.utils;
 
-import cu.edu.cujae.logs.core.enums.Sexo;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
-
-import java.util.Set;
 
 public class Validacion<E> {
     public static Validator validador(){
