@@ -18,10 +18,9 @@ import lombok.NoArgsConstructor;
 public class Usuario {
     @Id
     @NotNull(message = "El id no puede ser nulo")
-    @NotBlank(message = "El id no puede ser vacío")
     @Column(name = "uuid",nullable = false, length = 36, unique = true)
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String uuid;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long uuid;
 
     @NotNull(message = "El nombre de usuario no puede ser nulo")
     @NotBlank(message = "El nombre de usuario no puede ser vacío")

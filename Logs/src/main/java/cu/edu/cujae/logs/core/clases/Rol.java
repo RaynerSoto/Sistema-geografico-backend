@@ -17,10 +17,9 @@ public class Rol {
 
     @Id
     @NotNull(message = "El identificador no puede ser null")
-    @NotBlank(message = "El identificador no puede estar vacío")
     @Column(name = "uuid", nullable = false, length = 40, unique = true,updatable = false)
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String uuid;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long uuid;
 
     @NotNull(message = "El rol no puede ser null")
     @NotBlank(message = "El rol no puede estar vacío")

@@ -1,39 +1,48 @@
 package cu.edu.cujae.logs.core.clases;
 
 import cu.edu.cujae.logs.core.enums.Estado;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+@Entity
+@Table(name = "registros")
 public class Registro {
+
+    @Id
     @NotNull(message = "El identificador no puede ser null")
-    @NotBlank(message = "El identificador no puede estar vacío")
-    private String uuid;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "uuid", unique = true, nullable = false)
+    private Long uuid;
 
     @NotNull(message = "El id de usuario  no puede ser null")
     @NotBlank(message = "El id de usuario no puede estar vacío")
-    private String usuario;
+    @Transient
+    private Usuario usuario;
 
     @NotNull(message = "La actividad no puede ser null")
     @NotBlank(message = "La actividad no puede estar vacío")
-    @Size(min = 6,max = 50,message = "La actividad dedbe estar entre 6 y 50 caracteres")
+    @Size(min = 6,max = 100,message = "La actividad dedbe estar entre 6 y 100 caracteres")
+    @Column(name = "actividad", nullable = false, length = 100)
     private String actividad;
 
     @NotNull(message = "El IP no puede ser null")
     @NotBlank(message = "El IP no puede estar vacío")
     @Size(min = 7,max = 15,message = "La dirección IP con formato XXX.XXX.XXX es incorrecta")
+    @Column(name = "direccion_IP", nullable = false, length = 15)
     private String ip;
 
     @NotNull(message = "El nombre del PC no puede ser null")
     @NotBlank(message = "El identificador no puede estar vacío")
     @Size(min = 1,message = "El nombre del PC debe tener mínimo 1 caracter")
+    @Column(name = "nombrePC", nullable = false, length = 200)
     private String nombrePC;
 
 
     @NotNull(message = "El estado no puede ser null")
     @NotBlank(message = "El estado no puede estar vacío")
     @Enumerated(EnumType.ORDINAL)
+    @Transient
     private Estado estado;
 }
