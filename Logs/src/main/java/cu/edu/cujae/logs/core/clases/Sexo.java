@@ -1,5 +1,6 @@
 package cu.edu.cujae.logs.core.clases;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import cu.edu.cujae.logs.core.enums.SexoEnums;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -8,6 +9,8 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Table(name = "sexos")
@@ -32,6 +35,11 @@ public class Sexo {
     @Size(min = 1,max = 5,message = "Las sigla solamente tienen entre 1 y 5 caracteres")
     @Column(name = "sigla",nullable = false, length = 5,unique = true)
     private String sigla;
+
+    @OneToMany(mappedBy = "sexo")
+    @JsonIgnore
+    private List<Usuario> usuarioList;
+
 
     public Sexo (SexoEnums sexoEnums){
         this.nombre = sexoEnums.getNombre();

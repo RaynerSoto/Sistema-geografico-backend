@@ -18,6 +18,7 @@ public class Estado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @NotNull(message = "El id no puede ser nulo")
     @Column(name = "estadoID", nullable = false, updatable = false, unique = true)
     private Long uuid;
 

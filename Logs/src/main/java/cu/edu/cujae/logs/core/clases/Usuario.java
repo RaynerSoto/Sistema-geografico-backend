@@ -48,14 +48,21 @@ public class Usuario {
     @JoinColumn(name = "rolID")
     private Rol rol;
 
+
     @OneToMany(mappedBy = "usuario")
     private List<Registro> registroList;
 
     @NotNull(message = "El sexo no puede ser nulo")
     @NotBlank(message = "El sexo no puede ser vacío")
-    @Enumerated(EnumType.STRING)
-    private SexoEnums sexoEnums;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "sexoID")
+    private Sexo sexo;
 
     @Column(name = "activo", nullable = false)
     private boolean activo;
+
+    @Transient
+    private Long sexoID;
+    @Transient
+    private Long rolID;
 }

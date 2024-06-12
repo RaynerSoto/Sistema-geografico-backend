@@ -27,7 +27,7 @@ public class SexoService implements SexoServiceInterfaces {
         }
     }
 
-    public List<cu.edu.cujae.logs.core.clases.Sexo> listarSexos() {
+    public List<Sexo> listarSexos() {
         return sexoRepository.findAll();
     }
 }

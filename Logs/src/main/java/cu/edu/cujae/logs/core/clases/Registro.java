@@ -41,7 +41,7 @@ public class Registro {
     private String ip;
 
     @NotNull(message = "El nombre del PC no puede ser null")
-    @NotBlank(message = "El identificador no puede estar vacío")
+    @NotBlank(message = "El nombre del PC no puede estar vacío")
     @Size(min = 1,message = "El nombre del PC debe tener mínimo 1 caracter")
     @Column(name = "nombrePC", nullable = false, length = 200)
     private String nombrePC;

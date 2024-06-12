@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RolService implements RolServiceInterfaces {
@@ -25,5 +26,31 @@ public class RolService implements RolServiceInterfaces {
     @Override
     public List<Rol> consultarRol() {
         return rolRepository.findAll();
+    }
+
+
+    public void modificarRol(Rol rol, Long id) throws Exception {
+        if (rolRepository.existsById(id)){
+            rol.setUuid(id);
+            rolRepository.save(rol);
+        }
+        else {
+            throw new Exception("El rol no existe");
+        }
+
+    }
+
+    @Override
+    public void eliminarRol(Long id) throws Exception {
+        try{
+            if (rolRepository.existsById(id)){
+                rolRepository.deleteById(id);
+            }
+            else {
+                throw new Exception("El rol no existe");
+            }
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 }

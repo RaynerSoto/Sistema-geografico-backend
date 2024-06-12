@@ -43,6 +43,24 @@ public class RolController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> modificarRol(@PathVariable Long id, @RequestBody Rol rol){
+        try {
+            rolServiceInterfaces.modificarRol(rol,id);
+            return ResponseEntity.ok("Modificado correctamente");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> eliminarRol(@PathVariable Long id){
+        try {
+            rolServiceInterfaces.eliminarRol(id);
+            return ResponseEntity.ok("Eliminado correctamente");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
 }

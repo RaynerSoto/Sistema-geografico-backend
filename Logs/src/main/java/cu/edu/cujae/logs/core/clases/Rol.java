@@ -1,5 +1,7 @@
 package cu.edu.cujae.logs.core.clases;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,8 +14,8 @@ import java.util.List;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "roles")
 public class Rol {
 
@@ -29,6 +31,12 @@ public class Rol {
     @Column(name = "rolNombre", nullable = false, length = 100, unique = true,updatable = true)
     private String rol;
 
-    @OneToMany(mappedBy = "rol")
+
+    @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @JsonIgnore
     private List<Usuario> usuarioList;
+
+    @ManyToMany(mappedBy = "rolList")
+    @JsonIgnore
+    private List<Privilegio> privilegioList;
 }
