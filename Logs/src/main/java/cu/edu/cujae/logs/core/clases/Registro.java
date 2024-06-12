@@ -1,6 +1,8 @@
 package cu.edu.cujae.logs.core.clases;
 
 import cu.edu.cujae.logs.core.enums.Estado;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -32,5 +34,6 @@ public class Registro {
 
     @NotNull(message = "El estado no puede ser null")
     @NotBlank(message = "El estado no puede estar vacío")
+    @Enumerated(EnumType.ORDINAL)
     private Estado estado;
 }
