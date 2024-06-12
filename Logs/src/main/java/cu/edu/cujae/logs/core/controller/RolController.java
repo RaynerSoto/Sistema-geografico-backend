@@ -35,8 +35,12 @@ public class RolController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Rol>> listar() {
-        return ResponseEntity.ok(rolServiceInterfaces.consultarRol());
+    public ResponseEntity<?> listarRoles() {
+        try {
+            return ResponseEntity.ok(rolServiceInterfaces.consultarRol());
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 

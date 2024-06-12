@@ -3,7 +3,7 @@ package cu.edu.cujae.logs.core.enums;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-public enum Sexo {
+public enum SexoEnums {
     MASCULINO("Masculino","M"),
     FEMININO("Femenino","F");
 
@@ -17,7 +17,7 @@ public enum Sexo {
     @Size(min = 1,max = 1,message = "La sigla solamente tiene un caracter")
     private String sigla;
 
-    private Sexo(String nombre, String sigla) {
+    private SexoEnums(String nombre, String sigla) {
         this.nombre = nombre;
         this.sigla = sigla;
     }

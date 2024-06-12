@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -17,13 +19,16 @@ public class Rol {
 
     @Id
     @NotNull(message = "El identificador no puede ser null")
-    @Column(name = "uuid", nullable = false, length = 40, unique = true,updatable = false)
+    @Column(name = "rolID", nullable = false, length = 40, unique = true,updatable = false)
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long uuid;
 
     @NotNull(message = "El rol no puede ser null")
     @NotBlank(message = "El rol no puede estar vacío")
     @Size(min = 4,max = 50,message = "El rol debe tener entre 4 y 50 caracteres")
-    @Column(name = "rol", nullable = false, length = 100, unique = true,updatable = true)
+    @Column(name = "rolNombre", nullable = false, length = 100, unique = true,updatable = true)
     private String rol;
+
+    @OneToMany(mappedBy = "rol")
+    private List<Usuario> usuarioList;
 }

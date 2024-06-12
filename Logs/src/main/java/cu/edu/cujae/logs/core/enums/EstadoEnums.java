@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public enum Estado {
+public enum EstadoEnums {
     ACTIVO("Activo","Usuario acaba de loguearse en el sistema"),
     OPERATIVO("Operativo","El usuario ha realizado una acción en el sistema"),
     CERRADO("Cerrado","Usuario acaba de cerrar sesión en el sistema"),
@@ -21,7 +21,7 @@ public enum Estado {
     @Size(min = 4,max = 100,message = "La descrpción del Estado debe estar entre 4 y 100 caracteres")
     private String descripcion;
 
-    private Estado(String nombre,String descripcion) {
+    private EstadoEnums(String nombre, String descripcion) {
         this.nombre = nombre;
         this.descripcion = descripcion;
     }

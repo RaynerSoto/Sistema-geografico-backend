@@ -1,24 +1,31 @@
 package cu.edu.cujae.logs.core.clases;
 
-import cu.edu.cujae.logs.core.enums.Estado;
+import cu.edu.cujae.logs.core.enums.EstadoEnums;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "registros")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Registro {
 
     @Id
     @NotNull(message = "El identificador no puede ser null")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "uuid", unique = true, nullable = false)
+    @Column(name = "registroID", unique = true, nullable = false)
     private Long uuid;
 
     @NotNull(message = "El id de usuario  no puede ser null")
     @NotBlank(message = "El id de usuario no puede estar vacío")
-    @Transient
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "usuarioID")
     private Usuario usuario;
 
     @NotNull(message = "La actividad no puede ser null")
@@ -43,6 +50,5 @@ public class Registro {
     @NotNull(message = "El estado no puede ser null")
     @NotBlank(message = "El estado no puede estar vacío")
     @Enumerated(EnumType.ORDINAL)
-    @Transient
-    private Estado estado;
+    private EstadoEnums estadoEnums;
 }
