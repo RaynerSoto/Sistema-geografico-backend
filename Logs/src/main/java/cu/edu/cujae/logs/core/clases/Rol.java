@@ -32,11 +32,25 @@ public class Rol {
     private String rol;
 
 
-    @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "rol", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JsonIgnore
     private List<Usuario> usuarioList;
 
-    @ManyToMany(mappedBy = "rolList")
+    @ManyToMany(mappedBy = "rolList", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
     @JsonIgnore
     private List<Privilegio> privilegioList;
+
+    public void setPrivilegioList(List<Privilegio> privilegioList) {
+        privilegioList.forEach(s->{
+            s.getRolList().add(this);
+        });
+        this.privilegioList = privilegioList;
+    }
+
+    public void setUsuarioList(List<Usuario> usuarioList) {
+        usuarioList.forEach(s->{
+            s.setRol(this);
+        });
+        this.usuarioList = usuarioList;
+    }
 }

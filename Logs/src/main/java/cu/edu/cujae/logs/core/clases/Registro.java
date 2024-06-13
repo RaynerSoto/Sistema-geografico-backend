@@ -49,6 +49,7 @@ public class Registro {
 
     @NotNull(message = "El estado no puede ser null")
     @NotBlank(message = "El estado no puede estar vacío")
-    @Enumerated(EnumType.ORDINAL)
-    private EstadoEnums estadoEnums;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "estadoID", nullable = false)
+    private Estado estado;
 }

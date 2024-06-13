@@ -35,7 +35,7 @@ public class Privilegio {
     @Column(name = "descripcion",nullable = false,unique = true)
     private String descripcion;
 
-    @ManyToMany()
+    @ManyToMany(mappedBy = "")
     private List<Rol> rolList;
 
 

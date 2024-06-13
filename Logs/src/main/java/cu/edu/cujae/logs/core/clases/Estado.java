@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "estados")
 @Data
@@ -33,6 +35,9 @@ public class Estado {
     @Size(min = 4,max = 100,message = "La descrpción del Estado debe estar entre 4 y 100 caracteres")
     @Column(name = "descripcion", nullable = false, length = 100, unique = true)
     private String descripcion;
+
+    @OneToMany(mappedBy = "estado",fetch = FetchType.EAGER)
+    private List<Registro> registroList;
 
     public Estado(EstadoEnums estadoEnums){
         this.nombre = estadoEnums.getNombre();
