@@ -35,8 +35,7 @@ public class Privilegio {
     @Column(name = "descripcion",nullable = false,unique = true)
     private String descripcion;
 
-    @ManyToMany(mappedBy = "")
-    private List<Rol> rolList;
+    //FALTA LA ASIGnACIÒN DE LOS PRIVILEGIOS A LOS
 
 
     public Privilegio(PrivilegioEnums privilegioEnums) {

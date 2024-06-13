@@ -11,6 +11,7 @@ public enum PrivilegioEnums {
     USUARIOREAD("Privilegios para leer usuario","202"),
     USUARIOUPDATE("Privilegios para actualizar usuario","203"),
     USUARIODELETE("Privilegios para eliminar usuario","204"),
+    USUARIOADMINISTRADOR("Privilegios para la creación,modificación y eliminación de los administradores","205"),
     ENTIDAD("Privilegios de acceso a la inforamción de la entidad","30X"),
     ENTIDADCREATE("Privilegios para insertar entidad","301"),
     ENTIDADREAD("Privilegios para leer entidad","302"),

@@ -2,6 +2,7 @@ package cu.edu.cujae.logs.core.clases;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import cu.edu.cujae.logs.core.enums.RolEnums;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -36,21 +37,16 @@ public class Rol {
     @JsonIgnore
     private List<Usuario> usuarioList;
 
-    @ManyToMany(mappedBy = "rolList", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-    @JsonIgnore
-    private List<Privilegio> privilegioList;
-
-    public void setPrivilegioList(List<Privilegio> privilegioList) {
-        privilegioList.forEach(s->{
-            s.getRolList().add(this);
-        });
-        this.privilegioList = privilegioList;
-    }
-
     public void setUsuarioList(List<Usuario> usuarioList) {
         usuarioList.forEach(s->{
             s.setRol(this);
         });
         this.usuarioList = usuarioList;
     }
+
+    public Rol(RolEnums rolEnums){
+        this.rol = rolEnums.getNombre();
+    }
+
+    //Falta la unión con los privilegios
 }

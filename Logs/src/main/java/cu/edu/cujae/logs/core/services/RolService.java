@@ -1,13 +1,12 @@
 package cu.edu.cujae.logs.core.services;
 
 import cu.edu.cujae.logs.core.clases.Rol;
+import cu.edu.cujae.logs.core.enums.RolEnums;
 import cu.edu.cujae.logs.core.repository.RolRepository;
 import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RolService implements RolServiceInterfaces {
@@ -16,6 +15,17 @@ public class RolService implements RolServiceInterfaces {
 
     public RolService(RolRepository rolRepository){
         this.rolRepository = rolRepository;
+    }
+
+    @Override
+    public void iniciar() {
+        for (RolEnums rol : RolEnums.values()) {
+            try {
+                rolRepository.save(new Rol(rol));
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
     }
 
     @Override

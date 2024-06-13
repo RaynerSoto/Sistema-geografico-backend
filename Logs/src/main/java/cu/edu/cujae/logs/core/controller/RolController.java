@@ -62,5 +62,4 @@ public class RolController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
 }
