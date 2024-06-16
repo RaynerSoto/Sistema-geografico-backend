@@ -1,4 +1,4 @@
-package cu.edu.cujae.logs.core.clases;
+package cu.edu.cujae.logs.core.mapping;
 
 import cu.edu.cujae.logs.core.enums.EstadoEnums;
 import jakarta.persistence.*;

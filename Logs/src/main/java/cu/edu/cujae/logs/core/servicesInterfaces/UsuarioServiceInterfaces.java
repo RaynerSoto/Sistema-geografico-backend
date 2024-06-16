@@ -1,6 +1,6 @@
 package cu.edu.cujae.logs.core.servicesInterfaces;
 
-import cu.edu.cujae.logs.core.clases.Usuario;
+import cu.edu.cujae.logs.core.mapping.Usuario;
 
 import java.util.List;
 

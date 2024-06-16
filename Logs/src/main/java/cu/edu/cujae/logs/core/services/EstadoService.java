@@ -1,5 +1,5 @@
 package cu.edu.cujae.logs.core.services;
-import cu.edu.cujae.logs.core.clases.Estado;
+import cu.edu.cujae.logs.core.mapping.Estado;
 import cu.edu.cujae.logs.core.enums.EstadoEnums;
 import cu.edu.cujae.logs.core.repository.EstadoRepository;
 import cu.edu.cujae.logs.core.servicesInterfaces.EstadoServiceInterfaces;

@@ -1,8 +1,7 @@
 package cu.edu.cujae.logs.core.controller;
 
 
-import cu.edu.cujae.logs.core.clases.Rol;
-import cu.edu.cujae.logs.core.clases.Usuario;
+import cu.edu.cujae.logs.core.mapping.Rol;
 import cu.edu.cujae.logs.core.dto.RolDto;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;

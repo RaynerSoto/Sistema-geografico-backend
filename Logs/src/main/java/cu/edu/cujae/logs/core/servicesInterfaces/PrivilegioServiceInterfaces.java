@@ -1,6 +1,6 @@
 package cu.edu.cujae.logs.core.servicesInterfaces;
 
-import cu.edu.cujae.logs.core.clases.Privilegio;
+import cu.edu.cujae.logs.core.mapping.Privilegio;
 
 import java.util.List;
 

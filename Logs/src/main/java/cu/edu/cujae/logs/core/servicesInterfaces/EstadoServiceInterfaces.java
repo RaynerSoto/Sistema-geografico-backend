@@ -1,6 +1,6 @@
 package cu.edu.cujae.logs.core.servicesInterfaces;
 
-import cu.edu.cujae.logs.core.clases.Estado;
+import cu.edu.cujae.logs.core.mapping.Estado;
 
 import java.util.List;
 

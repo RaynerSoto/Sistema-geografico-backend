@@ -1,6 +1,6 @@
 package cu.edu.cujae.logs.core.services;
 
-import cu.edu.cujae.logs.core.clases.Rol;
+import cu.edu.cujae.logs.core.mapping.Rol;
 import cu.edu.cujae.logs.core.enums.RolEnums;
 import cu.edu.cujae.logs.core.repository.RolRepository;
 import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;

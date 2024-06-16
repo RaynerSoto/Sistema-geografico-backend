@@ -1,7 +1,6 @@
-package cu.edu.cujae.logs.core.clases;
+package cu.edu.cujae.logs.core.mapping;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import cu.edu.cujae.logs.core.dto.RolDto;
 import cu.edu.cujae.logs.core.enums.RolEnums;
 import jakarta.persistence.*;

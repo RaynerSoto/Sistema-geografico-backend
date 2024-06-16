@@ -1,20 +1,14 @@
 package cu.edu.cujae.logs.core.controller;
 
-import cu.edu.cujae.logs.core.clases.Rol;
-import cu.edu.cujae.logs.core.clases.Sexo;
-import cu.edu.cujae.logs.core.clases.Usuario;
+import cu.edu.cujae.logs.core.mapping.Usuario;
 import cu.edu.cujae.logs.core.repository.RolRepository;
 import cu.edu.cujae.logs.core.repository.SexoRepository;
-import cu.edu.cujae.logs.core.repository.UsuarioRepository;
-import cu.edu.cujae.logs.core.services.UsuarioService;
 import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.SexoServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/usuario")

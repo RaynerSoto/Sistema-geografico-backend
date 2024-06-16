@@ -1,6 +1,6 @@
 package cu.edu.cujae.logs.core.servicesInterfaces;
 
-import cu.edu.cujae.logs.core.clases.Sexo;
+import cu.edu.cujae.logs.core.mapping.Sexo;
 
 import java.util.List;
 import java.util.Optional;

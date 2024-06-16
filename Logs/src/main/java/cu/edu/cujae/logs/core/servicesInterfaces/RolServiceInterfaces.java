@@ -1,9 +1,7 @@
 package cu.edu.cujae.logs.core.servicesInterfaces;
 
-import cu.edu.cujae.logs.core.clases.Rol;
-import cu.edu.cujae.logs.core.dto.RolDto;
+import cu.edu.cujae.logs.core.mapping.Rol;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 

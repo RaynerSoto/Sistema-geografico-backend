@@ -1,6 +1,7 @@
-package cu.edu.cujae.logs.core.clases;
+package cu.edu.cujae.logs.core.mapping;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import cu.edu.cujae.logs.core.dto.SexoDto;
 import cu.edu.cujae.logs.core.enums.SexoEnums;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -44,5 +45,10 @@ public class Sexo {
     public Sexo (SexoEnums sexoEnums){
         this.nombre = sexoEnums.getNombre();
         this.sigla = sexoEnums.getSigla();
+    }
+
+    public Sexo(SexoDto sexoDto){
+        this.nombre = sexoDto.getNombre();
+        this.sigla = sexoDto.getSigla();
     }
 }

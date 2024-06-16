@@ -1,6 +1,6 @@
 package cu.edu.cujae.logs.core.services;
 
-import cu.edu.cujae.logs.core.clases.Sexo;
+import cu.edu.cujae.logs.core.mapping.Sexo;
 import cu.edu.cujae.logs.core.enums.SexoEnums;
 import cu.edu.cujae.logs.core.repository.SexoRepository;
 import cu.edu.cujae.logs.core.servicesInterfaces.SexoServiceInterfaces;

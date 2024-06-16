@@ -1,7 +1,6 @@
 package cu.edu.cujae.logs.core.controller;
 
-import cu.edu.cujae.logs.core.clases.Sexo;
-import cu.edu.cujae.logs.core.services.SexoService;
+import cu.edu.cujae.logs.core.dto.SexoDto;
 import cu.edu.cujae.logs.core.servicesInterfaces.SexoServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,8 @@ public class SexoController {
     @GetMapping("/")
     public ResponseEntity<?> listarSexos() {
         try {
-            return ResponseEntity.ok().body(sexoService.listarSexos());
+            List<SexoDto> sexos = sexoService.listarSexos().stream().map(s-> new SexoDto(s)).toList();
+            return ResponseEntity.ok().body(sexos);
         }
         catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

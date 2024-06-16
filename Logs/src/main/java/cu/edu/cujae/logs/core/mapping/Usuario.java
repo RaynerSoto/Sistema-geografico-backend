@@ -1,8 +1,6 @@
-package cu.edu.cujae.logs.core.clases;
+package cu.edu.cujae.logs.core.mapping;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import cu.edu.cujae.logs.core.enums.SexoEnums;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
