@@ -36,7 +36,7 @@ public class Sexo {
     @Column(name = "sigla",nullable = false, length = 5,unique = true)
     private String sigla;
 
-    @OneToMany(mappedBy = "sexo")
+    @OneToMany(mappedBy = "sexo",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Usuario> usuarioList;
 

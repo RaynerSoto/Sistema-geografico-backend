@@ -2,13 +2,15 @@ package cu.edu.cujae.logs.core.controller;
 
 
 import cu.edu.cujae.logs.core.clases.Rol;
+import cu.edu.cujae.logs.core.clases.Usuario;
+import cu.edu.cujae.logs.core.dto.RolDto;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/rol")
@@ -18,11 +20,11 @@ public class RolController {
     private RolServiceInterfaces rolServiceInterfaces;
 
     @PostMapping("/")
-    public ResponseEntity<?> create(@RequestBody Rol rol) {
+    public ResponseEntity<?> create(@RequestBody RolDto rol) {
         try{
             String resultado = Validacion.comprobacionValidador(Validacion.validador(),rol);
             if (resultado.isEmpty()) {
-                rolServiceInterfaces.insertarRol(rol);
+                rolServiceInterfaces.insertarRol(new Rol(rol));
             }
             else {
                 throw new Exception(resultado);
@@ -37,16 +39,35 @@ public class RolController {
     @GetMapping("/")
     public ResponseEntity<?> listarRoles() {
         try {
-            return ResponseEntity.ok(rolServiceInterfaces.consultarRol());
+            List<RolDto> roles = new ArrayList<>();
+            for (Rol r:rolServiceInterfaces.consultarRol()){
+                roles.add(new RolDto(r));
+            }
+            return ResponseEntity.ok(roles);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> consultarRol(@PathVariable Long id) {
+        try {
+            Optional<Rol> rol = rolServiceInterfaces.consultarRolID(id);
+            if (rol.isPresent()) {
+                return ResponseEntity.ok(new RolDto(rol.get()));
+            }
+            else {
+                throw new Exception("El rol no existe");
+            }
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> modificarRol(@PathVariable Long id, @RequestBody Rol rol){
+    public ResponseEntity<?> modificarRol(@PathVariable Long id, @RequestBody RolDto rol){
         try {
-            rolServiceInterfaces.modificarRol(rol,id);
+            rolServiceInterfaces.modificarRol(new Rol(rol),id);
             return ResponseEntity.ok("Modificado correctamente");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

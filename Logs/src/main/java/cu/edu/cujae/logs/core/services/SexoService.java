@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SexoService implements SexoServiceInterfaces {
@@ -29,5 +30,11 @@ public class SexoService implements SexoServiceInterfaces {
 
     public List<Sexo> listarSexos() {
         return sexoRepository.findAll();
+    }
+
+    @Override
+    public Optional<Sexo> buscarSexoPorId(Long id) {
+
+        return sexoRepository.findById(id);
     }
 }

@@ -2,6 +2,7 @@ package cu.edu.cujae.logs.core.clases;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import cu.edu.cujae.logs.core.dto.RolDto;
 import cu.edu.cujae.logs.core.enums.RolEnums;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -46,6 +47,10 @@ public class Rol {
 
     public Rol(RolEnums rolEnums){
         this.rol = rolEnums.getNombre();
+    }
+
+    public Rol(RolDto rolDto){
+        this.rol = rolDto.getNombre();
     }
 
     //Falta la unión con los privilegios

@@ -1,5 +1,7 @@
 package cu.edu.cujae.logs.core.clases;
 
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import cu.edu.cujae.logs.core.enums.SexoEnums;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -19,9 +21,9 @@ import java.util.List;
 @Table(name = "usuarios")
 public class Usuario {
     @Id
-    @NotNull(message = "El id no puede ser nulo")
     @Column(name = "usuarioID",nullable = false, length = 36, unique = true)
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "user_seq", sequenceName = "USER_SEQUENCE", allocationSize = 1)
     private Long uuid;
 
     @NotNull(message = "El nombre de usuario no puede ser nulo")
@@ -33,7 +35,7 @@ public class Usuario {
     @NotNull(message = "El nombre completo no puede ser nulo")
     @NotBlank(message = "El nombre completo no puede ser vacío")
     @Size(min = 2,max = 100,message = "El nombre completo debe tener entre 2 y 100 caracteres")
-    @Column(name = "nombre",nullable = false, length = 50)
+    @Column(name = "nombre",nullable = false, length = 100)
     private String name;
 
     @NotNull(message = "El correo no puede ser nulo")
@@ -43,26 +45,34 @@ public class Usuario {
     private String email;
 
     @NotNull(message = "El rol no puede ser nulo")
-    @NotBlank(message = "El rol no puede ser vacío")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rolID")
+    @JsonIgnore
     private Rol rol;
 
 
     @OneToMany(mappedBy = "usuario")
+    @JsonIgnore
     private List<Registro> registroList;
 
     @NotNull(message = "El sexo no puede ser nulo")
-    @NotBlank(message = "El sexo no puede ser vacío")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sexoID")
+    @JsonIgnore
     private Sexo sexo;
 
     @Column(name = "activo", nullable = false)
     private boolean activo;
 
-    @Transient
-    private Long sexoID;
-    @Transient
-    private Long rolID;
+
+
+    public Usuario(Usuario usuario){
+        this.uuid = usuario.getUuid();
+        this.username = usuario.getUsername();
+        this.name = usuario.getName();
+        this.email = usuario.getEmail();
+        this.rol = usuario.getRol();
+        this.sexo = usuario.getSexo();
+        this.activo = usuario.isActivo();
+    }
 }

@@ -7,6 +7,7 @@ import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RolService implements RolServiceInterfaces {
@@ -62,5 +63,10 @@ public class RolService implements RolServiceInterfaces {
         }catch (Exception e){
             throw new Exception(e.getMessage());
         }
+    }
+
+    @Override
+    public Optional<Rol> consultarRolID(Long id) throws Exception {
+        return rolRepository.findById(id);
     }
 }
