@@ -60,7 +60,7 @@ public class Usuario {
     private List<Registro> registroList;
 
     @NotNull(message = "El sexo no puede ser nulo")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sexoID")
     private Sexo sexo;
 

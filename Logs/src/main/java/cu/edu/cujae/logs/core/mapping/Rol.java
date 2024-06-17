@@ -34,7 +34,7 @@ public class Rol {
     private String rol;
 
 
-    @OneToMany(mappedBy = "rol", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private List<Usuario> usuarioList;
 
     public void setUsuarioList(List<Usuario> usuarioList) {

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -25,12 +26,20 @@ public class UsuarioController {
     private RolServiceInterfaces rolRepository;
     @Autowired
     private SexoServiceInterfaces sexoService;
-    @Autowired
-    private RolRepository repositoryRol;
-    @Autowired
-    private RolService rolService;
 
-    @GetMapping("/")
+    @GetMapping
+    public ResponseEntity<?> listarAllUsuarios() {
+        try {
+            return ResponseEntity.ok().body(usuarioService.listarUsuarios().stream().map(
+                    s -> new UsuarioDto(s)).toList()
+            );
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/userActivos")
     public ResponseEntity<?> listarUsuariosActivos() {
         try {
             return ResponseEntity.ok().body(usuarioService.listarUsuarios().stream().filter(s-> s.isActivo())
@@ -41,7 +50,7 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/eliminados")
+    @GetMapping("/userEliminado")
     public ResponseEntity<?> listarUsuariosEliminados() {
         try {
             return ResponseEntity.ok().body(usuarioService.listarUsuarios().stream().filter(s-> !s.isActivo())
@@ -115,8 +124,8 @@ public class UsuarioController {
         }
     }
 
-    @GetMapping("/userActivo")
-    public ResponseEntity<String> usuarioActivo(UsuarioDto usuario){
+    @GetMapping("/isUserActivo")
+    public ResponseEntity<String> isUsuarioActivo(UsuarioDto usuario){
         try {
             if (usuarioService.usuarioActivo(usuario.getEmail(), usuario.getUsername()).isPresent()) {
                 return ResponseEntity.ok().body("El usuario está activo");
