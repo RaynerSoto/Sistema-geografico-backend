@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Optional;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,5 +28,10 @@ public class RolDto {
     public RolDto(Rol rol) {
         this.id = rol.getUuid();
         this.nombre = rol.getRol();
+    }
+
+    public RolDto(Optional<Rol> rol) {
+        this.id = rol.get().getUuid();
+        this.nombre = rol.get().getRol();
     }
 }

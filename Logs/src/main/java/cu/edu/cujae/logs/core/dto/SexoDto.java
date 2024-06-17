@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Optional;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -31,5 +33,11 @@ public class SexoDto {
         this.id = sexo.getId();
         this.nombre = sexo.getNombre();
         this.sigla = sexo.getSigla();
+    }
+
+    public SexoDto(Optional<Sexo> sexo){
+        this.id = sexo.get().getId();
+        this.nombre = sexo.get().getNombre();
+        this.sigla = sexo.get().getSigla();
     }
 }

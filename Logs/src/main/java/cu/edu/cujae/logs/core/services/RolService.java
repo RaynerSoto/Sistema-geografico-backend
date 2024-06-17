@@ -69,4 +69,13 @@ public class RolService implements RolServiceInterfaces {
     public Optional<Rol> consultarRolID(Long id) throws Exception {
         return rolRepository.findById(id);
     }
+
+    @Override
+    public Optional<Rol> consultarRol(String rol) throws Exception {
+        return Optional.ofNullable(rolRepository.findByRolEqualsIgnoreCase(rol).orElseThrow(
+                () -> new RuntimeException("No se encontró el Rol")
+        ));
+    }
+
+
 }

@@ -17,4 +17,6 @@ public interface RolServiceInterfaces{
     public void eliminarRol(Long id) throws Exception;
 
     public Optional<Rol> consultarRolID(Long id) throws Exception;
+
+    public Optional<Rol> consultarRol(String rol) throws Exception;
 }

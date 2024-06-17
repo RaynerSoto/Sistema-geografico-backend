@@ -34,7 +34,6 @@ public class Rol {
 
 
     @OneToMany(mappedBy = "rol", fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
-    @JsonIgnore
     private List<Usuario> usuarioList;
 
     public void setUsuarioList(List<Usuario> usuarioList) {

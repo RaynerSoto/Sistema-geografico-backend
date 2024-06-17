@@ -38,7 +38,6 @@ public class Sexo {
     private String sigla;
 
     @OneToMany(mappedBy = "sexo",cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JsonIgnore
     private List<Usuario> usuarioList;
 
 
