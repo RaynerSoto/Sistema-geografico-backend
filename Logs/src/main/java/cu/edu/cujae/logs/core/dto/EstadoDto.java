@@ -1,7 +1,11 @@
-package cu.edu.cujae.logs.core.mapping;
+package cu.edu.cujae.logs.core.dto;
 
-import cu.edu.cujae.logs.core.enums.EstadoEnums;
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import cu.edu.cujae.logs.core.mapping.Estado;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -9,38 +13,34 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Optional;
 
-@Entity
-@Table(name = "estados")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Estado {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @NotNull(message = "El id no puede ser nulo")
-    @Column(name = "estadoID", nullable = false, updatable = false, unique = true)
+public class EstadoDto {
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long uuid;
 
     @NotNull(message = "El nombre del estado no puede ser null")
     @NotBlank(message = "El nombre del estado no puede estar vacío")
     @Size(min = 4,max = 100,message = "El nombre del estado debe estar entre 4 y 100 caracteres")
-    @Column(name = "nombre", nullable = false, length = 100, unique = true)
     private String nombre;
 
     @NotNull(message = "La descrpción del Estado no puede ser null")
     @NotBlank(message = "La descrpción del Estado no puede estar vacío")
     @Size(min = 4,max = 100,message = "La descrpción del Estado debe estar entre 4 y 100 caracteres")
-    @Column(name = "descripcion", nullable = false, length = 100, unique = true)
     private String descripcion;
 
-    @OneToMany(mappedBy = "estado",fetch = FetchType.LAZY)
-    private List<Registro> registroList;
+    public EstadoDto(Estado estado) {
+        this.uuid = estado.getUuid();
+        this.nombre = estado.getNombre();
+        this.descripcion = estado.getDescripcion();
+    }
 
-    public Estado(EstadoEnums estadoEnums){
-        this.nombre = estadoEnums.getNombre();
-        this.descripcion = estadoEnums.getDescripcion();
+    public EstadoDto(Optional<Estado>estado){
+        this.uuid = estado.get().getUuid();
+        this.nombre = estado.get().getNombre();
+        this.descripcion = estado.get().getDescripcion();
     }
 }
