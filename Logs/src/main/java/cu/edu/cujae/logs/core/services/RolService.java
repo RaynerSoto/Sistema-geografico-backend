@@ -4,19 +4,19 @@ import cu.edu.cujae.logs.core.mapping.Rol;
 import cu.edu.cujae.logs.core.enums.RolEnums;
 import cu.edu.cujae.logs.core.repository.RolRepository;
 import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
+@NoArgsConstructor
 @Service
 public class RolService implements RolServiceInterfaces {
     @Autowired
     private RolRepository rolRepository;
-
-    public RolService(RolRepository rolRepository){
-        this.rolRepository = rolRepository;
-    }
 
     @Override
     public void iniciar() {
@@ -72,9 +72,14 @@ public class RolService implements RolServiceInterfaces {
 
     @Override
     public Optional<Rol> consultarRol(String rol) throws Exception {
-        return Optional.ofNullable(rolRepository.findByRolEqualsIgnoreCase(rol).orElseThrow(
+        return Optional.ofNullable(consultarRolNombre(rol).orElseThrow(
                 () -> new RuntimeException("No se encontró el Rol")
         ));
+    }
+
+    @Override
+    public Optional<Rol> consultarRolNombre(String rol) throws Exception {
+        return rolRepository.findByRolEqualsIgnoreCase(rol);
     }
 
 

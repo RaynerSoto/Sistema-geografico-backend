@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "sexos")
@@ -49,5 +50,10 @@ public class Sexo {
     public Sexo(SexoDto sexoDto){
         this.nombre = sexoDto.getNombre();
         this.sigla = sexoDto.getSigla();
+    }
+
+    public Sexo(Optional<Sexo> sexo) {
+        this.nombre = sexo.get().nombre;
+        this.sigla = sexo.get().sigla;
     }
 }

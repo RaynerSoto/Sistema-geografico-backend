@@ -10,5 +10,7 @@ public interface SexoServiceInterfaces {
 
     public List<Sexo> listarSexos();
 
-    public Optional<Sexo> buscarSexoPorId(Long id);
+    public Optional<Sexo> consultarSexo(Long id);
+
+    public Optional<Sexo> consultarSexo(String sexo);
 }

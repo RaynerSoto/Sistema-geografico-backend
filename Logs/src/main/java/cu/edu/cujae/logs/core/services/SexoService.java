@@ -33,8 +33,16 @@ public class SexoService implements SexoServiceInterfaces {
     }
 
     @Override
-    public Optional<Sexo> buscarSexoPorId(Long id) {
-
+    public Optional<Sexo> consultarSexo(Long id) {
         return sexoRepository.findById(id);
+    }
+
+    @Override
+    public Optional<Sexo> consultarSexo(String sexo) {
+        return Optional.ofNullable(buscarSexoPorNome(sexo).orElseThrow(()-> new RuntimeException("El sexo no se encontró")));
+    }
+
+    public Optional<Sexo> buscarSexoPorNome(String nombre) {
+        return sexoRepository.findByNombreEqualsIgnoreCase(nombre);
     }
 }

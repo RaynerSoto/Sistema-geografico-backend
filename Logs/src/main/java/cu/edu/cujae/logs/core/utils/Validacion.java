@@ -5,21 +5,15 @@ import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
 
-public class Validacion<E> {
-    public static Validator validador(){
-        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-        Validator validator = factory.getValidator();
-        return validator;
-    }
+public class Validacion {
 
-    public static String comprobacionValidador(Validator validator, Object elemento){
-        String resultado = "";
-        if (validador().validate(elemento).isEmpty() == false){
+    public static String comprobacionValidador(Object elemento){
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        if (validator.validate(elemento).isEmpty() == false){
             for (ConstraintViolation con : validator.validate(elemento)){
-                resultado = con.getMessage();
-                break;
+                return con.getMessage();
             }
         }
-        return resultado;
+        return "";
     }
 }

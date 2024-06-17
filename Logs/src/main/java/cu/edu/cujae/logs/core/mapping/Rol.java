@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Data
@@ -49,6 +50,10 @@ public class Rol {
 
     public Rol(RolDto rolDto){
         this.rol = rolDto.getNombre();
+    }
+
+    public Rol(Optional<Rol> rolOptional){
+        this.rol = rolOptional.get().getRol();
     }
 
     //Falta la unión con los privilegios

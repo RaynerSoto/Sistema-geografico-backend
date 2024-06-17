@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UsuarioService implements UsuarioServiceInterfaces {
@@ -25,9 +26,8 @@ public class UsuarioService implements UsuarioServiceInterfaces {
     }
 
     @Override
-    public void modificarUsuario(Usuario usuario, Long id) throws Exception {
-        if (usuarioRepository.existsById(id)) {
-            usuario.setUuid(id);
+    public void modificarUsuario(Usuario usuario) throws Exception {
+        if (usuarioRepository.existsById(usuario.getUuid())) {
             usuarioRepository.save(usuario);
         }
         else {
@@ -38,7 +38,9 @@ public class UsuarioService implements UsuarioServiceInterfaces {
     @Override
     public void eliminarUsuario(Long id) throws Exception{
         if (usuarioRepository.existsById(id)) {
-            usuarioRepository.deleteById(id);
+            Usuario usuario = usuarioRepository.findById(id).get();
+            usuario.setActivo(false);
+            usuarioRepository.save(usuario);
         }
         else {
             throw new Exception("No existe el usuario");
@@ -54,4 +56,40 @@ public class UsuarioService implements UsuarioServiceInterfaces {
             throw new Exception("No existe el usuario");
         }
     }
+
+    @Override
+    public Optional<Usuario> usuarioActivo(String email, String username) throws Exception {
+        return usuarioRepository.findFirstByEmailEqualsIgnoreCaseAndActivoIsTrueAndUsernameEquals(email,username);
+    }
+
+    @Override
+    public Optional<Usuario> usuarioActivoEmail(String email) throws Exception {
+        return usuarioRepository.findByEmailEqualsIgnoreCaseAndActivoIsTrue(email);
+    }
+
+    @Override
+    public Optional<Usuario> usuarioActivoUsername(String username) throws Exception {
+        return usuarioRepository.findByUsernameEqualsIgnoreCaseAndActivoIsTrue(username);
+    }
+
+    @Override
+    public void validarUsuarioInsertar(String email, String username) throws Exception {
+        if (usuarioActivoUsername(username).isPresent()) {
+            throw new Exception("El nombre de usuario ya existe");
+        }
+        else if (usuarioActivoEmail(email).isPresent()) {
+            throw new Exception("El email ya existe");
+        }
+    }
+
+    public void validarUsuarioModificar(String email, String username,Long id) throws Exception{
+        if (usuarioRepository.findByEmailEqualsIgnoreCaseAndActivoIsTrueAndUuidNot(email,id).isPresent()){
+            throw new Exception("El nombre de usuario ya existe");
+        }
+        else if (usuarioRepository.findByUsernameEqualsIgnoreCaseAndActivoIsTrueAndUuidNot(username,id).isPresent()){
+            throw new Exception("El email ya existe");
+        }
+    }
+
+
 }

@@ -1,6 +1,10 @@
 package cu.edu.cujae.logs.core.mapping;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import cu.edu.cujae.logs.core.dto.UsuarioDto;
+import cu.edu.cujae.logs.core.services.RolService;
+import cu.edu.cujae.logs.core.services.SexoService;
+import cu.edu.cujae.logs.core.servicesInterfaces.SexoServiceInterfaces;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,6 +13,8 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 
@@ -18,6 +24,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "usuarios")
 public class Usuario {
+
     @Id
     @Column(name = "usuarioID",nullable = false, length = 36, unique = true)
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -70,5 +77,15 @@ public class Usuario {
         this.rol = usuario.getRol();
         this.sexo = usuario.getSexo();
         this.activo = usuario.isActivo();
+    }
+
+    public Usuario(UsuarioDto usuarioDto,Rol rol, Sexo sexo) throws Exception {
+        this.uuid = usuarioDto.getUuid();
+        this.username = usuarioDto.getUsername();
+        this.name = usuarioDto.getName();
+        this.email = usuarioDto.getEmail();
+        this.activo = usuarioDto.isActivo();
+        this.rol = rol;
+        this.sexo = sexo;
     }
 }

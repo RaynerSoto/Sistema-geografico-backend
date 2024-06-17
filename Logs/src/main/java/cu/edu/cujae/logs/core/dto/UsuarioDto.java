@@ -60,6 +60,7 @@ public class UsuarioDto {
         this.email = usuario.getEmail();
         this.rol = usuario.getRol().getRol();
         this.sexo = usuario.getSexo().getNombre();
+        this.activo = usuario.isActivo();
     }
 
     public UsuarioDto(Optional<Usuario> usuario) {
@@ -69,6 +70,7 @@ public class UsuarioDto {
         this.email = usuario.get().getEmail();
         this.rol = usuario.get().getRol().getRol();
         this.sexo = usuario.get().getSexo().getNombre();
+        this.activo = usuario.get().isActivo();
     }
 
 }
