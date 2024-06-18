@@ -15,9 +15,10 @@ import java.net.http.HttpResponse;
 @Service
 public class GeoIPService implements GeoIP {
     @Override
-    public CoordenadasIp findMyIp(String ip, String key) {
+    public CoordenadasIp findMyIp(String ip) {
         try {
-            HttpRequest request = HttpRequest.newBuilder(URI.create(new Propertie().getKeyPropierties(new Propertie().getAplication(),"url_ip")+key+"&ip="+ip)).build();
+            String url = System.getenv("IPKey");
+            HttpRequest request = HttpRequest.newBuilder(URI.create(url+"&ip="+ip)).build();
             HttpResponse response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
             CoordenadasIp coordenadasIp = new Gson().fromJson((String) response.body(),CoordenadasIp.class);
             return coordenadasIp;

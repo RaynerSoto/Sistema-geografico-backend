@@ -19,23 +19,25 @@ public class Propertie {
     }
 
     //Cargar la llave de las propiedadades
-    public String getKeyPropierties(String url,String key){
+    public String getKeyPropierties(String key){
         try {
             Properties properties = new Properties();
-            properties.load(new FileReader(new File(url)));
+            properties.load(new FileReader(new File("src/main/resources/application.properties")));
             return properties.getProperty(key);
         } catch (FileNotFoundException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException("Archivo no encontrado");
         } catch (IOException e) {
+            System.out.println(e.getMessage());
             throw new RuntimeException("Archivo no encontrado, corrupto o no se puede leer");
         }
     }
 
 
-    public Double getKeyPropiertiesDouble(String url,String key){
+    public Double getKeyPropiertiesDouble(String key){
         try {
             Properties properties = new Properties();
-            properties.load(new FileReader(new File(url)));
+            properties.load(new FileReader(new File("src/main/resources/application.properties")));
             return Double.parseDouble(properties.getProperty(key));
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Archivo no encontrado");
@@ -44,10 +46,10 @@ public class Propertie {
         }
     }
 
-    public Integer getKeyPropiertiesInteger(String url,String key){
+    public Integer getKeyPropiertiesInteger(String key){
         try {
             Properties properties = new Properties();
-            properties.load(new FileReader(new File(url)));
+            properties.load(new FileReader(new File("src/main/resources/application.properties")));
             return Integer.parseInt(properties.getProperty(key));
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Archivo no encontrado");

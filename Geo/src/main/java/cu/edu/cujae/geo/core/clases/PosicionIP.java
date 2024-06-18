@@ -12,8 +12,4 @@ public class PosicionIP {
     @NotNull(message = "El ip no puede ser nulo")
     @NotBlank(message = "El ip no puede ser vacío")
     private String ip;
-
-    @NotNull(message = "El país no puede ser nulo")
-    @NotBlank(message = "El país no puede ser vacío")
-    private String pais;
 }
