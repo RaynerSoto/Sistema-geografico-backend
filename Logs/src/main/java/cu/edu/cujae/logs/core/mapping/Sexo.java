@@ -20,15 +20,15 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Sexo {
+
     @Id
-    @NotNull(message = "El id no puede ser nulo")
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "sexoID",unique = true, nullable = false,updatable = false,insertable = false)
     private Long id;
 
     @NotNull(message = "El nombre del sexo no puede ser null")
-    @NotBlank(message = "El nombre del sexo no puede estar vacío")
     @Size(min = 4,max = 100,message = "El nombre del sexo debe estar entre 4 y 100 caracteres")
+    @NotBlank(message = "El nombre del sexo no puede estar vacío")
     @Column(name = "nombre",nullable = false, length = 50,unique = true)
     private String nombre;
 
@@ -56,4 +56,10 @@ public class Sexo {
         this.nombre = sexo.get().nombre;
         this.sigla = sexo.get().sigla;
     }
+
+    @PreRemove
+    public void removerSexo() {
+        throw new UnsupportedOperationException("Sexo no eliminable");
+    }
+
 }

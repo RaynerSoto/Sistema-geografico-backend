@@ -9,21 +9,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Table(name = "privilegios")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Privilegio {
-    @Id()
-    @NotNull(message = "El id no puede ser nulo")
+
+    @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "privilegiosID",nullable = false,unique = true, updatable = false)
     private Long uuid;
 
     @NotNull(message = "El código no puede ser null")
-    @NotBlank(message = "El código no puede estar vacío")
     @Size(min = 1,message = "El código debe tener mínimo 1 caracter")
+    @NotBlank(message = "El código no puede estar vacío")
     @Column(name = "codigo",nullable = false,unique = true)
     private String codigo;
 
@@ -33,7 +35,10 @@ public class Privilegio {
     @Column(name = "descripcion",nullable = false,unique = true)
     private String descripcion;
 
-    //FALTA LA ASIGnACIÒN DE LOS PRIVILEGIOS A LOS
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "")
+    @Transient
+    private List<Rol> rolList;
 
 
     public Privilegio(PrivilegioEnums privilegioEnums) {

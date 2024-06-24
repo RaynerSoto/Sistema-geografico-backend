@@ -21,24 +21,16 @@ public class RolController {
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody RolDto rol) {
         try{
-            String resultado = Validacion.comprobacionValidador(rol);
-            if (resultado.isEmpty()) {
-                if (rolServiceInterfaces.consultarRolNombre(rol.getNombre()).isPresent() == false){
-                    rolServiceInterfaces.insertarRol(new Rol(rol));
-                    return ResponseEntity.ok("Insertado correctamente");
-                }
-                else {
-                    ResponseEntity.badRequest().body("El rol ya existe");
-                }
-            }
-            else {
-                ResponseEntity.badRequest().body(resultado);
+            if (rolServiceInterfaces.consultarRolNombre(rol.getNombre()).isPresent() == false){
+                rolServiceInterfaces.insertarRol(new Rol(rol));
+                return ResponseEntity.ok("Insertado correctamente");
+            } else {
+                return ResponseEntity.badRequest().body("El rol ya existe");
             }
         }
         catch(Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-        return null;
     }
 
     @GetMapping("/")

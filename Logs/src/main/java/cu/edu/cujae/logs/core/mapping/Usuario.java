@@ -32,21 +32,22 @@ public class Usuario {
     private Long uuid;
 
     @NotNull(message = "El nombre de usuario no puede ser nulo")
-    @NotBlank(message = "El nombre de usuario no puede ser vacío")
     @Size(min = 4,max = 50,message = "El nombre de usuario se encuentra en un rango de 4 y 50 caracteres")
-    @Column(name = "username",nullable = false, length = 50)
+    @NotBlank(message = "El nombre de usuario no puede ser vacío")
+    @Column(name = "username",nullable = false, length = 100)
     private String username;
 
     @NotNull(message = "El nombre completo no puede ser nulo")
-    @NotBlank(message = "El nombre completo no puede ser vacío")
     @Size(min = 2,max = 100,message = "El nombre completo debe tener entre 2 y 100 caracteres")
+    @NotBlank(message = "El nombre completo no puede ser vacío")
     @Column(name = "nombre",nullable = false, length = 100)
     private String name;
 
     @NotNull(message = "El correo no puede ser nulo")
     @NotBlank(message = "El correo no puede ser vacío")
+    @Size(max = 100,message = "El correo tiene un máximo de 100 caracteres")
     @Email(message = "Correo no válido")
-    @Column(name = "email",nullable = false, length = 50)
+    @Column(name = "email",nullable = false, length = 100)
     private String email;
 
     @NotNull(message = "El rol no puede ser nulo")
