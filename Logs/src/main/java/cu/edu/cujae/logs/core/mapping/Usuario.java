@@ -5,6 +5,7 @@ import cu.edu.cujae.logs.core.dto.UsuarioDto;
 import cu.edu.cujae.logs.core.services.RolService;
 import cu.edu.cujae.logs.core.services.SexoService;
 import cu.edu.cujae.logs.core.servicesInterfaces.SexoServiceInterfaces;
+import cu.edu.cujae.logs.core.utils.Validacion;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 
+import javax.naming.OperationNotSupportedException;
 import java.util.List;
 
 @Entity
@@ -88,5 +90,18 @@ public class Usuario {
         this.activo = usuarioDto.isActivo();
         this.rol = rol;
         this.sexo = sexo;
+    }
+
+    @PrePersist
+    @PreUpdate
+    public void prePersistUpdate(){
+        String validacion = Validacion.comprobacionValidador(this);
+        if (validacion.isBlank() == false)
+            throw new UnsupportedOperationException(validacion);
+    }
+
+    @PreRemove
+    public void preRemove(){
+        throw new UnsupportedOperationException("No se puede eliminar usuarios");
     }
 }

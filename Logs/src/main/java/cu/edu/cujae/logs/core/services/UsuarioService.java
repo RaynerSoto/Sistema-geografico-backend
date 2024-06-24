@@ -75,19 +75,19 @@ public class UsuarioService implements UsuarioServiceInterfaces {
     @Override
     public void validarUsuarioInsertar(String email, String username) throws Exception {
         if (usuarioActivoUsername(username).isPresent()) {
-            throw new Exception("El nombre de usuario ya existe");
+            throw new Exception("El nombre de usuario está en uso");
         }
         else if (usuarioActivoEmail(email).isPresent()) {
-            throw new Exception("El email ya existe");
+            throw new Exception("El email está en uso");
         }
     }
 
     public void validarUsuarioModificar(String email, String username,Long id) throws Exception{
         if (usuarioRepository.findByEmailEqualsIgnoreCaseAndActivoIsTrueAndUuidNot(email,id).isPresent()){
-            throw new Exception("El nombre de usuario ya existe");
+            throw new Exception("El nombre de usuario está en uso");
         }
         else if (usuarioRepository.findByUsernameEqualsIgnoreCaseAndActivoIsTrueAndUuidNot(username,id).isPresent()){
-            throw new Exception("El email ya existe");
+            throw new Exception("El email está en uso");
         }
     }
 

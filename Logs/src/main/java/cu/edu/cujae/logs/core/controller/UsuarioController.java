@@ -4,8 +4,6 @@ import cu.edu.cujae.logs.core.dto.UsuarioDto;
 import cu.edu.cujae.logs.core.mapping.Rol;
 import cu.edu.cujae.logs.core.mapping.Sexo;
 import cu.edu.cujae.logs.core.mapping.Usuario;
-import cu.edu.cujae.logs.core.repository.RolRepository;
-import cu.edu.cujae.logs.core.services.RolService;
 import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.SexoServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
@@ -66,7 +64,7 @@ public class UsuarioController {
     public ResponseEntity<String> insertarUsuario(@RequestBody UsuarioDto usuario) {
         String resultado = Validacion.comprobacionValidador(usuario);
         try {
-            if (resultado.isEmpty() || resultado.isBlank()){
+            if (resultado.isBlank()){
                 Optional<Rol> rol = rolRepository.consultarRolNombre(usuario.getRol());
                 Optional<Sexo> sexo = sexoService.consultarSexo(usuario.getSexo());
                 usuarioService.validarUsuarioInsertar(usuario.getEmail(),usuario.getUsername());
@@ -91,7 +89,7 @@ public class UsuarioController {
         try {
             String resultado = Validacion.comprobacionValidador(usuario);
             usuario.setUuid(id);
-            if (resultado.isEmpty() || resultado.isBlank()){
+            if (resultado.isBlank()){
                 Optional<Rol> rol = rolRepository.consultarRolNombre(usuario.getRol());
                 Optional<Sexo> sexo = sexoService.consultarSexo(usuario.getSexo());
                 usuarioService.validarUsuarioModificar(usuario.getEmail(),usuario.getUsername(),usuario.getUuid());
