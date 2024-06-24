@@ -48,20 +48,15 @@ public class RolService implements RolServiceInterfaces {
         else {
             throw new Exception("El rol no existe");
         }
-
     }
 
     @Override
     public void eliminarRol(Long id) throws Exception {
-        try{
-            if (rolRepository.existsById(id)){
-                rolRepository.deleteById(id);
-            }
-            else {
-                throw new Exception("El rol no existe");
-            }
-        }catch (Exception e){
-            throw new Exception(e.getMessage());
+        if (rolRepository.existsById(id)){
+            rolRepository.deleteById(id);
+        }
+        else {
+            throw new Exception("El rol no existe");
         }
     }
 

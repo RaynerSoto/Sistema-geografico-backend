@@ -19,7 +19,7 @@ public class RolController {
     private RolServiceInterfaces rolServiceInterfaces;
 
     @PostMapping("/")
-    public ResponseEntity<?> create(@RequestBody RolDto rol) {
+    public ResponseEntity<?> crearRol(@RequestBody RolDto rol) {
         try{
             if (rolServiceInterfaces.consultarRolNombre(rol.getNombre()).isPresent() == false){
                 rolServiceInterfaces.insertarRol(new Rol(rol));
@@ -51,7 +51,7 @@ public class RolController {
                 return ResponseEntity.ok(new RolDto(rol.get()));
             }
             else {
-                throw new Exception("El rol no existe");
+                return ResponseEntity.badRequest().body("El rol no existe");
             }
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
