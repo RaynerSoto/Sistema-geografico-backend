@@ -93,11 +93,20 @@ public class Usuario {
     }
 
     @PrePersist
-    @PreUpdate
-    public void prePersistUpdate(){
+    public void prePersist(){
         String validacion = Validacion.comprobacionValidador(this);
         if (validacion.isBlank() == false)
             throw new UnsupportedOperationException(validacion);
+    }
+
+    @PreUpdate
+    public void preUpdate(){
+        String validacion = Validacion.comprobacionValidador(this);
+        if (validacion.isBlank() == false){
+            throw new UnsupportedOperationException(validacion);
+        } else if (this.getUuid() == null) {
+            throw new UnsupportedOperationException("El id del usuario no puede ser nulo");
+        }
     }
 
     @PreRemove
