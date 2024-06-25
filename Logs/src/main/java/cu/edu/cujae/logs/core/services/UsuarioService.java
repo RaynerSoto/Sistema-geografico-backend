@@ -90,6 +90,4 @@ public class UsuarioService implements UsuarioServiceInterfaces {
             throw new Exception("El email está en uso");
         }
     }
-
-
 }
