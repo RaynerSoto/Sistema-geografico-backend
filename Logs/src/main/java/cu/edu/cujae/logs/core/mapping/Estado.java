@@ -37,7 +37,7 @@ public class Estado {
     @Column(name = "descripcion", nullable = false, length = 100, unique = true)
     private String descripcion;
 
-    @OneToMany(mappedBy = "estado",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "estado",fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
     private List<Registro> registroList;
 
     public Estado(EstadoEnums estadoEnums){

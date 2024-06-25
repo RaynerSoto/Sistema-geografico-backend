@@ -1,11 +1,7 @@
 package cu.edu.cujae.logs.core.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import cu.edu.cujae.logs.core.mapping.Estado;
 import cu.edu.cujae.logs.core.mapping.Registro;
-import cu.edu.cujae.logs.core.mapping.Usuario;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -48,7 +44,7 @@ public class RegistroDto {
 
     public RegistroDto(Registro registro){
         this.uuid = registro.getUuid();
-        this.usuario = registro.getUsuario().getUsername();
+        this.usuario = registro.getNombreUsuario().getUsername();
         this.actividad = registro.getActividad();
         this.ip = registro.getIp();
         this.nombrePC = registro.getNombrePC();

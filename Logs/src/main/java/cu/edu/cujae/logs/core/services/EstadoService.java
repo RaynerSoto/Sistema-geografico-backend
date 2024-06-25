@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EstadoService implements EstadoServiceInterfaces {
@@ -29,5 +30,12 @@ public class EstadoService implements EstadoServiceInterfaces {
     @Override
     public List<Estado> listarEstados() {
         return estadoRepository.findAll();
+    }
+
+    @Override
+    public Optional<Estado> obtenerEstado(String nombre) {
+        return Optional.ofNullable(estadoRepository.findByNombreEqualsIgnoreCase(nombre).orElseThrow(
+                () -> new RuntimeException("No existe el estado con el nombre: " + nombre)
+        ));
     }
 }

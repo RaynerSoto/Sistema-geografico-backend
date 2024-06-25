@@ -90,4 +90,10 @@ public class UsuarioService implements UsuarioServiceInterfaces {
             throw new Exception("El email está en uso");
         }
     }
+
+    @Override
+    public Optional<Usuario> buscarUsuarioPorUsernameActivo(String username) throws Exception {
+        return Optional.ofNullable(usuarioRepository.findByUsernameEqualsIgnoreCaseAndActivoIsTrue(username).orElseThrow(
+                () -> new Exception("No existe el usuario")));
+    }
 }

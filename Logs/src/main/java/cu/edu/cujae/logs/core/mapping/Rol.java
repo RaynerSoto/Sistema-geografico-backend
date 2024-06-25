@@ -41,13 +41,6 @@ public class Rol {
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
     private List<Privilegio> privilegioList;
 
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        usuarioList.forEach(s->{
-            s.setRol(this);
-        });
-        this.usuarioList = usuarioList;
-    }
-
     public Rol(RolEnums rolEnums){
         this.rol = rolEnums.getNombre();
     }

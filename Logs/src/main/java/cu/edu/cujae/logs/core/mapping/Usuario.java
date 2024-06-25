@@ -1,10 +1,6 @@
 package cu.edu.cujae.logs.core.mapping;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import cu.edu.cujae.logs.core.dto.UsuarioDto;
-import cu.edu.cujae.logs.core.services.RolService;
-import cu.edu.cujae.logs.core.services.SexoService;
-import cu.edu.cujae.logs.core.servicesInterfaces.SexoServiceInterfaces;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -14,10 +10,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 
-import javax.naming.OperationNotSupportedException;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +24,7 @@ public class Usuario {
     @Id
     @Column(name = "usuarioID",nullable = false, length = 36, unique = true)
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "user_seq", sequenceName = "USER_SEQUENCE", allocationSize = 1)
+    @SequenceGenerator(name = "user_seq", sequenceName = "USER_SEQUENCE")
     private Long uuid;
 
     @NotNull(message = "El nombre de usuario no puede ser nulo")
@@ -54,17 +47,16 @@ public class Usuario {
     private String email;
 
     @NotNull(message = "El rol no puede ser nulo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rolID")
-    @JsonIgnore
     private Rol rol;
 
 
-    @OneToMany(mappedBy = "usuario")
+    @OneToMany(mappedBy = "nombreUsuario",cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private List<Registro> registroList;
 
     @NotNull(message = "El sexo no puede ser nulo")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sexoID")
     private Sexo sexo;
 

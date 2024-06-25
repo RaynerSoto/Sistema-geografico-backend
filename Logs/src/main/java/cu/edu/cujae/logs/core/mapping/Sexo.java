@@ -38,7 +38,7 @@ public class Sexo {
     @Column(name = "sigla",nullable = false, length = 5,unique = true)
     private String sigla;
 
-    @OneToMany(mappedBy = "sexo",cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "sexo",cascade = CascadeType.REFRESH, fetch = FetchType.LAZY,orphanRemoval = true)
     private List<Usuario> usuarioList;
 
 

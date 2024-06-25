@@ -25,9 +25,8 @@ public class Registro {
 
     @NotNull(message = "El usuario  no puede ser null")
     @ManyToOne(fetch = FetchType.EAGER)
-    @NotBlank(message = "El usuario no puede estar vacío")
     @JoinColumn(name = "usuarioID")
-    private Usuario usuario;
+    private Usuario nombreUsuario;
 
     @NotNull(message = "La actividad no puede ser null")
     @Size(min = 6,max = 100,message = "La actividad dedbe estar entre 6 y 100 caracteres")
@@ -49,23 +48,22 @@ public class Registro {
 
 
     @NotNull(message = "El estado no puede ser null")
-    @NotBlank(message = "El estado no puede estar vacío")
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "estadoID", nullable = false)
+    @JoinColumn(name = "estadoID")
     private Estado estado;
 
     public Registro(Registro registro) {
         this.uuid = registro.getUuid();
-        this.usuario = registro.getUsuario();
+        this.nombreUsuario = registro.getNombreUsuario();
         this.actividad = registro.getActividad();
         this.ip = registro.getIp();
         this.nombrePC = registro.getNombrePC();
         this.estado = registro.getEstado();
     }
 
-    public Registro(RegistroDto registroDto, Usuario usuario,Estado estado) {
+    public Registro(RegistroDto registroDto, Usuario nombreUsuario, Estado estado) {
         this.uuid = registroDto.getUuid();
-        this.usuario = usuario;
+        this.nombreUsuario = nombreUsuario;
         this.actividad = registroDto.getActividad();
         this.ip = registroDto.getIp();
         this.nombrePC = registroDto.getNombrePC();
@@ -74,7 +72,7 @@ public class Registro {
 
     public Registro(Optional<Registro> registro) {
         this.uuid = registro.get().getUuid();
-        this.usuario = registro.get().getUsuario();
+        this.nombreUsuario = registro.get().getNombreUsuario();
         this.actividad = registro.get().getActividad();
         this.ip = registro.get().getIp();
         this.nombrePC = registro.get().getNombrePC();

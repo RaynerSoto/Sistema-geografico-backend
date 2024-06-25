@@ -25,4 +25,6 @@ public interface UsuarioServiceInterfaces {
     public void validarUsuarioInsertar(String email, String username) throws Exception;
 
     public void validarUsuarioModificar(String email, String username,Long id) throws Exception;
+
+    public Optional<Usuario> buscarUsuarioPorUsernameActivo(String username) throws Exception;
     }
