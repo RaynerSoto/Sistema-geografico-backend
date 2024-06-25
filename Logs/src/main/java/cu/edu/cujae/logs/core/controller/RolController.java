@@ -5,10 +5,18 @@ import cu.edu.cujae.logs.core.mapping.Rol;
 import cu.edu.cujae.logs.core.dto.RolDto;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
+import inet.ipaddr.IPAddress;
+import inet.ipaddr.IPAddressString;
+import inet.ipaddr.ipv4.IPv4Address;
+import inet.ipaddr.ipv6.IPv6Address;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.Inet4Address;
+import java.net.InetAddress;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @RestController
@@ -34,7 +42,7 @@ public class RolController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<?> listarRoles() {
+    public ResponseEntity<?> listarRoles(HttpServletRequest request) {
         try {
             List<RolDto> roles = rolServiceInterfaces.consultarRol().stream().map(s-> new RolDto(s)).toList();
             return ResponseEntity.ok(roles);
