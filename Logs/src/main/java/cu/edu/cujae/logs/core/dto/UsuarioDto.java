@@ -72,5 +72,4 @@ public class UsuarioDto {
         this.sexo = usuario.get().getSexo().getNombre();
         this.activo = usuario.get().isActivo();
     }
-
 }

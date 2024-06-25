@@ -53,10 +53,12 @@ public class Rol {
     }
 
     public Rol(RolDto rolDto){
+        this.uuid = rolDto.getId();
         this.rol = rolDto.getNombre();
     }
 
     public Rol(Optional<Rol> rolOptional){
+        this.uuid = rolOptional.get().getUuid();
         this.rol = rolOptional.get().getRol();
     }
 

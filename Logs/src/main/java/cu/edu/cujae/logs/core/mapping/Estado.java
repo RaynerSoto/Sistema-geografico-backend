@@ -1,5 +1,6 @@
 package cu.edu.cujae.logs.core.mapping;
 
+import cu.edu.cujae.logs.core.dto.EstadoDto;
 import cu.edu.cujae.logs.core.enums.EstadoEnums;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -10,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Table(name = "estados")
@@ -41,5 +43,17 @@ public class Estado {
     public Estado(EstadoEnums estadoEnums){
         this.nombre = estadoEnums.getNombre();
         this.descripcion = estadoEnums.getDescripcion();
+    }
+
+    public Estado(EstadoDto estadoDto){
+        this.uuid = estadoDto.getUuid();
+        this.nombre = estadoDto.getNombre();
+        this.descripcion = estadoDto.getDescripcion();
+    }
+
+    public Estado(Optional<EstadoDto> estadoDto){
+        this.uuid = estadoDto.get().getUuid();
+        this.nombre = estadoDto.get().getNombre();
+        this.descripcion = estadoDto.get().getDescripcion();
     }
 }

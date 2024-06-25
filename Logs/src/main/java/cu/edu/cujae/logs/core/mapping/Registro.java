@@ -1,5 +1,6 @@
 package cu.edu.cujae.logs.core.mapping;
 
+import cu.edu.cujae.logs.core.dto.RegistroDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -7,6 +8,8 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Optional;
 
 @Entity
 @Table(name = "registros")
@@ -50,6 +53,34 @@ public class Registro {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "estadoID", nullable = false)
     private Estado estado;
+
+    public Registro(Registro registro) {
+        this.uuid = registro.getUuid();
+        this.usuario = registro.getUsuario();
+        this.actividad = registro.getActividad();
+        this.ip = registro.getIp();
+        this.nombrePC = registro.getNombrePC();
+        this.estado = registro.getEstado();
+    }
+
+    public Registro(RegistroDto registroDto, Usuario usuario,Estado estado) {
+        this.uuid = registroDto.getUuid();
+        this.usuario = usuario;
+        this.actividad = registroDto.getActividad();
+        this.ip = registroDto.getIp();
+        this.nombrePC = registroDto.getNombrePC();
+        this.estado = estado;
+    }
+
+    public Registro(Optional<Registro> registro) {
+        this.uuid = registro.get().getUuid();
+        this.usuario = registro.get().getUsuario();
+        this.actividad = registro.get().getActividad();
+        this.ip = registro.get().getIp();
+        this.nombrePC = registro.get().getNombrePC();
+        this.estado = registro.get().getEstado();
+    }
+
 
     @PreUpdate
     public void preUpdate() {

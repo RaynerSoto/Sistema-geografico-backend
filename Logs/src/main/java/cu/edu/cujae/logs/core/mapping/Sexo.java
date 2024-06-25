@@ -48,18 +48,21 @@ public class Sexo {
     }
 
     public Sexo(SexoDto sexoDto){
+        this.id = sexoDto.getId();
         this.nombre = sexoDto.getNombre();
         this.sigla = sexoDto.getSigla();
     }
 
     public Sexo(Optional<Sexo> sexo) {
+        this.id = sexo.get().getId();
         this.nombre = sexo.get().nombre;
         this.sigla = sexo.get().sigla;
     }
 
+    @PrePersist
+    @PreUpdate
     @PreRemove
     public void removerSexo() {
-        throw new UnsupportedOperationException("Sexo no eliminable");
+        throw new UnsupportedOperationException("Solamente existen 2 sexos");
     }
-
 }

@@ -19,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 
 import javax.naming.OperationNotSupportedException;
 import java.util.List;
+import java.util.Optional;
 
 @Entity
 @Data
@@ -70,8 +71,6 @@ public class Usuario {
     @Column(name = "activo", nullable = false)
     private boolean activo;
 
-
-
     public Usuario(Usuario usuario){
         this.uuid = usuario.getUuid();
         this.username = usuario.getUsername();
@@ -90,6 +89,16 @@ public class Usuario {
         this.activo = usuarioDto.isActivo();
         this.rol = rol;
         this.sexo = sexo;
+    }
+
+    public Usuario(Optional<Usuario> usuario){
+        this.uuid = usuario.get().getUuid();
+        this.username = usuario.get().getUsername();
+        this.name = usuario.get().getName();
+        this.email = usuario.get().getEmail();
+        this.rol = usuario.get().getRol();
+        this.sexo = usuario.get().getSexo();
+        this.activo = usuario.get().isActivo();
     }
 
     @PrePersist
