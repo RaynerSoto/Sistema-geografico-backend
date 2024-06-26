@@ -17,16 +17,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Privilegio {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "privilegiosID",nullable = false,unique = true, updatable = false)
-    private Long uuid;
-
     @NotNull(message = "El código no puede ser null")
     @Size(min = 1,message = "El código debe tener mínimo 1 caracter")
     @NotBlank(message = "El código no puede estar vacío")
-    @Column(name = "codigo",nullable = false,unique = true)
+    @Column(name = "codigoNombre",nullable = false,unique = true)
     private String codigo;
 
     @NotNull(message = "La descripción no puede ser null")
@@ -35,11 +30,8 @@ public class Privilegio {
     @Column(name = "descripcion",nullable = false,unique = true)
     private String descripcion;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "")
-    @Transient
-    private List<Rol> rolList;
-
+    @OneToMany(mappedBy = "privilegioCodigo", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<PrivilegioRol> privilegioRols;
 
     public Privilegio(PrivilegioEnums privilegioEnums) {
         this.codigo = privilegioEnums.getCodigo();

@@ -38,8 +38,8 @@ public class Rol {
     @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private List<Usuario> usuarioList;
 
-    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH)
-    private List<Privilegio> privilegioList;
+    @OneToMany(fetch = FetchType.LAZY,cascade = CascadeType.REFRESH,mappedBy = "rol")
+    private List<PrivilegioRol> privilegioList;
 
     public Rol(RolEnums rolEnums){
         this.rol = rolEnums.getNombre();

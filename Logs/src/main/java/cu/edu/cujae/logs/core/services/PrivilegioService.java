@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PrivilegioService implements PrivilegioServiceInterfaces {
@@ -29,5 +30,11 @@ public class PrivilegioService implements PrivilegioServiceInterfaces {
     @Override
     public List<Privilegio> listarPrivilegios() {
         return privilegiosRepository.findAll();
+    }
+
+    @Override
+    public Optional<Privilegio> obtenerPrivilegio(String codigo) throws Exception {
+        return Optional.ofNullable(privilegiosRepository.findByCodigoEqualsIgnoreCase(codigo).orElseThrow(
+                () -> new Exception("No se encontró el privilegio por el código")));
     }
 }
