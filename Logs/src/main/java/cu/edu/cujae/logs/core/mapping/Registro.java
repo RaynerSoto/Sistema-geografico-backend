@@ -1,6 +1,7 @@
 package cu.edu.cujae.logs.core.mapping;
 
 import cu.edu.cujae.logs.core.dto.RegistroDto;
+import cu.edu.cujae.logs.core.utils.Validacion;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -79,6 +80,10 @@ public class Registro {
         this.estado = registro.get().getEstado();
     }
 
+    @PrePersist
+    public void prePersist() {
+        Validacion.validarUnsupportedOperationException(this);
+    }
 
     @PreUpdate
     public void preUpdate() {
