@@ -11,10 +11,7 @@ import cu.edu.cujae.logs.core.servicesInterfaces.PrivilegioServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -44,6 +41,23 @@ public class PrivilegioRolController {
                 return ResponseEntity.ok("Asignado al rol el privilegio");
             }else {
                 return ResponseEntity.badRequest().body("Rol que ya cuenta con dicho privilegio");
+            }
+
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/")
+    public ResponseEntity<?> eliminar(@RequestBody PrivilegioRolDto privilegioRolDto){
+        try {
+            Optional<Rol> rol = rolService.consultarRol(privilegioRolDto.getRol());
+            Optional<Privilegio> privilegio = privilegioService.obtenerPrivilegio(privilegioRolDto.getCodigo());
+            if (privilegioRolRepository.findByRolEqualsAndPrivilegioCodigoEquals(rol.get(),privilegio.get()).isPresent()){
+                privilegioRolService.eliminarPrivilegioRol(new PrivilegioRol(rol.get(),privilegio.get()));
+                return ResponseEntity.ok("Eliminado el privilegio del Rol");
+            }else {
+                return ResponseEntity.badRequest().body("No se encuentra dicha relación entre rol y privilegio");
             }
 
         }catch (Exception e){

@@ -5,8 +5,6 @@ import cu.edu.cujae.logs.core.mapping.PrivilegioRol;
 public interface PrivilegioRolServiceInterfaces {
     public void addPrivilegioRol(PrivilegioRol privilegioRol) throws Exception;
 
-    public void modificarPrivilegioRol(PrivilegioRol privilegioRol);
-
     public void eliminarPrivilegioRol(PrivilegioRol privilegioRol);
 
 }

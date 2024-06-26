@@ -18,12 +18,7 @@ public class PrivilegioRolService implements PrivilegioRolServiceInterfaces {
     }
 
     @Override
-    public void modificarPrivilegioRol(PrivilegioRol privilegioRol) {
-
-    }
-
-    @Override
     public void eliminarPrivilegioRol(PrivilegioRol privilegioRol) {
-
+        privilegioRolRepository.delete(privilegioRol);
     }
 }
