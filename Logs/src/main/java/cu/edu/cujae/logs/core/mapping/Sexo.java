@@ -62,7 +62,7 @@ public class Sexo {
     @PrePersist
     @PreUpdate
     @PreRemove
-    public void removerSexo() {
+    public void Sexo() {
         throw new UnsupportedOperationException("Solamente existen 2 sexos");
     }
 }

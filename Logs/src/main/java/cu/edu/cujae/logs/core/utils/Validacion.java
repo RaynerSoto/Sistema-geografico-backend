@@ -16,4 +16,10 @@ public class Validacion {
         }
         return "";
     }
+
+    public static void validarUnsupportedOperationException(Object elemento){
+        String validacion = Validacion.comprobacionValidador(elemento);
+        if (validacion.isBlank() == false)
+            throw new UnsupportedOperationException(validacion);
+    }
 }

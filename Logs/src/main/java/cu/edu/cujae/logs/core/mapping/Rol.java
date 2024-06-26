@@ -57,16 +57,23 @@ public class Rol {
 
     //Falta la unión con los privilegios
 
+    @PrePersist
+    public void prePersist(){
+        Validacion.validarUnsupportedOperationException(this);
+    }
+
+
     @PreRemove
     public void preRemove(){
         if (this.usuarioList.size() != 0)
             throw new UnsupportedOperationException("El rol se encuentra asignado a un usuario. Eliminalo para proseguir");
     }
 
-    @PrePersist
-    public void prePersist(){
-        String validacion = Validacion.comprobacionValidador(this);
-        if (validacion.isEmpty() == false)
-            throw new UnsupportedOperationException(validacion);
+    @PreUpdate
+    public void preUpdate(){
+        prePersist();
+        if (this.uuid.equals(null) == true){
+            throw new UnsupportedOperationException("El ID del rol a modificar no puede ser nulo");
+        }
     }
 }

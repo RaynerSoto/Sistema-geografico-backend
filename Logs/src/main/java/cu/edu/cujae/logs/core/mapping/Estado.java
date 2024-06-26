@@ -2,6 +2,7 @@ package cu.edu.cujae.logs.core.mapping;
 
 import cu.edu.cujae.logs.core.dto.EstadoDto;
 import cu.edu.cujae.logs.core.enums.EstadoEnums;
+import cu.edu.cujae.logs.core.utils.Validacion;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.naming.OperationNotSupportedException;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,5 +57,24 @@ public class Estado {
         this.uuid = estadoDto.get().getUuid();
         this.nombre = estadoDto.get().getNombre();
         this.descripcion = estadoDto.get().getDescripcion();
+    }
+
+    @PrePersist
+    public void prePersist(){
+        Validacion.validarUnsupportedOperationException(this);
+    }
+
+    @PreUpdate
+    public void preUpdate(){
+        prePersist();
+        if (this.uuid.equals(null) == true)
+            throw new UnsupportedOperationException("Id para modificar nulo");
+    }
+
+    @PreRemove
+    public void preRemove(){
+        if (this.registroList.size()!=0){
+            throw new UnsupportedOperationException("No se puede eliminar el estado ya que tiene registros asignados");
+        }
     }
 }
