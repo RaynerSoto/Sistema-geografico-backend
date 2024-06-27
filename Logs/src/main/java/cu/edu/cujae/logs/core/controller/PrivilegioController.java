@@ -1,5 +1,6 @@
 package cu.edu.cujae.logs.core.controller;
 
+import cu.edu.cujae.logs.core.dto.PrivilegioDto;
 import cu.edu.cujae.logs.core.services.PrivilegioService;
 import cu.edu.cujae.logs.core.servicesInterfaces.PrivilegioServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,8 @@ public class PrivilegioController {
     @GetMapping("/")
     public ResponseEntity<?> listarPrivilegios() {
         try {
-            return ResponseEntity.ok().body(privilegioService.listarPrivilegios());
+            return ResponseEntity.ok().body(privilegioService.listarPrivilegios().stream()
+                    .map(s -> new PrivilegioDto(s)).toList());
         }
         catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
