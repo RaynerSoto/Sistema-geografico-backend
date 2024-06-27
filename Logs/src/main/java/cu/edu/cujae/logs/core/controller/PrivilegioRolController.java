@@ -9,6 +9,7 @@ import cu.edu.cujae.logs.core.services.PrivilegioRolService;
 import cu.edu.cujae.logs.core.servicesInterfaces.PrivilegioRolServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.PrivilegioServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
+import cu.edu.cujae.logs.core.utils.Validacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +35,7 @@ public class PrivilegioRolController {
     @PostMapping("/")
     public ResponseEntity<?> create(@RequestBody PrivilegioRolDto privilegioRolDto) {
         try {
+            Validacion.validarUnsupportedOperationException(privilegioRolDto);
             Optional<Rol> rol = rolService.consultarRol(privilegioRolDto.getRol());
             Optional<Privilegio> privilegio = privilegioService.obtenerPrivilegio(privilegioRolDto.getCodigo());
             if (privilegioRolRepository.findByRolEqualsAndPrivilegioCodigoEquals(rol.get(),privilegio.get()).isPresent() == false){

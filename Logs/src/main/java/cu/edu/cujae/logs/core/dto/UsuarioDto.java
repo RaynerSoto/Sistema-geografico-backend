@@ -35,13 +35,13 @@ public class UsuarioDto {
     @Size(min = 2,max = 100,message = "El nombre completo debe tener entre 2 y 100 caracteres")
     private String name;
 
-    @NotNull(message = "El correo no puede ser nulo")
-    @NotBlank(message = "El correo no puede ser vacío")
     @Email(message = "Correo no válido")
+    @NotBlank(message = "El correo no puede ser vacío")
+    @NotNull(message = "El correo no puede ser nulo")
     private String email;
 
-    @NotNull(message = "El rol no puede ser nulo")
     @NotBlank(message = "El rol no puede ser vacío")
+    @NotNull(message = "El rol no puede ser nulo")
     private String rol;
 
 

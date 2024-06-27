@@ -16,9 +16,9 @@ public class PrivilegioRolDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
-    @NotNull(message = "El rol no puede ser null")
-    @NotBlank(message = "El rol no puede estar vacío")
     @Size(min = 4,max = 50,message = "El rol debe tener entre 4 y 50 caracteres")
+    @NotBlank(message = "El rol no puede estar vacío")
+    @NotNull(message = "El rol no puede ser null")
     private String rol;
 
     @NotNull(message = "El código no puede ser null")

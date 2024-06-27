@@ -19,14 +19,14 @@ public class SexoDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
-    @NotNull(message = "El nombre del sexo no puede ser null")
-    @NotBlank(message = "El nombre del sexo no puede estar vacío")
     @Size(min = 4,max = 100,message = "El nombre del sexo debe estar entre 4 y 100 caracteres")
+    @NotBlank(message = "El nombre del sexo no puede estar vacío")
+    @NotNull(message = "El nombre del sexo no puede ser null")
     private String nombre;
 
-    @NotNull(message = "La sigla no puede ser null")
-    @NotBlank(message = "La sigla no puede estar vacío")
     @Size(min = 1,max = 5,message = "Las sigla solamente tienen entre 1 y 5 caracteres")
+    @NotBlank(message = "La sigla no puede estar vacío")
+    @NotNull(message = "La sigla no puede ser null")
     private String sigla;
 
     public SexoDto(Sexo sexo){

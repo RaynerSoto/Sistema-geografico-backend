@@ -10,6 +10,7 @@ import inet.ipaddr.IPAddressString;
 import inet.ipaddr.ipv4.IPv4Address;
 import inet.ipaddr.ipv6.IPv6Address;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,6 +30,7 @@ public class RolController {
     @PostMapping("/")
     public ResponseEntity<?> crearRol(@RequestBody RolDto rol) {
         try{
+            Validacion.validarUnsupportedOperationException(rol);
             if (rolServiceInterfaces.consultarRolNombre(rol.getNombre()).isPresent() == false){
                 rolServiceInterfaces.insertarRol(new Rol(rol));
                 return ResponseEntity.ok("Insertado correctamente");

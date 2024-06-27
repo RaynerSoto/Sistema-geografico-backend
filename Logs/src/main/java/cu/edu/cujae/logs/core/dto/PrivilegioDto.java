@@ -13,14 +13,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PrivilegioDto {
-    @NotNull(message = "El código no puede ser null")
+
     @Size(min = 1,message = "El código debe tener mínimo 1 caracter")
     @NotBlank(message = "El código no puede estar vacío")
+    @NotNull(message = "El código no puede ser null")
     private String codigo;
 
+    @Size(min = 1,message = "La descripción debe tener mínimo 1 caracter")
     @NotNull(message = "La descripción no puede ser null")
     @NotBlank(message = "La descripción no puede estar vacío")
-    @Size(min = 1,message = "La descripción debe tener mínimo 1 caracter")
     private String descripcion;
 
     public PrivilegioDto(Privilegio privilegio) {
