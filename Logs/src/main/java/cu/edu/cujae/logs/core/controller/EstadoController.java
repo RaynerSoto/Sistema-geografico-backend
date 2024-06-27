@@ -19,7 +19,7 @@ public class EstadoController {
     @GetMapping("/")
     public ResponseEntity<?> listarEstados() {
         try {
-            return ResponseEntity.ok().body(estadoService.listarEstados().stream().map(estado -> new EstadoDto(estado)).toList());
+            return ResponseEntity.ok().body(estadoService.listarEstados().stream().map(EstadoDto::new).toList());
         }
         catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

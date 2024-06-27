@@ -9,6 +9,7 @@ import cu.edu.cujae.logs.core.servicesInterfaces.SexoServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,12 +26,21 @@ public class UsuarioController {
     @Autowired
     private SexoServiceInterfaces sexoService;
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<?> listarAllUsuarios() {
         try {
-            return ResponseEntity.ok().body(usuarioService.listarUsuarios().stream().map(
-                    s -> new UsuarioDto(s)).toList()
+            return ResponseEntity.ok().body(usuarioService.listarUsuarios().stream().map(UsuarioDto::new).toList()
             );
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/userActivosPagina")
+    public ResponseEntity<?> listarUsuariosActivosPagina(Pageable pageable) {
+        try {
+            return ResponseEntity.ok().body(usuarioService.listarUsuarios(pageable).filter(s-> s.isActivo()).map(UsuarioDto::new).toList());
         }
         catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -41,7 +51,18 @@ public class UsuarioController {
     public ResponseEntity<?> listarUsuariosActivos() {
         try {
             return ResponseEntity.ok().body(usuarioService.listarUsuarios().stream().filter(s-> s.isActivo())
-                    .map(s-> new UsuarioDto(s)).toList());
+                    .map(UsuarioDto::new).toList());
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/userEliminadoPagina")
+    public ResponseEntity<?> listarUsuariosEliminadosPagina(Pageable pageable) {
+        try {
+            return ResponseEntity.ok().body(usuarioService.listarUsuarios(pageable).filter(s-> !s.isActivo())
+                    .map(UsuarioDto::new).toList());
         }
         catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -52,7 +73,7 @@ public class UsuarioController {
     public ResponseEntity<?> listarUsuariosEliminados() {
         try {
             return ResponseEntity.ok().body(usuarioService.listarUsuarios().stream().filter(s-> !s.isActivo())
-                    .map(s-> new UsuarioDto(s)).toList());
+                    .map(UsuarioDto::new).toList());
         }
         catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -19,7 +19,7 @@ public class SexoController {
     @GetMapping("/")
     public ResponseEntity<?> listarSexos() {
         try {
-            List<SexoDto> sexos = sexoService.listarSexos().stream().map(s-> new SexoDto(s)).toList();
+            List<SexoDto> sexos = sexoService.listarSexos().stream().map(SexoDto::new).toList();
             return ResponseEntity.ok().body(sexos);
         }
         catch (Exception e) {

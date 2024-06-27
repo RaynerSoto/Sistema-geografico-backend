@@ -4,6 +4,8 @@ import cu.edu.cujae.logs.core.mapping.Usuario;
 import cu.edu.cujae.logs.core.repository.UsuarioRepository;
 import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +20,11 @@ public class UsuarioService implements UsuarioServiceInterfaces {
     @Override
     public List<Usuario> listarUsuarios() throws Exception{
         return usuarioRepository.findAll();
+    }
+
+    @Override
+    public Page<Usuario> listarUsuarios(Pageable pageable) throws Exception{
+        return usuarioRepository.findAll(pageable);
     }
 
     @Override

@@ -46,7 +46,7 @@ public class RolController {
     @GetMapping("/")
     public ResponseEntity<?> listarRoles(HttpServletRequest request) {
         try {
-            List<RolDto> roles = rolServiceInterfaces.consultarRol().stream().map(s-> new RolDto(s)).toList();
+            List<RolDto> roles = rolServiceInterfaces.consultarRol().stream().map(RolDto::new).toList();
             return ResponseEntity.ok(roles);
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

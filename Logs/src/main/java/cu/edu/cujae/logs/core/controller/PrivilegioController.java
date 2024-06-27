@@ -21,7 +21,7 @@ public class PrivilegioController {
     public ResponseEntity<?> listarPrivilegios() {
         try {
             return ResponseEntity.ok().body(privilegioService.listarPrivilegios().stream()
-                    .map(s -> new PrivilegioDto(s)).toList());
+                    .map(PrivilegioDto::new).toList());
         }
         catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

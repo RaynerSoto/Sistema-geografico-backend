@@ -1,12 +1,16 @@
 package cu.edu.cujae.logs.core.servicesInterfaces;
 
 import cu.edu.cujae.logs.core.mapping.Usuario;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioServiceInterfaces {
     public List<Usuario> listarUsuarios() throws Exception;
+
+    public Page<Usuario> listarUsuarios(Pageable pageable) throws Exception;
 
     public void insertarUsuario(Usuario usuario) throws Exception;
 
