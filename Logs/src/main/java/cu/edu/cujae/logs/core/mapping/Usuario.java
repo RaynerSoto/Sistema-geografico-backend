@@ -102,6 +102,8 @@ public class Usuario {
 
     @PreUpdate
     public void preUpdate(){
+        if (this.rol.getRol().equalsIgnoreCase("SuperAdministrador"))
+            throw new UnsupportedOperationException("No se puede modificar el usuario Super Administrador");
         String validacion = Validacion.comprobacionValidador(this);
         if (validacion.isBlank() == false){
             throw new UnsupportedOperationException(validacion);
