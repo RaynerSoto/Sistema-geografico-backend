@@ -58,6 +58,19 @@ public class UsuarioController {
         }
     }
 
+    @GetMapping("/userActivosNoSuperAdministrador")
+    public ResponseEntity<?> listarUsuariosActivosNoAdministrador() {
+        try {
+            return ResponseEntity.ok().body(usuarioService.listarUsuariosNoSuperAdministrador().stream().filter(s-> s.isActivo())
+                    .map(UsuarioDto::new).toList());
+        }
+        catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
+
     @GetMapping("/userEliminadoPagina")
     public ResponseEntity<?> listarUsuariosEliminadosPagina(Pageable pageable) {
         try {

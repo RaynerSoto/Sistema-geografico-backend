@@ -23,6 +23,11 @@ public class UsuarioService implements UsuarioServiceInterfaces {
     }
 
     @Override
+    public List<Usuario> listarUsuariosNoSuperAdministrador() throws Exception{
+        return usuarioRepository.listadoUsuarioActivosNoSuperAdministrador();
+    }
+
+    @Override
     public Page<Usuario> listarUsuarios(Pageable pageable) throws Exception{
         return usuarioRepository.findAll(pageable);
     }

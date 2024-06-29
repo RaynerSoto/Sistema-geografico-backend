@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/v1/sexo")
 public class SexoController {
@@ -19,8 +17,7 @@ public class SexoController {
     @GetMapping("/")
     public ResponseEntity<?> listarSexos() {
         try {
-            List<SexoDto> sexos = sexoService.listarSexos().stream().map(SexoDto::new).toList();
-            return ResponseEntity.ok().body(sexos);
+            return ResponseEntity.ok().body(sexoService.listarSexos().stream().map(SexoDto::new).toList());
         }
         catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

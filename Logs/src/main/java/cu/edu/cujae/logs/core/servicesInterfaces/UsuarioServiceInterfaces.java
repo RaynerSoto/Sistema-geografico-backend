@@ -31,4 +31,6 @@ public interface UsuarioServiceInterfaces {
     public void validarUsuarioModificar(String email, String username,Long id) throws Exception;
 
     public Optional<Usuario> buscarUsuarioPorUsernameActivo(String username) throws Exception;
+
+    public List<Usuario> listarUsuariosNoSuperAdministrador() throws Exception;
     }

@@ -44,10 +44,18 @@ public class RolController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<?> listarRoles(HttpServletRequest request) {
+    public ResponseEntity<?> listarRoles() {
         try {
-            List<RolDto> roles = rolServiceInterfaces.consultarRol().stream().map(RolDto::new).toList();
-            return ResponseEntity.ok(roles);
+            return ResponseEntity.ok(rolServiceInterfaces.consultarRol().stream().map(RolDto::new).toList());
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/nombresRol")
+    public ResponseEntity<?> listarRolesNombre() {
+        try {
+            return ResponseEntity.ok(rolServiceInterfaces.consultarRol().stream().map(s-> s.getRol()).toList());
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

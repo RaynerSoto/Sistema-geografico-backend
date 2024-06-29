@@ -6,6 +6,8 @@ import cu.edu.cujae.logs.core.servicesInterfaces.RegistroServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RegistroService implements RegistroServiceInterfaces {
 
@@ -15,5 +17,15 @@ public class RegistroService implements RegistroServiceInterfaces {
     @Override
     public void insertarRegistro(Registro registro) {
         registroRepository.save(registro);
+    }
+
+    @Override
+    public List<Registro> listarRegistros() {
+        return registroRepository.findAll();
+    }
+
+    @Override
+    public List<Registro> listarRegistrosPoUsuario(String usuario) {
+        return registroRepository.findAll().stream().filter(s -> s.getNombreUsuario().getUsername().equalsIgnoreCase(usuario)).toList();
     }
 }

@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+  spring-boot:
+    container_name: spring-aplication
+    image: openjdk:23
+    ports:
+      - "8888:8888"
+    depends_on:
+      - dbpostgres
+
+  dbpostgres:
+    container_name: dbpostgres
+    image: postgis/postgis:16-3.4
+    environment:
+      DATABASE_USER : postgres
+      POSTGRES_PASSWORD: 0000
+    volumes:
+      - logs:/var/lib/postgresql/data
+
+volumes:
+  logs:
