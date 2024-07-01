@@ -1,9 +1,7 @@
 package cu.edu.cujae.gestion.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import cu.edu.cujae.gestion.core.mapping.Municipio;
 import cu.edu.cujae.gestion.core.mapping.ZonaTransporte;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

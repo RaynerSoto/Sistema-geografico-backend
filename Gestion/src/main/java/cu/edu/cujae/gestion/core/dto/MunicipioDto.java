@@ -2,8 +2,6 @@ package cu.edu.cujae.gestion.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import cu.edu.cujae.gestion.core.mapping.Municipio;
-import cu.edu.cujae.gestion.core.mapping.Provincia;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

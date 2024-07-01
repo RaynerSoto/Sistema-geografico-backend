@@ -3,17 +3,11 @@ package cu.edu.cujae.gestion.core.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cu.edu.cujae.gestion.core.mapping.Provincia;
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.locationtech.jts.geom.Geometry;
-
-import javax.swing.text.html.Option;
 import java.util.Optional;
 
 @Data

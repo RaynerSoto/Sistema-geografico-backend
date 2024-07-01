@@ -5,9 +5,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
 import org.locationtech.jts.geom.Geometry;
-import org.springframework.data.geo.Point;
 
 import java.util.List;
 
