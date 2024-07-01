@@ -5,25 +5,19 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Type;
 import org.locationtech.jts.geom.Geometry;
-import org.springframework.data.geo.Point;
-
-import java.util.List;
-
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "provincias")
-public class Provincia {
-
+@Table(name = "municipios")
+public class Municipio {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @NotNull(message = "El id de provincia no puede ser nulo")
-    @Column(name = "idprovincia", nullable = false, updatable = false, unique = true)
-    private int uuid;
+    @Column(name = "idmunicipio", nullable = false, updatable = false, unique = true)
+    private Long uuid;
 
     @Size(min = 2,max = 6,message = "El código de la provincia  debe estar  entre 2 y 6 caracteres")
     @NotBlank(message = "El código no puede estar vacío o estar compuesto solamente por espacios")
@@ -61,6 +55,11 @@ public class Provincia {
     @Column(name = "centroide", nullable = false,columnDefinition = "geometry")
     private Geometry centroide;
 
-    @OneToMany(mappedBy = "provincia", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    private List<Municipio> listadoMunicipios;
+    @Column(name = "distcentroprov")
+    @DecimalMin(value = "0.0000000000000000001", message = "El valor mínimo es: 0.0000000000000000001")
+    private Double distCentroProv;
+
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "idProvincia",nullable = false)
+    private Provincia provincia;
 }
