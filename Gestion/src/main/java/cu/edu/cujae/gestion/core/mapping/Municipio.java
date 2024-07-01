@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.locationtech.jts.geom.Geometry;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -62,4 +64,7 @@ public class Municipio {
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "idProvincia",nullable = false)
     private Provincia provincia;
+
+    @OneToMany(mappedBy = "municipio",fetch = FetchType.LAZY)
+    private List<ZonaTransporte> zonaTransportes;
 }
