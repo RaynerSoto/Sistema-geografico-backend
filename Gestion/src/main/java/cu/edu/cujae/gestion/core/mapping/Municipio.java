@@ -67,4 +67,7 @@ public class Municipio {
 
     @OneToMany(mappedBy = "municipio",fetch = FetchType.LAZY)
     private List<ZonaTransporte> zonaTransportes;
+
+    @OneToMany(mappedBy = "municipio",fetch = FetchType.LAZY)
+    private List<AreaSalud> areaSaluds;
 }
