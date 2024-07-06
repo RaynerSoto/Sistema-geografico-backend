@@ -62,7 +62,7 @@ public class Municipio {
     private Double distCentroProv;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "idProvincia",nullable = false)
+    @JoinColumn(name = "idprovincia",nullable = false)
     private Provincia provincia;
 
     @OneToMany(mappedBy = "municipio",fetch = FetchType.LAZY)
@@ -70,4 +70,10 @@ public class Municipio {
 
     @OneToMany(mappedBy = "municipio",fetch = FetchType.LAZY)
     private List<AreaSalud> areaSaluds;
+
+    @OneToMany(mappedBy = "municipio",fetch = FetchType.LAZY)
+    private List<Entidad> entidades;
+
+    @OneToMany(mappedBy = "municipio", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    private List<Personal> personals;
 }

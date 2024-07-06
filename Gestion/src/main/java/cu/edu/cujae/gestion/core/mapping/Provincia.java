@@ -61,4 +61,10 @@ public class Provincia {
 
     @OneToMany(mappedBy = "provincia", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
     private List<Municipio> listadoMunicipios;
+
+    @OneToMany(mappedBy = "provincia", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    private List<Entidad> entidades;
+
+    @OneToMany(mappedBy = "provincia", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    private List<Personal> personals;
 }
