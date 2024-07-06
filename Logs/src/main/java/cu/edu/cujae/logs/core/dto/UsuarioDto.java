@@ -1,21 +1,13 @@
 package cu.edu.cujae.logs.core.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import cu.edu.cujae.logs.core.mapping.Registro;
-import cu.edu.cujae.logs.core.mapping.Rol;
-import cu.edu.cujae.logs.core.mapping.Sexo;
 import cu.edu.cujae.logs.core.mapping.Usuario;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
 import java.util.Optional;
 
 @Data
@@ -24,6 +16,7 @@ import java.util.Optional;
 public class UsuarioDto {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @Min(value = 1,message = "El valor mínimo del id es 1")
     private Long uuid;
 
     @NotNull(message = "El nombre de usuario no puede ser nulo")
@@ -34,6 +27,11 @@ public class UsuarioDto {
     @NotBlank(message = "El nombre completo no puede ser vacío")
     @Size(min = 2,max = 100,message = "El nombre completo debe tener entre 2 y 100 caracteres")
     private String name;
+
+    @Size(min = 4,max = 1000,message = "La contraseña no se encuentra en un rango de 4 y 1000 caracteres")
+    @NotNull(message = "La contraseña no puede ser nulo")
+    @Column(name = "password",nullable = false, length = 1000)
+    private String password;
 
     @Email(message = "Correo no válido")
     @NotBlank(message = "El correo no puede ser vacío")
@@ -52,6 +50,12 @@ public class UsuarioDto {
 
     @NotNull(message = "Este dato no puede ser null")
     private boolean activo;
+
+    public UsuarioDto(Long uuid,String username,String password){
+        this.uuid = uuid;
+        this.username = username;
+        this.password = password;
+    }
 
     public UsuarioDto(Usuario usuario) {
         this.uuid = usuario.getUuid();

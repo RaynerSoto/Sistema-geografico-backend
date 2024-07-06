@@ -20,7 +20,6 @@ import java.util.Optional;
 @NoArgsConstructor
 @Table(name = "usuarios")
 public class Usuario {
-
     @Id
     @Column(name = "usuarioID",nullable = false, length = 36, unique = true)
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -32,6 +31,11 @@ public class Usuario {
     @NotBlank(message = "El nombre de usuario no puede ser vacío")
     @Column(name = "username",nullable = false, length = 100)
     private String username;
+
+    @Size(min = 4,max = 1000,message = "La contraseña no se encuentra en un rango de 4 y 1000 caracteres")
+    @NotNull(message = "La contraseña no puede ser nulo")
+    @Column(name = "password",nullable = false, length = 1000)
+    private String password;
 
     @NotNull(message = "El nombre completo no puede ser nulo")
     @Size(min = 2,max = 100,message = "El nombre completo debe tener entre 2 y 100 caracteres")
@@ -71,6 +75,7 @@ public class Usuario {
         this.rol = usuario.getRol();
         this.sexo = usuario.getSexo();
         this.activo = usuario.isActivo();
+        this.password = usuario.getPassword();
     }
 
     public Usuario(UsuarioDto usuarioDto,Rol rol, Sexo sexo) throws Exception {
