@@ -8,5 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface PrivilegioRolRepository extends JpaRepository<PrivilegioRol,Long> {
-    public Optional<PrivilegioRol> findByRolEqualsAndPrivilegioCodigoEquals(Rol rol, Privilegio privilegio);
+    Optional<PrivilegioRol> findByRolEqualsAndPrivilegioCodigoEquals(Rol rol, Privilegio privilegio);
 }

@@ -8,29 +8,29 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioServiceInterfaces {
-    public List<Usuario> listarUsuarios() throws Exception;
+    List<Usuario> listarUsuarios() throws Exception;
 
-    public Page<Usuario> listarUsuarios(Pageable pageable) throws Exception;
+    Page<Usuario> listarUsuarios(Pageable pageable) throws Exception;
 
-    public void insertarUsuario(Usuario usuario) throws Exception;
+    void insertarUsuario(Usuario usuario) throws Exception;
 
-    public void modificarUsuario(Usuario usuario) throws Exception;
+    void modificarUsuario(Usuario usuario) throws Exception;
 
-    public void eliminarUsuario(Long id) throws Exception;
+    void eliminarUsuario(Long id) throws Exception;
 
-    public Usuario buscarUsuario(Long id) throws Exception;
+    Usuario buscarUsuario(Long id) throws Exception;
 
-    public Optional<Usuario> usuarioActivo(String email,String username) throws Exception;
+    Optional<Usuario> usuarioActivo(String email,String username) throws Exception;
 
-    public Optional<Usuario> usuarioActivoEmail(String email) throws Exception;
+    Optional<Usuario> usuarioActivoEmail(String email) throws Exception;
 
-    public Optional<Usuario> usuarioActivoUsername(String username) throws Exception;
+    Optional<Usuario> usuarioActivoUsername(String username) throws Exception;
 
-    public void validarUsuarioInsertar(String email, String username) throws Exception;
+    void validarUsuarioInsertar(String email, String username) throws Exception;
 
-    public void validarUsuarioModificar(String email, String username,Long id) throws Exception;
+    void validarUsuarioModificar(String email, String username,Long id) throws Exception;
 
-    public Optional<Usuario> buscarUsuarioPorUsernameActivo(String username) throws Exception;
+    Optional<Usuario> buscarUsuarioPorUsernameActivo(String username) throws Exception;
 
-    public List<Usuario> listarUsuariosNoSuperAdministrador() throws Exception;
+    List<Usuario> listarUsuariosNoSuperAdministrador() throws Exception;
     }

@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EstadoServiceInterfaces {
-    public void iniciar();
+    void iniciar();
 
-    public List<Estado> listarEstados();
+    List<Estado> listarEstados();
 
-    public Optional<Estado> obtenerEstado(String nombre);
+    Optional<Estado> obtenerEstado(String nombre);
 }

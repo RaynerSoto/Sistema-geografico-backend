@@ -6,11 +6,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface SexoServiceInterfaces {
-    public void iniciar();
+    void iniciar();
 
-    public List<Sexo> listarSexos();
+    List<Sexo> listarSexos();
 
-    public Optional<Sexo> consultarSexo(Long id);
+    Optional<Sexo> consultarSexo(Long id);
 
-    public Optional<Sexo> consultarSexo(String sexo);
+    Optional<Sexo> consultarSexo(String sexo);
 }

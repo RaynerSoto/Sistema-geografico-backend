@@ -51,12 +51,6 @@ public class UsuarioDto {
     @NotNull(message = "Este dato no puede ser null")
     private boolean activo;
 
-    public UsuarioDto(Long uuid,String username,String password){
-        this.uuid = uuid;
-        this.username = username;
-        this.password = password;
-    }
-
     public UsuarioDto(Usuario usuario) {
         this.uuid = usuario.getUuid();
         this.username = usuario.getUsername();

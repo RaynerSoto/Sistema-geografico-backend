@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface PrivilegioServiceInterfaces {
-    public void iniciar();
+    void iniciar();
 
-    public List<Privilegio> listarPrivilegios();
+    List<Privilegio> listarPrivilegios();
 
-    public Optional<Privilegio> obtenerPrivilegio(String nombre) throws Exception;
+    Optional<Privilegio> obtenerPrivilegio(String nombre) throws Exception;
 }
