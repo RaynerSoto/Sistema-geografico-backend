@@ -33,4 +33,6 @@ public interface UsuarioServiceInterfaces {
     Optional<Usuario> buscarUsuarioPorUsernameActivo(String username) throws Exception;
 
     List<Usuario> listarUsuariosNoSuperAdministrador() throws Exception;
-    }
+
+    Optional<Usuario> obtenerUsuarioPorUsernameAndPassword(String username,String password) throws Exception;
+}

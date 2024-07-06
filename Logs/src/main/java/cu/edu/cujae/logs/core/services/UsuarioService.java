@@ -1,5 +1,6 @@
 package cu.edu.cujae.logs.core.services;
 
+import cu.edu.cujae.logs.core.exception.SearchException;
 import cu.edu.cujae.logs.core.mapping.Usuario;
 import cu.edu.cujae.logs.core.repository.UsuarioRepository;
 import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
@@ -28,6 +29,13 @@ public class UsuarioService implements UsuarioServiceInterfaces {
     }
 
     @Override
+    public Optional<Usuario> obtenerUsuarioPorUsernameAndPassword(String username, String password) throws Exception {
+        return Optional.ofNullable(usuarioRepository.findByUsernameAndPassword(username,password).orElseThrow(
+                () -> new SearchException("Usuario no encontrado")
+        ));
+    }
+
+    @Override
     public Page<Usuario> listarUsuarios(Pageable pageable) throws Exception{
         return usuarioRepository.findAll(pageable);
     }
@@ -43,7 +51,7 @@ public class UsuarioService implements UsuarioServiceInterfaces {
             usuarioRepository.save(usuario);
         }
         else {
-            throw new Exception("No existe el usuario a modificar");
+            throw new SearchException("No existe el usuario a modificar");
         }
     }
 
@@ -55,7 +63,7 @@ public class UsuarioService implements UsuarioServiceInterfaces {
             usuarioRepository.save(usuario);
         }
         else {
-            throw new Exception("No existe el usuario");
+            throw new SearchException("No existe el usuario");
         }
     }
 
@@ -65,7 +73,7 @@ public class UsuarioService implements UsuarioServiceInterfaces {
             return usuarioRepository.findById(id).get();
         }
         else{
-            throw new Exception("No existe el usuario");
+            throw new SearchException("No existe el usuario");
         }
     }
 
@@ -106,6 +114,6 @@ public class UsuarioService implements UsuarioServiceInterfaces {
     @Override
     public Optional<Usuario> buscarUsuarioPorUsernameActivo(String username) throws Exception {
         return Optional.ofNullable(usuarioRepository.findByUsernameEqualsIgnoreCaseAndActivoIsTrue(username).orElseThrow(
-                () -> new Exception("No existe el usuario")));
+                () -> new SearchException("No existe el usuario")));
     }
 }
