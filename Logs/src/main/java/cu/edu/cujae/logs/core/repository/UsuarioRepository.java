@@ -23,6 +23,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("from Usuario as user INNER JOIN Rol as rol on rol.uuid = user.rol.uuid and rol.rol like 'Super Administrador' where user.activo = true")
     public List<Usuario> listadoUsuarioActivosNoSuperAdministrador();
 
-    @Query("from Usuario as user where user.username like ? and user.password like ?")
+    @Query("from Usuario as user where user.username like :username and user.password like :password")
     public  Optional<Usuario> findByUsernameAndPassword(String username,String password);
 }
