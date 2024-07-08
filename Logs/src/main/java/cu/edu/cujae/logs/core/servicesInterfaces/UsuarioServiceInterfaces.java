@@ -35,5 +35,5 @@ public interface UsuarioServiceInterfaces {
 
     List<Usuario> listarUsuariosNoSuperAdministrador() throws Exception;
 
-    Optional<Usuario> obtenerUsuarioPorUsernameAndPassword(String username,String password) throws Exception;
+    Usuario obtenerUsuarioPorUsernameAndPassword(String username,String password);
 }

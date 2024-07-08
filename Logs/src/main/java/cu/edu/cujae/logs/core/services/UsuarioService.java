@@ -8,6 +8,7 @@ import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public class UsuarioService implements UsuarioServiceInterfaces {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<Usuario> listarUsuarios() throws Exception{
@@ -30,10 +33,13 @@ public class UsuarioService implements UsuarioServiceInterfaces {
     }
 
     @Override
-    public Optional<Usuario> obtenerUsuarioPorUsernameAndPassword(String username, String password) throws Exception {
-        return Optional.ofNullable(usuarioRepository.findByUsernameAndPassword(username,password).orElseThrow(
-                () -> new SearchException("Usuario no encontrado")
-        ));
+    public Usuario obtenerUsuarioPorUsernameAndPassword(String username,String password){
+        for (Usuario user : usuarioRepository.listadoUsuarioActivos()){
+            if(user.getUsername().equalsIgnoreCase(username) && passwordEncoder.matches(password,user.getPassword())){
+                return user;
+            }
+        }
+        return null;
     }
 
     @Override

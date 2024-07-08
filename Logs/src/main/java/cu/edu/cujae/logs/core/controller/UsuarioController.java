@@ -26,6 +26,8 @@ public class UsuarioController {
     private RolServiceInterfaces rolRepository;
     @Autowired
     private SexoServiceInterfaces sexoService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/")
     public ResponseEntity<?> listarAllUsuarios() {
@@ -102,6 +104,7 @@ public class UsuarioController {
             Optional<Rol> rol = rolRepository.consultarRolNombre(usuario.getRol());
             Optional<Sexo> sexo = sexoService.consultarSexo(usuario.getSexo());
             usuarioService.validarUsuarioInsertar(usuario.getEmail(),usuario.getUsername());
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             if (rol.isPresent() && sexo.isPresent() && usuario.isActivo() == true) {
                 usuarioService.insertarUsuario(new Usuario(usuario,rol.get(),sexo.get()));
                 return ResponseEntity.ok().body("Usuario insertado correctamente");
