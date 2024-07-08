@@ -3,12 +3,13 @@ package cu.edu.cujae.logs.core.repository;
 import cu.edu.cujae.logs.core.mapping.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
-    public Optional<Usuario> existsUsuarioByUsernameEqualsIgnoreCaseAndActivoIsTrue(String username);
+    public Optional<Usuario> findByUsernameEqualsIgnoreCaseAndPasswordEqualsAndActivoIsTrue(String username,String password);
 
     public Optional<Usuario> findByUsernameEqualsIgnoreCaseAndActivoIsTrue(String username);
 
@@ -25,4 +26,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
     @Query("from Usuario as user where user.username like :username and user.password like :password")
     public  Optional<Usuario> findByUsernameAndPassword(String username,String password);
+
+    UserDetails findByUsername(String username);
 }

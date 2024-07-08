@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,7 +20,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "usuarios")
-public class Usuario {
+public class Usuario{
     @Id
     @Column(name = "usuarioID",nullable = false, length = 36, unique = true)
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -86,6 +87,7 @@ public class Usuario {
         this.activo = usuarioDto.isActivo();
         this.rol = rol;
         this.sexo = sexo;
+        this.password = usuarioDto.getPassword();
     }
 
     public Usuario(Optional<Usuario> usuario){

@@ -1,13 +1,20 @@
 package cu.edu.cujae.logs.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import cu.edu.cujae.logs.core.mapping.Usuario;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-public class UsuarioLoginDto extends UsuarioDto{
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UsuarioLoginDto{
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     @Min(value = 1,message = "El valor mínimo del id es 1")
     private Long uuid;
@@ -19,4 +26,10 @@ public class UsuarioLoginDto extends UsuarioDto{
     @Size(min = 4,max = 1000,message = "La contraseña no se encuentra en un rango de 4 y 1000 caracteres")
     @NotNull(message = "La contraseña no puede ser nulo")
     private String password;
+
+    public UsuarioLoginDto(Usuario user){
+        this.uuid = user.getUuid();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+    }
 }

@@ -1,5 +1,6 @@
 package cu.edu.cujae.logs.core.servicesInterfaces;
 
+import cu.edu.cujae.logs.core.dto.UsuarioLoginDto;
 import cu.edu.cujae.logs.core.mapping.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

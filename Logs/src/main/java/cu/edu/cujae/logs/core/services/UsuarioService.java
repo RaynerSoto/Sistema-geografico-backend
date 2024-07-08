@@ -1,5 +1,6 @@
 package cu.edu.cujae.logs.core.services;
 
+import cu.edu.cujae.logs.core.dto.UsuarioLoginDto;
 import cu.edu.cujae.logs.core.exception.SearchException;
 import cu.edu.cujae.logs.core.mapping.Usuario;
 import cu.edu.cujae.logs.core.repository.UsuarioRepository;

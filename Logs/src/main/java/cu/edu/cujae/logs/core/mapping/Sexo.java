@@ -3,6 +3,8 @@ package cu.edu.cujae.logs.core.mapping;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import cu.edu.cujae.logs.core.dto.SexoDto;
 import cu.edu.cujae.logs.core.enums.SexoEnums;
+import cu.edu.cujae.logs.core.repository.SexoRepository;
+import cu.edu.cujae.logs.core.services.SexoService;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,6 +12,11 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +26,10 @@ import java.util.Optional;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Sexo {
-
+public class Sexo{
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @Column(name = "sexoID",unique = true, nullable = false,updatable = false,insertable = false)
+    @Column(name = "sexoID",unique = true, nullable = false,updatable = false)
     private Long id;
 
     @NotNull(message = "El nombre del sexo no puede ser null")
@@ -57,12 +63,5 @@ public class Sexo {
         this.id = sexo.get().getId();
         this.nombre = sexo.get().nombre;
         this.sigla = sexo.get().sigla;
-    }
-
-    @PrePersist
-    @PreUpdate
-    @PreRemove
-    public void Sexo() {
-        throw new UnsupportedOperationException("Solamente existen 2 sexos");
     }
 }

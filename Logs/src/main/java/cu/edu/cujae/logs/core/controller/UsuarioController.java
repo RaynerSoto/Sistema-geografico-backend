@@ -11,6 +11,7 @@ import cu.edu.cujae.logs.core.utils.Validacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -96,21 +97,16 @@ public class UsuarioController {
 
     @PostMapping("/")
     public ResponseEntity<String> insertarUsuario(@RequestBody UsuarioDto usuario) {
-        String resultado = Validacion.comprobacionValidador(usuario);
         try {
-            if (resultado.isBlank()){
-                Optional<Rol> rol = rolRepository.consultarRolNombre(usuario.getRol());
-                Optional<Sexo> sexo = sexoService.consultarSexo(usuario.getSexo());
-                usuarioService.validarUsuarioInsertar(usuario.getEmail(),usuario.getUsername());
-                if (rol.isPresent() && sexo.isPresent() && usuario.isActivo() == true) {
-                    usuarioService.insertarUsuario(new Usuario(usuario,rol.get(),sexo.get()));
-                    return ResponseEntity.ok().body("Usuario insertado correctamente");
-                }else {
-                    return ResponseEntity.badRequest().body("Usuario no insertado");
-                }
-            }
-            else {
-                return ResponseEntity.badRequest().body(resultado);
+            Validacion.validarUnsupportedOperationException(usuario);
+            Optional<Rol> rol = rolRepository.consultarRolNombre(usuario.getRol());
+            Optional<Sexo> sexo = sexoService.consultarSexo(usuario.getSexo());
+            usuarioService.validarUsuarioInsertar(usuario.getEmail(),usuario.getUsername());
+            if (rol.isPresent() && sexo.isPresent() && usuario.isActivo() == true) {
+                usuarioService.insertarUsuario(new Usuario(usuario,rol.get(),sexo.get()));
+                return ResponseEntity.ok().body("Usuario insertado correctamente");
+            }else {
+                return ResponseEntity.badRequest().body("Usuario no insertado");
             }
         }
         catch (Exception e){
