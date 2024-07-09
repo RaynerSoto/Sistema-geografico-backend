@@ -1,5 +1,6 @@
 package cu.edu.cujae.logs.core.security;
 
+import cu.edu.cujae.logs.core.dto.TokenDto;
 import cu.edu.cujae.logs.core.dto.UsuarioLoginDto;
 import cu.edu.cujae.logs.core.mapping.Usuario;
 import cu.edu.cujae.logs.core.services.UsuarioService;
@@ -21,15 +22,18 @@ public class AutentificacionController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private UsuarioService usuarioService;
+    @Autowired
+    private TokenService tokenService;
 
     @PostMapping("/")
     public ResponseEntity<?> autenticacionUsuario(@RequestBody UsuarioLoginDto usuarioLoginDto){
         try {
             Usuario usuario = usuarioService.obtenerUsuarioPorUsernameAndPassword(usuarioLoginDto.getUsername(), usuarioLoginDto.getPassword());
             usuario = new Usuario(usuario, usuarioLoginDto.getPassword());
-            Authentication token = new UsernamePasswordAuthenticationToken(usuario.getUsername(),usuario.getPassword());;
-            authenticationManager.authenticate(token);
-            return ResponseEntity.ok(token);
+            Authentication authenticationToken = new UsernamePasswordAuthenticationToken(usuario.getUsername(),usuario.getPassword());;
+            var usuarioAutentificado = authenticationManager.authenticate(authenticationToken);
+            var JWTtoken = tokenService.generarToken((Usuario) usuarioAutentificado.getPrincipal());
+            return ResponseEntity.ok(new TokenDto(JWTtoken));
         }catch (Exception e){
             System.out.println(e);
             return ResponseEntity.badRequest().body(e.getMessage());
