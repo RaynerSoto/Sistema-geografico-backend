@@ -22,15 +22,19 @@ public class SecurityConfigurations {
     @Autowired
     private SecurityFilter securityFilter;
 
-    public static final String[] STRINGS = {"/login/**","swagger-ui.html"};
+    public static final String[] permitidos = {
+            "/login/**"
+            ,"swagger-ui.html"
+            ,"/swagger-ui/**"
+            ,"/api-docs**"
+            ,"/api-docs/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(reques ->
-                        reques.requestMatchers("/swagger-ui/index.html").permitAll()
-                                .requestMatchers("/login/**").permitAll()
+                        reques.requestMatchers(permitidos).permitAll()
                                 .anyRequest().authenticated())
                 .addFilterBefore(this.securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();

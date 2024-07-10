@@ -123,6 +123,7 @@ public class UsuarioController {
         try {
             Validacion.validarUnsupportedOperationException(usuario);
             usuario.setUuid(id);
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             Optional<Rol> rol = rolRepository.consultarRolNombre(usuario.getRol());
             Optional<Sexo> sexo = sexoService.consultarSexo(usuario.getSexo());
             usuarioService.validarUsuarioModificar(usuario.getEmail(),usuario.getUsername(),usuario.getUuid());

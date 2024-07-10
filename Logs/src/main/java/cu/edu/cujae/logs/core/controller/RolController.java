@@ -45,7 +45,7 @@ public class RolController {
         }
     }
 
-    @PreAuthorize(value = "hasAnyRole('Super_Administrador', 'SUPER_ADMINISTRADOR','ROLE_SUPER_ADMINISTRADOR','super_administrador')")
+    @PreAuthorize(value = "hasAnyRole('Super_Administrador')")
     @GetMapping("/")
     public ResponseEntity<?> listarRoles() {
         try {

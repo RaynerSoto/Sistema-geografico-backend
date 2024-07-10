@@ -49,6 +49,7 @@ public class UsuarioDto {
 
 
     @NotNull(message = "Este dato no puede ser null")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private boolean activo;
 
     public UsuarioDto(Usuario usuario) {
