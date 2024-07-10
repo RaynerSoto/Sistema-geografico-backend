@@ -26,6 +26,8 @@ public class SecurityFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         System.out.println("Inicio doFilter");
         TokenDto token = new TokenDto(request.getHeader("Authorization"));
+        String requesUri = request.getRequestURI();
+        System.out.println(requesUri);
         if (token.getToken() != null){
             Validacion.validarUnsupportedOperationException(token);
             token.setToken(token.getToken().replace("Bearer ", ""));

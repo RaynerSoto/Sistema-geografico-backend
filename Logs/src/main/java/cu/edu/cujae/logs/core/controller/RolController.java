@@ -13,6 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.Inet4Address;
@@ -43,6 +45,7 @@ public class RolController {
         }
     }
 
+    @PreAuthorize(value = "hasAnyRole('SUPER_ADMIN', 'ADMIN')")
     @GetMapping("/")
     public ResponseEntity<?> listarRoles() {
         try {
