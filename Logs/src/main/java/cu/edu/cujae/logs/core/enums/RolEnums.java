@@ -5,7 +5,7 @@ import java.util.List;
 
 public enum RolEnums {
 
-    SUPERADMINISTRADO("Super Administrador",List.of(
+    SUPERADMINISTRADO("Super_Administrador",List.of(
             new Privilegio(PrivilegioEnums.ROL),
             new Privilegio(PrivilegioEnums.ENTIDAD),
             new Privilegio(PrivilegioEnums.PERSONAL),

@@ -1,6 +1,7 @@
 package cu.edu.cujae.logs.core.controller;
 
 import cu.edu.cujae.logs.core.dto.UsuarioDto;
+import cu.edu.cujae.logs.core.exception.GoodException;
 import cu.edu.cujae.logs.core.mapping.Rol;
 import cu.edu.cujae.logs.core.mapping.Sexo;
 import cu.edu.cujae.logs.core.mapping.Usuario;
@@ -120,23 +121,18 @@ public class UsuarioController {
     @PutMapping("/{id}")
     public ResponseEntity<String> actualizarUsuario(@RequestBody UsuarioDto usuario,@PathVariable Long id) {
         try {
-            String resultado = Validacion.comprobacionValidador(usuario);
+            Validacion.validarUnsupportedOperationException(usuario);
             usuario.setUuid(id);
-            if (resultado.isBlank()){
-                Optional<Rol> rol = rolRepository.consultarRolNombre(usuario.getRol());
-                Optional<Sexo> sexo = sexoService.consultarSexo(usuario.getSexo());
-                usuarioService.validarUsuarioModificar(usuario.getEmail(),usuario.getUsername(),usuario.getUuid());
-                if (rol.isPresent() && sexo.isPresent() && usuario.isActivo() == true) {
-                    Usuario user = new Usuario(usuario,rol.get(),sexo.get());
-                    usuarioService.modificarUsuario(new Usuario(usuario, rol.get(), sexo.get()));
-                    return ResponseEntity.ok().body("Usuario modificado correctamente");
-                }
-                else {
-                    return ResponseEntity.badRequest().body("Usuario no modificado");
-                }
+            Optional<Rol> rol = rolRepository.consultarRolNombre(usuario.getRol());
+            Optional<Sexo> sexo = sexoService.consultarSexo(usuario.getSexo());
+            usuarioService.validarUsuarioModificar(usuario.getEmail(),usuario.getUsername(),usuario.getUuid());
+            if (rol.isPresent() && sexo.isPresent() && usuario.isActivo() == true) {
+                Usuario user = new Usuario(usuario,rol.get(),sexo.get());
+                usuarioService.modificarUsuario(new Usuario(usuario, rol.get(), sexo.get()));
+                return ResponseEntity.ok().body("Usuario modificado correctamente");
             }
             else {
-                return ResponseEntity.badRequest().body(resultado);
+                return ResponseEntity.badRequest().body("Usuario no modificado");
             }
         }
         catch (Exception e){
@@ -147,8 +143,14 @@ public class UsuarioController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarUsuario(@PathVariable Long id) {
         try {
-            usuarioService.eliminarUsuario(id);
-            return ResponseEntity.ok().body("Usuario eliminado correctamente");
+            try {
+                usuarioService.eliminarUsuario(id);
+            }catch (GoodException e){
+                return ResponseEntity.ok().body(e.getMessage());
+            }catch (Exception e){
+                throw new RuntimeException(e.getMessage());
+            }
+            return ResponseEntity.ok().body("Usuario eliminado de manera permanente por lo tanto es erróneo");
         }
         catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

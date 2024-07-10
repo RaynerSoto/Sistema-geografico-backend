@@ -40,6 +40,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             if(user != null){
                 var usuario = usuarioRepository.findByUsername(user);
                 //Forzar inicio de sesión
+                System.out.println(usuario.getAuthorities());
                 var autenticacion = new UsernamePasswordAuthenticationToken(usuario,null,usuario.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(autenticacion);
             }

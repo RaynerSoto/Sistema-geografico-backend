@@ -1,6 +1,7 @@
 package cu.edu.cujae.logs.core.mapping;
 
 import cu.edu.cujae.logs.core.dto.UsuarioDto;
+import cu.edu.cujae.logs.core.exception.GoodException;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -136,12 +137,13 @@ public class Usuario implements UserDetails{
 
     @PreRemove
     public void preRemove(){
-        throw new UnsupportedOperationException("No se puede eliminar usuarios");
+        this.activo = false;
+        throw new GoodException("Usuario eliminado");
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USERA"));
+        return List.of(new SimpleGrantedAuthority("ROLE_SUPER_ADMINISTRADOR"));
     }
 
     @Override
