@@ -38,6 +38,8 @@ public class TokenService {
     }
 
     public String getSubjetc(String token) throws Exception {
+        if(token == null)
+            throw new Exception("Token nullo");
         DecodedJWT decodedJWT = null;
         try {
             Algorithm algorithm = Algorithm.HMAC256("${jwt.secreto}");
