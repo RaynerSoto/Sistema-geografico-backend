@@ -66,7 +66,8 @@ public class UsuarioService implements UsuarioServiceInterfaces {
     public void eliminarUsuario(Long id) throws Exception{
         if (usuarioRepository.existsById(id)) {
             Usuario usuario = usuarioRepository.findById(id).get();
-            usuarioRepository.delete(usuario);
+            usuario.setActivo(false);
+            usuarioRepository.save(usuario);
         }
         else {
             throw new SearchException("No existe el usuario");

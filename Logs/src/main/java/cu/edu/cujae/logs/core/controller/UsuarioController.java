@@ -101,17 +101,14 @@ public class UsuarioController {
     @PostMapping("/")
     public ResponseEntity<String> insertarUsuario(@RequestBody UsuarioDto usuario) {
         try {
+            usuario.setActivo(true);
             Validacion.validarUnsupportedOperationException(usuario);
-            Optional<Rol> rol = rolRepository.consultarRolNombre(usuario.getRol());
+            Optional<Rol> rol = rolRepository.consultarRol(usuario.getRol());
             Optional<Sexo> sexo = sexoService.consultarSexo(usuario.getSexo());
             usuarioService.validarUsuarioInsertar(usuario.getEmail(),usuario.getUsername());
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-            if (rol.isPresent() && sexo.isPresent() && usuario.isActivo() == true) {
-                usuarioService.insertarUsuario(new Usuario(usuario,rol.get(),sexo.get()));
-                return ResponseEntity.ok().body("Usuario insertado correctamente");
-            }else {
-                return ResponseEntity.badRequest().body("Usuario no insertado");
-            }
+            usuarioService.insertarUsuario(new Usuario(usuario,rol.get(),sexo.get()));
+            return ResponseEntity.ok().body("Usuario insertado correctamente");
         }
         catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -144,14 +141,8 @@ public class UsuarioController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarUsuario(@PathVariable Long id) {
         try {
-            try {
-                usuarioService.eliminarUsuario(id);
-            }catch (GoodException e){
-                return ResponseEntity.ok().body(e.getMessage());
-            }catch (Exception e){
-                throw new RuntimeException(e.getMessage());
-            }
-            return ResponseEntity.ok().body("Usuario eliminado de manera permanente por lo tanto es erróneo");
+            usuarioService.eliminarUsuario(id);
+            return ResponseEntity.ok("Usuario eliminado");
         }
         catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());

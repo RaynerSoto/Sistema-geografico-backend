@@ -118,9 +118,15 @@ public class Usuario implements UserDetails{
 
     @PrePersist
     public void prePersist(){
-        String validacion = Validacion.comprobacionValidador(this);
-        if (validacion.isBlank() == false)
-            throw new UnsupportedOperationException(validacion);
+        try {
+            Validacion.validarUnsupportedOperationException(this);
+
+        }catch (Exception e){
+            throw new UnsupportedOperationException(e.getMessage());
+        }
+        if (this.isActivo() == false){
+            throw new UnsupportedOperationException("El usuario no puede ser aceptado por no encontrarse activo");
+        }
     }
 
     @PreUpdate
@@ -137,7 +143,7 @@ public class Usuario implements UserDetails{
 
     @PreRemove
     public void preRemove(){
-        this.activo = false;
+        this.setActivo(false);
         throw new GoodException("Usuario eliminado");
     }
 
