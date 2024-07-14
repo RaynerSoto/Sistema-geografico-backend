@@ -44,6 +44,4 @@ public class Entidad {
     @NotNull(message = "La dirección de la entidad no puede ser null")
     @Column(name = "direccion",nullable = false)
     public String direccion;
-
-
 }
