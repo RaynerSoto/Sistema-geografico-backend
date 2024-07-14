@@ -9,6 +9,8 @@ import inet.ipaddr.IPAddress;
 import inet.ipaddr.IPAddressString;
 import inet.ipaddr.ipv4.IPv4Address;
 import inet.ipaddr.ipv6.IPv6Address;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,8 @@ public class RolController {
     @Autowired
     private RolServiceInterfaces rolServiceInterfaces;
 
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     @PostMapping("/")
     public ResponseEntity<?> crearRol(@RequestBody RolDto rol) {
         try{
@@ -45,7 +49,8 @@ public class RolController {
         }
     }
 
-    @PreAuthorize(value = "hasAnyRole('Super_Administrador')")
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     @GetMapping("/")
     public ResponseEntity<?> listarRoles() {
         try {
@@ -55,6 +60,8 @@ public class RolController {
         }
     }
 
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     @GetMapping("/nombresRol")
     public ResponseEntity<?> listarRolesNombre() {
         try {
@@ -64,6 +71,8 @@ public class RolController {
         }
     }
 
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     @GetMapping("/{id}")
     public ResponseEntity<?> consultarRol(@PathVariable Long id) {
         try {
@@ -79,6 +88,8 @@ public class RolController {
         }
     }
 
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     @PutMapping("/{id}")
     public ResponseEntity<?> modificarRol(@PathVariable Long id, @RequestBody RolDto rol){
         try {
@@ -89,6 +100,8 @@ public class RolController {
         }
     }
 
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarRol(@PathVariable Long id){
         try {
@@ -99,6 +112,8 @@ public class RolController {
         }
     }
 
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     @GetMapping("/buscadorNombre")
     public ResponseEntity<?> buscadorRolNombre(RolDto rol){
         try {
