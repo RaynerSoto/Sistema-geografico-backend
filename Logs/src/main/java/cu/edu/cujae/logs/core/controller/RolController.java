@@ -11,6 +11,7 @@ import inet.ipaddr.ipv4.IPv4Address;
 import inet.ipaddr.ipv6.IPv6Address;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +27,15 @@ import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/rol")
+@SecurityRequirement(name = "bearer-key")
+@Tag(name = "Controlador de los roles",description = "Determina todo lo relacionado con las funcionalidades de los roles del proyecto")
 public class RolController {
 
     @Autowired
     private RolServiceInterfaces rolServiceInterfaces;
 
-    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite insertar un rol")
     @PostMapping("/")
     public ResponseEntity<?> crearRol(@RequestBody RolDto rol) {
         try{
@@ -49,8 +52,8 @@ public class RolController {
         }
     }
 
-    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver todos los roles")
     @GetMapping("/")
     public ResponseEntity<?> listarRoles() {
         try {
@@ -61,7 +64,7 @@ public class RolController {
     }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver solamente los nombres de los roles")
     @GetMapping("/nombresRol")
     public ResponseEntity<?> listarRolesNombre() {
         try {
@@ -71,8 +74,9 @@ public class RolController {
         }
     }
 
-    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") }
+    ,summary = "Permite consultar un rol por el ID")
     @GetMapping("/{id}")
     public ResponseEntity<?> consultarRol(@PathVariable Long id) {
         try {
@@ -88,8 +92,9 @@ public class RolController {
         }
     }
 
-    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") }
+    ,summary = "Permite modificar un rol")
     @PutMapping("/{id}")
     public ResponseEntity<?> modificarRol(@PathVariable Long id, @RequestBody RolDto rol){
         try {
@@ -100,8 +105,9 @@ public class RolController {
         }
     }
 
-    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") }
+    ,summary = "Permite eliminar un rol")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarRol(@PathVariable Long id){
         try {
@@ -113,7 +119,7 @@ public class RolController {
     }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite buscar un rol por su nombre")
     @GetMapping("/buscadorNombre")
     public ResponseEntity<?> buscadorRolNombre(RolDto rol){
         try {

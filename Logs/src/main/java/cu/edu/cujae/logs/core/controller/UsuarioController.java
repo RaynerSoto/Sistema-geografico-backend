@@ -11,6 +11,7 @@ import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,8 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/usuario")
+@SecurityRequirement(name = "bearer-key")
+@Tag(name = "Controllador de los usuarios del sistema", description = "Controlla los usuarios registrados en el sistema")
 public class UsuarioController {
     @Autowired
     private UsuarioServiceInterfaces usuarioService;
@@ -34,7 +37,7 @@ public class UsuarioController {
     private PasswordEncoder passwordEncoder;
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Listado de todos los usuarios independientemente de su estado")
     @GetMapping("/")
     public ResponseEntity<?> listarAllUsuarios() {
         try {
@@ -47,7 +50,8 @@ public class UsuarioController {
     }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },
+            summary = "Listados de usuarios activos, devueltos en una página para facilitar al Frontend")
     @GetMapping("/userActivosPagina")
     public ResponseEntity<?> listarUsuariosActivosPagina(Pageable pageable) {
         try {
@@ -59,7 +63,8 @@ public class UsuarioController {
     }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },
+    summary = "Listado de usuarios activos")
     @GetMapping("/userActivos")
     public ResponseEntity<?> listarUsuariosActivos() {
         try {
@@ -72,7 +77,8 @@ public class UsuarioController {
     }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },
+    summary = "Listados de usuarios no Super Administradores")
     @GetMapping("/userActivosNoSuperAdministrador")
     public ResponseEntity<?> listarUsuariosActivosNoAdministrador() {
         try {
@@ -85,7 +91,7 @@ public class UsuarioController {
     }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Pagína para el frontend de los usuarios eliminados")
     @GetMapping("/userEliminadoPagina")
     public ResponseEntity<?> listarUsuariosEliminadosPagina(Pageable pageable) {
         try {
@@ -98,7 +104,8 @@ public class UsuarioController {
     }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") }
+    ,summary = "Listado de usuarios eliminados")
     @GetMapping("/userEliminado")
     public ResponseEntity<?> listarUsuariosEliminados() {
         try {
@@ -111,7 +118,8 @@ public class UsuarioController {
     }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") }
+    ,summary = "Permite insertar un usuario")
     @PostMapping("/")
     public ResponseEntity<String> insertarUsuario(@RequestBody UsuarioDto usuario) {
         try {
@@ -130,7 +138,8 @@ public class UsuarioController {
     }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") }
+    ,summary = "Permite actualizar un usuario")
     @PutMapping("/{id}")
     public ResponseEntity<String> actualizarUsuario(@RequestBody UsuarioDto usuario,@PathVariable Long id) {
         try {
@@ -155,7 +164,7 @@ public class UsuarioController {
     }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite eliminar un usuario")
     @DeleteMapping("/{id}")
     public ResponseEntity<String> eliminarUsuario(@PathVariable Long id) {
         try {
@@ -168,7 +177,7 @@ public class UsuarioController {
     }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite conocer si un usuario está activo o no")
     @GetMapping("/isUserActivo")
     public ResponseEntity<String> isUsuarioActivo(UsuarioDto usuario){
         try {
