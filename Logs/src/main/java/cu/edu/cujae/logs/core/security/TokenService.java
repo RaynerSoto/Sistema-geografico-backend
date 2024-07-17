@@ -6,7 +6,11 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import cu.edu.cujae.logs.core.exception.SearchException;
 import cu.edu.cujae.logs.core.mapping.Usuario;
+import cu.edu.cujae.logs.core.services.UsuarioService;
+import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -17,6 +21,7 @@ import java.util.Date;
 @Service
 public class TokenService {
 
+
     public String generarToken(Usuario usuario){
         try {
             Algorithm algorithm = Algorithm.HMAC256("${jwt.secreto}");
@@ -25,6 +30,7 @@ public class TokenService {
                     .withClaim("id",usuario.getUuid())
                     .withSubject(usuario.getUsername())
                     .withClaim("Rol",usuario.getRol().getRol())
+                    .withClaim("correo",usuario.getEmail())
                     .withExpiresAt(generarFechaExpiracion())
                     .sign(algorithm);
             return token;

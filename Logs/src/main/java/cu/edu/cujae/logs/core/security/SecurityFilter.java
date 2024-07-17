@@ -34,7 +34,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         System.out.println(requesUri);
         if (token.getToken() != null){
             Validacion.validarUnsupportedOperationException(token);
-            token.setToken(token.getToken().replace("Bearer ", ""));
+            token.setToken(token.getToken().replace("Bearer ", "").replaceAll(" ","").replaceAll("\"",""));
             var user = tokenService.getSubjetc(token.getToken());
             System.out.println(token);
             if(user != null){

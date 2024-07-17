@@ -5,24 +5,13 @@ import cu.edu.cujae.logs.core.mapping.Rol;
 import cu.edu.cujae.logs.core.dto.RolDto;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
-import inet.ipaddr.IPAddress;
-import inet.ipaddr.IPAddressString;
-import inet.ipaddr.ipv4.IPv4Address;
-import inet.ipaddr.ipv6.IPv6Address;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.Inet4Address;
-import java.net.InetAddress;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @RestController

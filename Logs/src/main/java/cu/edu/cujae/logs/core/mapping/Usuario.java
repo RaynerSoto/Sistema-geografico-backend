@@ -165,21 +165,21 @@ public class Usuario implements UserDetails{
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return this.activo;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return this.activo;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return this.activo;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.activo;
     }
 }

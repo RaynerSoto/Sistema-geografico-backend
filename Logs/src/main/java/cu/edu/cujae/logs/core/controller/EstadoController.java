@@ -1,5 +1,4 @@
 package cu.edu.cujae.logs.core.controller;
-
 import cu.edu.cujae.logs.core.dto.EstadoDto;
 import cu.edu.cujae.logs.core.servicesInterfaces.EstadoServiceInterfaces;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,8 +10,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/estado")

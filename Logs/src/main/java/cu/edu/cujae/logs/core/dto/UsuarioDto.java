@@ -28,9 +28,10 @@ public class UsuarioDto {
     @Size(min = 2,max = 100,message = "El nombre completo debe tener entre 2 y 100 caracteres")
     private String name;
 
-    @Size(min = 4,max = 1000,message = "La contraseña no se encuentra en un rango de 4 y 1000 caracteres")
+    @NotBlank(message = "La contraseña no puede estar llena de espacios")
+    @Size(min = 1,max = 1000,message = "La contraseña no se encuentra en un rango de 1 y 1000 caracteres")
     @NotNull(message = "La contraseña no puede ser nulo")
-    @Column(name = "password",nullable = false, length = 1000)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
 
     @Email(message = "Correo no válido")
