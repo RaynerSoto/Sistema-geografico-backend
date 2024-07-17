@@ -1,6 +1,7 @@
 package cu.edu.cujae.logs.core.controller;
 
 import cu.edu.cujae.logs.core.dto.UsuarioDto;
+import cu.edu.cujae.logs.core.dto.UsuarioDtoInsert;
 import cu.edu.cujae.logs.core.exception.GoodException;
 import cu.edu.cujae.logs.core.mapping.Rol;
 import cu.edu.cujae.logs.core.mapping.Sexo;
@@ -19,6 +20,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -121,7 +124,7 @@ public class UsuarioController {
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
     ,summary = "Permite insertar un usuario")
     @PostMapping("/")
-    public ResponseEntity<String> insertarUsuario(@RequestBody UsuarioDto usuario) {
+    public ResponseEntity<String> insertarUsuario(@RequestBody UsuarioDtoInsert usuario) {
         try {
             usuario.setActivo(true);
             Validacion.validarUnsupportedOperationException(usuario);
@@ -129,6 +132,14 @@ public class UsuarioController {
             Optional<Sexo> sexo = sexoService.consultarSexo(usuario.getSexo());
             usuarioService.validarUsuarioInsertar(usuario.getEmail(),usuario.getUsername());
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+            if (usuario.isReactivado() == true){
+                Usuario user = usuarioService.obtenerUsuarioEmailUsernameName(usuario.getEmail(),usuario.getUsername(),usuario.getName(),sexo.get()).get();
+                user.setFechaEliminacion(null);
+                user.setActivo(true);
+                user.setFechaCreacion(Timestamp.valueOf(LocalDateTime.now()));
+                usuarioService.modificarUsuario(user);
+                return ResponseEntity.ok().body("Usuario reactivado correctamente");
+            }
             usuarioService.insertarUsuario(new Usuario(usuario,rol.get(),sexo.get()));
             return ResponseEntity.ok().body("Usuario insertado correctamente");
         }

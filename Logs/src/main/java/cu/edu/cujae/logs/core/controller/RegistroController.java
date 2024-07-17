@@ -33,7 +33,7 @@ public class RegistroController {
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Registra la actividad del usuario")
     @PostMapping("/")
-    public ResponseEntity<?> registro(@RequestBody RegistroDto registro, HttpRequest httpRequest) {
+    public ResponseEntity<?> registro(@RequestBody RegistroDto registro) {
         try {
             Optional<Usuario> usuario = usuarioService.buscarUsuarioPorUsernameActivo(registro.getUsuario());
             Optional<Estado> estado = estadoService.obtenerEstado(registro.getEstado());

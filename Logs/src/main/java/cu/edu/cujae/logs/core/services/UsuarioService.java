@@ -2,6 +2,7 @@ package cu.edu.cujae.logs.core.services;
 
 import cu.edu.cujae.logs.core.dto.UsuarioLoginDto;
 import cu.edu.cujae.logs.core.exception.SearchException;
+import cu.edu.cujae.logs.core.mapping.Sexo;
 import cu.edu.cujae.logs.core.mapping.Usuario;
 import cu.edu.cujae.logs.core.repository.UsuarioRepository;
 import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
@@ -42,6 +43,13 @@ public class UsuarioService implements UsuarioServiceInterfaces {
             }
         }
         return null;
+    }
+
+    @Override
+    public Optional<Usuario> obtenerUsuarioEmailUsernameName(String email, String username, String name, Sexo sexo) throws SearchException {
+        return Optional.ofNullable(usuarioRepository.findByEmailEqualsAndUsernameEqualsAndNameEqualsAndSexoEquals(email,username,name,sexo)).orElseThrow(
+                ()->new SearchException("Usuario no encontrado")
+        );
     }
 
     @Override

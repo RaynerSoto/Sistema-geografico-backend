@@ -2,14 +2,12 @@ package cu.edu.cujae.logs.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cu.edu.cujae.logs.core.mapping.Usuario;
+
 import cu.edu.cujae.logs.core.utils.FechaFormato;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.sql.Date;
 import java.util.Optional;
 
 @Data
@@ -45,11 +43,9 @@ public class UsuarioDto {
     @NotNull(message = "El rol no puede ser nulo")
     private String rol;
 
-
     @NotNull(message = "El sexo no puede ser nulo")
     @NotBlank(message = "El sexo no puede estar vacío")
     private String sexo;
-
 
     @NotNull(message = "Este dato no puede ser null")
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
