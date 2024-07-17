@@ -8,7 +8,7 @@ public class FechaFormato {
     public static String formateoFecha(Timestamp fechaHora){
         if (fechaHora == null)
             return null;
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         String fechaFormateada = sdf.format(new Date(fechaHora.getTime()));
         return fechaFormateada;
     }
