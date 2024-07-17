@@ -32,24 +32,7 @@ public class RegistroDto {
     @NotNull(message = "El IP no puede ser null")
     private String ip;
 
-
-    @Size(min = 1,message = "El nombre del PC debe tener mínimo 1 caracter")
-    @NotBlank(message = "El nombre del PC no puede estar vacío")
-    @NotNull(message = "El nombre del PC no puede ser null")
-    private String nombrePC;
-
-
     @NotNull(message = "El estado no puede ser null")
     @NotBlank(message = "El estado no puede estar vacío")
     private String estado;
-
-    public RegistroDto(Registro registro){
-        this.uuid = registro.getUuid();
-        this.usuario = registro.getNombreUsuario().getUsername();
-        this.actividad = registro.getActividad();
-        this.ip = registro.getIp();
-        this.nombrePC = registro.getNombrePC();
-        this.estado = registro.getEstado().getNombre();
-    }
-
 }

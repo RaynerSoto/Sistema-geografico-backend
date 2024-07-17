@@ -11,6 +11,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -67,6 +69,7 @@ public class UsuarioService implements UsuarioServiceInterfaces {
         if (usuarioRepository.existsById(id)) {
             Usuario usuario = usuarioRepository.findById(id).get();
             usuario.setActivo(false);
+            usuario.setFechaEliminacion(Timestamp.valueOf(LocalDateTime.now()));
             usuarioRepository.save(usuario);
         }
         else {

@@ -15,6 +15,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -60,10 +63,6 @@ public class Usuario implements UserDetails{
     @JoinColumn(name = "rolID")
     private Rol rol;
 
-
-    @OneToMany(mappedBy = "nombreUsuario",cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-    private List<Registro> registroList;
-
     @NotNull(message = "El sexo no puede ser nulo")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sexoID")
@@ -71,6 +70,15 @@ public class Usuario implements UserDetails{
 
     @Column(name = "activo", nullable = false)
     private boolean activo;
+
+    @NotNull(message = "La fecha de creación no puede ser null")
+    @Column(name = "creacion",nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp fechaCreacion;
+
+    @Column(name = "eliminacion",nullable = true)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp fechaEliminacion;
 
     public Usuario(Usuario usuario){
         this.uuid = usuario.getUuid();
@@ -81,6 +89,8 @@ public class Usuario implements UserDetails{
         this.sexo = usuario.getSexo();
         this.activo = usuario.isActivo();
         this.password = usuario.getPassword();
+        this.fechaCreacion = usuario.getFechaCreacion();
+        this.fechaEliminacion = usuario.getFechaEliminacion();
     }
 
     public Usuario(UsuarioDto usuarioDto,Rol rol, Sexo sexo) throws Exception {
@@ -92,6 +102,8 @@ public class Usuario implements UserDetails{
         this.rol = rol;
         this.sexo = sexo;
         this.password = usuarioDto.getPassword();
+        this.fechaCreacion = Timestamp.valueOf(LocalDateTime.now());
+        this.fechaEliminacion = null;
     }
 
     public Usuario(Optional<Usuario> usuario){
@@ -103,6 +115,8 @@ public class Usuario implements UserDetails{
         this.sexo = usuario.get().getSexo();
         this.activo = usuario.get().isActivo();
         this.password = usuario.get().getPassword();
+        this.fechaCreacion = Timestamp.valueOf(LocalDateTime.now());
+        this.fechaEliminacion = null;
     }
 
     public Usuario(Usuario usuario, String password){
@@ -114,6 +128,8 @@ public class Usuario implements UserDetails{
         this.sexo = usuario.getSexo();
         this.activo = usuario.isActivo();
         this.password = password;
+        this.fechaCreacion = Timestamp.valueOf(LocalDateTime.now());
+        this.fechaEliminacion = null;
     }
 
     @PrePersist

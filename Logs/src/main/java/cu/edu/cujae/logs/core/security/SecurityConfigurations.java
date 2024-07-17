@@ -44,7 +44,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(reques ->
                         reques.requestMatchers("/login**").permitAll()
                                 .requestMatchers("/api/**").authenticated()
-                                .anyRequest().permitAll().notifyAll())
+                                .anyRequest().permitAll())
                 .addFilterBefore(this.securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
 

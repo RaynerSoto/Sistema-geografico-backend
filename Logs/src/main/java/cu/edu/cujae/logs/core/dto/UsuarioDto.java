@@ -2,12 +2,14 @@ package cu.edu.cujae.logs.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cu.edu.cujae.logs.core.mapping.Usuario;
+import cu.edu.cujae.logs.core.utils.FechaFormato;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Date;
 import java.util.Optional;
 
 @Data
@@ -53,6 +55,12 @@ public class UsuarioDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private boolean activo;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String fechaCreacion;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String fechaEliminacion;
+
     public UsuarioDto(Usuario usuario) {
         this.uuid = usuario.getUuid();
         this.username = usuario.getUsername();
@@ -62,6 +70,8 @@ public class UsuarioDto {
         this.sexo = usuario.getSexo().getNombre();
         this.activo = usuario.isActivo();
         this.password = usuario.getPassword();
+        this.fechaCreacion = FechaFormato.formateoFecha(usuario.getFechaCreacion());
+        this.fechaEliminacion = FechaFormato.formateoFecha(usuario.getFechaEliminacion());
     }
 
     public UsuarioDto(Optional<Usuario> usuario) {
@@ -73,5 +83,7 @@ public class UsuarioDto {
         this.sexo = usuario.get().getSexo().getNombre();
         this.activo = usuario.get().isActivo();
         this.password = usuario.get().getPassword();
+        this.fechaCreacion = FechaFormato.formateoFecha(usuario.get().getFechaCreacion());
+        this.fechaEliminacion = FechaFormato.formateoFecha(usuario.get().getFechaEliminacion());
     }
 }

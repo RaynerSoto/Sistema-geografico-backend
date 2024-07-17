@@ -5,11 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public enum EstadoEnums {
-    ACTIVO("Activo","Usuario acaba de loguearse en el sistema"),
-    OPERATIVO("Operativo","El usuario ha realizado una acción en el sistema"),
-    CERRADO("Cerrado","Usuario acaba de cerrar sesión en el sistema"),
-    ERROR("Error","Error en la operación"),
-    NO_AUTORIZADO("No Autorizado","El usuario no tiene autorización para la tarea actual");
+    ACEPTADO("Aceptado","La petición a sido aceptada"),
+    RECHAZADO("Rechazado","La petición a sido denegada");
 
     @NotNull(message = "El nombre del estado no puede ser null")
     @NotBlank(message = "El nombre del estado no puede estar vacío")

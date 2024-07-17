@@ -24,10 +24,8 @@ public class Registro {
     @Column(name = "registroID", unique = true, nullable = false)
     private Long uuid;
 
-    @NotNull(message = "El usuario  no puede ser null")
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "usuarioID")
-    private Usuario nombreUsuario;
+    @Column(name = "idusuario")
+    private Long idUsuario;
 
     @NotNull(message = "La actividad no puede ser null")
     @Size(min = 6,max = 100,message = "La actividad dedbe estar entre 6 y 100 caracteres")
@@ -41,12 +39,6 @@ public class Registro {
     @Column(name = "direccion_IP", nullable = false, length = 15)
     private String ip;
 
-    @NotNull(message = "El nombre del PC no puede ser null")
-    @Size(min = 1,message = "El nombre del PC debe tener mínimo 1 caracter")
-    @NotBlank(message = "El nombre del PC no puede estar vacío")
-    @Column(name = "nombrePC", nullable = false, length = 200)
-    private String nombrePC;
-
 
     @NotNull(message = "El estado no puede ser null")
     @ManyToOne(fetch = FetchType.EAGER)
@@ -55,28 +47,25 @@ public class Registro {
 
     public Registro(Registro registro) {
         this.uuid = registro.getUuid();
-        this.nombreUsuario = registro.getNombreUsuario();
+        this.idUsuario = registro.getIdUsuario();
         this.actividad = registro.getActividad();
         this.ip = registro.getIp();
-        this.nombrePC = registro.getNombrePC();
         this.estado = registro.getEstado();
     }
 
     public Registro(RegistroDto registroDto, Usuario nombreUsuario, Estado estado) {
         this.uuid = registroDto.getUuid();
-        this.nombreUsuario = nombreUsuario;
+        this.idUsuario = nombreUsuario.getUuid();
         this.actividad = registroDto.getActividad();
         this.ip = registroDto.getIp();
-        this.nombrePC = registroDto.getNombrePC();
         this.estado = estado;
     }
 
     public Registro(Optional<Registro> registro) {
         this.uuid = registro.get().getUuid();
-        this.nombreUsuario = registro.get().getNombreUsuario();
+        this.idUsuario = registro.get().getIdUsuario();
         this.actividad = registro.get().getActividad();
         this.ip = registro.get().getIp();
-        this.nombrePC = registro.get().getNombrePC();
         this.estado = registro.get().getEstado();
     }
 

@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.http.HttpRequest;
 import java.util.Optional;
 
 @RestController
@@ -32,7 +33,7 @@ public class RegistroController {
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Registra la actividad del usuario")
     @PostMapping("/")
-    public ResponseEntity<?> registro(@RequestBody RegistroDto registro) {
+    public ResponseEntity<?> registro(@RequestBody RegistroDto registro, HttpRequest httpRequest) {
         try {
             Optional<Usuario> usuario = usuarioService.buscarUsuarioPorUsernameActivo(registro.getUsuario());
             Optional<Estado> estado = estadoService.obtenerEstado(registro.getEstado());

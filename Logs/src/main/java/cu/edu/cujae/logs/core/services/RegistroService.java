@@ -25,7 +25,7 @@ public class RegistroService implements RegistroServiceInterfaces {
     }
 
     @Override
-    public List<Registro> listarRegistrosPoUsuario(String usuario) {
-        return registroRepository.findAll().stream().filter(s -> s.getNombreUsuario().getUsername().equalsIgnoreCase(usuario)).toList();
+    public List<Registro> listarRegistrosPoUsuario(Long usuario) {
+        return registroRepository.findAll().stream().filter(s -> s.getIdUsuario() == usuario).toList();
     }
 }

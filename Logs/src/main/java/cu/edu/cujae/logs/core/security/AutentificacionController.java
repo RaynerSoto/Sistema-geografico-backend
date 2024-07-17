@@ -8,6 +8,7 @@ import cu.edu.cujae.logs.core.services.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.net.http.HttpRequest;
 import java.util.Optional;
 
 @RestController
@@ -35,8 +37,9 @@ public class AutentificacionController {
 
     @PostMapping("/")
     @Operation(summary = "Encargado de autentificar el usuario")
-    public ResponseEntity<?> autenticacionUsuario(@RequestBody UsuarioLoginDto usuarioLoginDto){
+    public ResponseEntity<?> autenticacionUsuario(@RequestBody UsuarioLoginDto usuarioLoginDto, HttpServletRequest httpServletRequest){
         try {
+            System.out.println(httpServletRequest.getRemoteHost());//Obtener IP versión V4
             Usuario usuario = usuarioService.obtenerUsuarioPorUsernameAndPassword(usuarioLoginDto.getUsername(), usuarioLoginDto.getPassword());
             usuario = new Usuario(usuario, usuarioLoginDto.getPassword());
             Authentication authenticationToken = new UsernamePasswordAuthenticationToken(usuario.getUsername(),usuario.getPassword());;

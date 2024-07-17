@@ -9,5 +9,5 @@ public interface RegistroServiceInterfaces {
 
     List<Registro> listarRegistros();
 
-    List<Registro> listarRegistrosPoUsuario(String usuario);
+    List<Registro> listarRegistrosPoUsuario(Long usuario);
 }
