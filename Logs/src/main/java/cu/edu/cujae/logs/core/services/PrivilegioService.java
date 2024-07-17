@@ -1,7 +1,5 @@
 package cu.edu.cujae.logs.core.services;
 
-import cu.edu.cujae.logs.core.mapping.Privilegio;
-import cu.edu.cujae.logs.core.enums.PrivilegioEnums;
 import cu.edu.cujae.logs.core.repository.PrivilegiosRepository;
 import cu.edu.cujae.logs.core.servicesInterfaces.PrivilegioServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;

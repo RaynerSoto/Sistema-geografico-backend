@@ -1,7 +1,5 @@
 package cu.edu.cujae.logs.core.servicesInterfaces;
 
-import cu.edu.cujae.logs.core.mapping.Privilegio;
-
 import java.util.List;
 import java.util.Optional;
 

@@ -1,6 +1,5 @@
 package cu.edu.cujae.logs.core.services;
 
-import cu.edu.cujae.logs.core.mapping.PrivilegioRol;
 import cu.edu.cujae.logs.core.repository.PrivilegioRolRepository;
 import cu.edu.cujae.logs.core.servicesInterfaces.PrivilegioRolServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
