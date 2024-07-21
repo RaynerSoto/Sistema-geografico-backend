@@ -1,8 +1,7 @@
 package cu.edu.cujae.logs.core.controller;
 
-import cu.edu.cujae.logs.core.dto.UsuarioDto;
-import cu.edu.cujae.logs.core.dto.UsuarioDtoInsert;
-import cu.edu.cujae.logs.core.exception.GoodException;
+import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
+import cu.edu.cujae.logs.core.dto.usuario.UsuarioDtoInsert;
 import cu.edu.cujae.logs.core.mapping.Rol;
 import cu.edu.cujae.logs.core.mapping.Sexo;
 import cu.edu.cujae.logs.core.mapping.Usuario;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -44,8 +42,7 @@ public class UsuarioController {
     @GetMapping("/")
     public ResponseEntity<?> listarAllUsuarios() {
         try {
-            return ResponseEntity.ok().body(usuarioService.listarUsuarios().stream().map(UsuarioDto::new).toList()
-            );
+            return ResponseEntity.ok().body(usuarioService.listarUsuarios().stream().map(UsuarioDto::new).toList());
         }
         catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

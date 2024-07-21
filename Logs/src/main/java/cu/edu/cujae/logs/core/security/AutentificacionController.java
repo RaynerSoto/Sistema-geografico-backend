@@ -1,17 +1,15 @@
 package cu.edu.cujae.logs.core.security;
 
 import cu.edu.cujae.logs.core.dto.TokenDto;
-import cu.edu.cujae.logs.core.dto.UsuarioDto;
-import cu.edu.cujae.logs.core.dto.UsuarioLoginDto;
+import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
+import cu.edu.cujae.logs.core.dto.usuario.UsuarioLoginDto;
 import cu.edu.cujae.logs.core.mapping.Usuario;
 import cu.edu.cujae.logs.core.services.UsuarioService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -20,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.http.HttpRequest;
 import java.util.Optional;
 
 @RestController

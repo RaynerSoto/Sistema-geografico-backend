@@ -1,6 +1,6 @@
 package cu.edu.cujae.logs.core.mapping;
 
-import cu.edu.cujae.logs.core.dto.UsuarioDto;
+import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
 import cu.edu.cujae.logs.core.exception.GoodException;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import jakarta.persistence.*;
@@ -15,7 +15,6 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Collection;

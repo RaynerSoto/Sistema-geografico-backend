@@ -1,6 +1,6 @@
 package cu.edu.cujae.logs.core.controller;
 
-import cu.edu.cujae.logs.core.dto.UsuarioDto;
+import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
 import cu.edu.cujae.logs.core.mapping.Rol;
 import cu.edu.cujae.logs.core.mapping.Sexo;
 import cu.edu.cujae.logs.core.mapping.Usuario;

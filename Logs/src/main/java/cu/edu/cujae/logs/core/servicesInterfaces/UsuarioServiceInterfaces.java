@@ -1,6 +1,5 @@
 package cu.edu.cujae.logs.core.servicesInterfaces;
 
-import cu.edu.cujae.logs.core.dto.UsuarioLoginDto;
 import cu.edu.cujae.logs.core.exception.SearchException;
 import cu.edu.cujae.logs.core.mapping.Sexo;
 import cu.edu.cujae.logs.core.mapping.Usuario;
