@@ -46,7 +46,7 @@ public class UsuarioService implements UsuarioServiceInterfaces {
 
     @Override
     public Optional<Usuario> obtenerUsuarioEmailUsernameName(String email, String username, String name, Sexo sexo) throws SearchException {
-        return Optional.ofNullable(usuarioRepository.findByEmailEqualsAndUsernameEqualsAndNameEqualsAndSexoEquals(email,username,name,sexo)).orElseThrow(
+        return Optional.ofNullable(usuarioRepository.findByEmailEqualsAndUsernameEqualsIgnoreCaseAndNameEqualsAndSexoEquals(email,username,name,sexo)).orElseThrow(
                 ()->new SearchException("Usuario no encontrado")
         );
     }
@@ -91,6 +91,16 @@ public class UsuarioService implements UsuarioServiceInterfaces {
         }
         else{
             throw new SearchException("No existe el usuario");
+        }
+    }
+
+    @Override
+    public Usuario buscarUsuarioReturnedNull(Long id){
+        try {
+            return buscarUsuario(id);
+        }
+        catch (Exception e) {
+            return null;
         }
     }
 

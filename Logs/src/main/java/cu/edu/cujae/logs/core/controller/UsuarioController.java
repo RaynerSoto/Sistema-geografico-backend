@@ -1,5 +1,6 @@
 package cu.edu.cujae.logs.core.controller;
 
+import cu.edu.cujae.logs.core.dto.RegistroDto;
 import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
 import cu.edu.cujae.logs.core.dto.usuario.UsuarioDtoInsert;
 import cu.edu.cujae.logs.core.mapping.Rol;
@@ -8,10 +9,13 @@ import cu.edu.cujae.logs.core.mapping.Usuario;
 import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.SexoServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
+import cu.edu.cujae.logs.core.utils.RegistroUtils;
+import cu.edu.cujae.logs.core.utils.TokenUtils;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -36,15 +41,23 @@ public class UsuarioController {
     private SexoServiceInterfaces sexoService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RegistroUtils registroUtils;
+    @Autowired
+    private TokenUtils tokenUtils;
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Listado de todos los usuarios independientemente de su estado")
     @GetMapping("/")
-    public ResponseEntity<?> listarAllUsuarios() {
+    public ResponseEntity<?> listarAllUsuarios(HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado completo de los usuarios");
         try {
-            return ResponseEntity.ok().body(usuarioService.listarUsuarios().stream().map(UsuarioDto::new).toList());
+            List<UsuarioDto> user = usuarioService.listarUsuarios().stream().map(UsuarioDto::new).toList();
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            return ResponseEntity.ok().body(user);
         }
         catch (Exception e) {
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -53,11 +66,15 @@ public class UsuarioController {
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },
             summary = "Listados de usuarios activos, devueltos en una página para facilitar al Frontend")
     @GetMapping("/userActivosPagina")
-    public ResponseEntity<?> listarUsuariosActivosPagina(Pageable pageable) {
+    public ResponseEntity<?> listarUsuariosActivosPagina(Pageable pageable,HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado completo de los usuarios como un archivo paginable");
         try {
-            return ResponseEntity.ok().body(usuarioService.listarUsuarios(pageable).filter(s-> s.isActivo()).map(UsuarioDto::new).toList());
+            List<UsuarioDto> usuarioDtos = usuarioService.listarUsuarios(pageable).filter(s-> s.isActivo()).map(UsuarioDto::new).toList();
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            return ResponseEntity.ok().body(usuarioDtos);
         }
         catch (Exception e) {
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -66,7 +83,8 @@ public class UsuarioController {
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },
     summary = "Listado de usuarios activos")
     @GetMapping("/userActivos")
-    public ResponseEntity<?> listarUsuariosActivos() {
+    public ResponseEntity<?> listarUsuariosActivos(HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado completo de los usuarios activos");
         try {
             return ResponseEntity.ok().body(usuarioService.listarUsuarios().stream().filter(s-> s.isActivo())
                     .map(UsuarioDto::new).toList());
@@ -80,7 +98,8 @@ public class UsuarioController {
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },
     summary = "Listados de usuarios no Super Administradores")
     @GetMapping("/userActivosNoSuperAdministrador")
-    public ResponseEntity<?> listarUsuariosActivosNoAdministrador() {
+    public ResponseEntity<?> listarUsuariosActivosNoAdministrador(HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado completo de los usuarios no administrador");
         try {
             return ResponseEntity.ok().body(usuarioService.listarUsuariosNoSuperAdministrador().stream().filter(s-> s.isActivo())
                     .map(UsuarioDto::new).toList());
@@ -93,7 +112,8 @@ public class UsuarioController {
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Pagína para el frontend de los usuarios eliminados")
     @GetMapping("/userEliminadoPagina")
-    public ResponseEntity<?> listarUsuariosEliminadosPagina(Pageable pageable) {
+    public ResponseEntity<?> listarUsuariosEliminadosPagina(Pageable pageable,HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado completo de los usuarios eliminados paginable");
         try {
             return ResponseEntity.ok().body(usuarioService.listarUsuarios(pageable).filter(s-> !s.isActivo())
                     .map(UsuarioDto::new).toList());
@@ -107,7 +127,8 @@ public class UsuarioController {
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
     ,summary = "Listado de usuarios eliminados")
     @GetMapping("/userEliminado")
-    public ResponseEntity<?> listarUsuariosEliminados() {
+    public ResponseEntity<?> listarUsuariosEliminados(HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado completo de los usuarios eliminados");
         try {
             return ResponseEntity.ok().body(usuarioService.listarUsuarios().stream().filter(s-> !s.isActivo())
                     .map(UsuarioDto::new).toList());
@@ -121,7 +142,8 @@ public class UsuarioController {
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
     ,summary = "Permite insertar un usuario")
     @PostMapping("/")
-    public ResponseEntity<String> insertarUsuario(@RequestBody UsuarioDtoInsert usuario) {
+    public ResponseEntity<String> insertarUsuario(@RequestBody UsuarioDtoInsert usuario,HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Insertar un usuario");
         try {
             usuario.setActivo(true);
             Validacion.validarUnsupportedOperationException(usuario);
@@ -149,7 +171,8 @@ public class UsuarioController {
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
     ,summary = "Permite actualizar un usuario")
     @PutMapping("/{id}")
-    public ResponseEntity<String> actualizarUsuario(@RequestBody UsuarioDto usuario,@PathVariable Long id) {
+    public ResponseEntity<String> actualizarUsuario(@RequestBody UsuarioDto usuario,@PathVariable Long id,HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Modificar usuario");
         try {
             Validacion.validarUnsupportedOperationException(usuario);
             usuario.setUuid(id);
@@ -174,7 +197,8 @@ public class UsuarioController {
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite eliminar un usuario")
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> eliminarUsuario(@PathVariable Long id) {
+    public ResponseEntity<String> eliminarUsuario(@PathVariable Long id,HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Eliminar un usuario por ID");
         try {
             usuarioService.eliminarUsuario(id);
             return ResponseEntity.ok("Usuario eliminado");
@@ -187,12 +211,13 @@ public class UsuarioController {
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite conocer si un usuario está activo o no")
     @GetMapping("/isUserActivo")
-    public ResponseEntity<String> isUsuarioActivo(UsuarioDto usuario){
+    public ResponseEntity<String> isUsuarioActivo(UsuarioDto usuario,HttpServletRequest request){
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener si un usuario está activo o no");
         try {
             if (usuarioService.usuarioActivo(usuario.getEmail(), usuario.getUsername()).isPresent()) {
                 return ResponseEntity.ok().body("El usuario está activo");
             }
-            return ResponseEntity.ok("No debería está aquí");
+            return ResponseEntity.ok("El usuario no está activo");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

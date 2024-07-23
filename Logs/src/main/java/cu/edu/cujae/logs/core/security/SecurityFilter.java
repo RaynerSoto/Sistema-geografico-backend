@@ -3,12 +3,14 @@ package cu.edu.cujae.logs.core.security;
 import cu.edu.cujae.logs.core.dto.TokenDto;
 import cu.edu.cujae.logs.core.mapping.Usuario;
 import cu.edu.cujae.logs.core.repository.UsuarioRepository;
+import cu.edu.cujae.logs.core.utils.TokenUtils;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
+import org.hsqldb.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContext;
@@ -29,7 +31,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         System.out.println("Inicio doFilter");
-        TokenDto token = new TokenDto(request.getHeader("Authorization"));
+        TokenDto token = TokenUtils.requestToken(request);
         String requesUri = request.getRequestURI();
         System.out.println(requesUri);
         if (token.getToken() != null){
@@ -38,7 +40,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             var user = tokenService.getSubjetc(token.getToken());
             System.out.println(token);
             if(user != null){
-                var usuario = usuarioRepository.findByUsername(user);
+                var usuario = usuarioRepository.findByUsernameEqualsIgnoreCase(user);
                 //Forzar inicio de sesión
                 System.out.println(usuario.getAuthorities());
                 var autenticacion = new UsernamePasswordAuthenticationToken(usuario,null,usuario.getAuthorities());

@@ -1,13 +1,11 @@
 package cu.edu.cujae.logs.core.repository;
 
-import cu.edu.cujae.logs.core.mapping.Rol;
 import cu.edu.cujae.logs.core.mapping.Sexo;
 import cu.edu.cujae.logs.core.mapping.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,7 +31,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     @Query("from Usuario as user where user.username like :username and user.password like :password")
     public  Optional<Usuario> findByUsernameAndPassword(String username,String password);
 
-    UserDetails findByUsername(String username);
+    UserDetails findByUsernameEqualsIgnoreCase(String username);
 
-    Optional<Usuario> findByEmailEqualsAndUsernameEqualsAndNameEqualsAndSexoEquals(String email, String username,String name,Sexo sexo);
+    Optional<Usuario> findByUuidEquals(Long id);
+
+    Optional<Usuario> findByEmailEqualsAndUsernameEqualsIgnoreCaseAndNameEqualsAndSexoEquals(String email, String username, String name, Sexo sexo);
 }

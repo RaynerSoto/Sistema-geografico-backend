@@ -1,11 +1,16 @@
 package cu.edu.cujae.logs.core.services;
 
+import cu.edu.cujae.logs.core.dto.RegistroDto;
 import cu.edu.cujae.logs.core.mapping.Registro;
+import cu.edu.cujae.logs.core.mapping.Usuario;
 import cu.edu.cujae.logs.core.repository.RegistroRepository;
+import cu.edu.cujae.logs.core.repository.UsuarioRepository;
 import cu.edu.cujae.logs.core.servicesInterfaces.RegistroServiceInterfaces;
+import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -13,7 +18,10 @@ public class RegistroService implements RegistroServiceInterfaces {
 
     @Autowired
     private RegistroRepository registroRepository;
-
+    @Autowired
+    private UsuarioServiceInterfaces usuarioService;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
     @Override
     public void insertarRegistro(Registro registro) {
         registroRepository.save(registro);
@@ -27,5 +35,20 @@ public class RegistroService implements RegistroServiceInterfaces {
     @Override
     public List<Registro> listarRegistrosPoUsuario(Long usuario) {
         return registroRepository.findAll().stream().filter(s -> s.getIdUsuario() == usuario).toList();
+    }
+
+    @Override
+    public List<RegistroDto> listadoRegistros() {
+        List<RegistroDto> registroDtos = new ArrayList<>();
+        for(Registro registro:registroRepository.findAll()){
+            Usuario username = usuarioService.buscarUsuarioReturnedNull(registro.getIdUsuario());
+            if (username != null) {
+                registroDtos.add(new RegistroDto(registro,usuarioService.buscarUsuarioReturnedNull(registro.getIdUsuario()).getUsername()));
+            }
+            else {
+                registroDtos.add(new RegistroDto(registro,null));
+            }
+        }
+        return registroDtos;
     }
 }

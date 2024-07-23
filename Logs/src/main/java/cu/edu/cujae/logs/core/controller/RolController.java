@@ -3,6 +3,8 @@ package cu.edu.cujae.logs.core.controller;
 
 import cu.edu.cujae.logs.core.mapping.Rol;
 import cu.edu.cujae.logs.core.dto.RolDto;
+import cu.edu.cujae.logs.core.utils.RegistroUtils;
+import cu.edu.cujae.logs.core.utils.TokenUtils;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
 import io.swagger.v3.oas.annotations.Operation;
@@ -22,10 +24,14 @@ public class RolController {
 
     @Autowired
     private RolServiceInterfaces rolServiceInterfaces;
+    @Autowired
+    private RegistroUtils registroUtils;
+    @Autowired
+    private TokenUtils tokenUtils;
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite insertar un rol")
-    @PostMapping("/")
+    //@PostMapping("/")
     public ResponseEntity<?> crearRol(@RequestBody RolDto rol) {
         try{
             Validacion.validarUnsupportedOperationException(rol);
@@ -84,7 +90,7 @@ public class RolController {
     @PreAuthorize(value = "hasAnyRole('Super Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
     ,summary = "Permite modificar un rol")
-    @PutMapping("/{id}")
+    //@PutMapping("/{id}")
     public ResponseEntity<?> modificarRol(@PathVariable Long id, @RequestBody RolDto rol){
         try {
             rolServiceInterfaces.modificarRol(new Rol(rol),id);
@@ -97,7 +103,7 @@ public class RolController {
     @PreAuthorize(value = "hasAnyRole('Super Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
     ,summary = "Permite eliminar un rol")
-    @DeleteMapping("/{id}")
+    //@DeleteMapping("/{id}")
     public ResponseEntity<?> eliminarRol(@PathVariable Long id){
         try {
             rolServiceInterfaces.eliminarRol(id);

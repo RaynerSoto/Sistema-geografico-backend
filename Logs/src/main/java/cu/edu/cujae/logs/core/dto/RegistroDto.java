@@ -18,8 +18,6 @@ public class RegistroDto {
     private Long uuid;
 
     //Referencia al nombre de usuario
-    @NotBlank(message = "El usuario no puede estar vacío")
-    @NotNull(message = "El usuario  no puede ser null")
     private String usuario;
 
     @Size(min = 6,max = 100,message = "La actividad dedbe estar entre 6 y 100 caracteres")
@@ -35,4 +33,12 @@ public class RegistroDto {
     @NotNull(message = "El estado no puede ser null")
     @NotBlank(message = "El estado no puede estar vacío")
     private String estado;
+
+    public RegistroDto(Registro registro,String username){
+        this.uuid = registro.getUuid();
+        this.usuario = username;
+        this.actividad = registro.getActividad();
+        this.ip = registro.getIp();
+        this.estado = registro.getEstado().getNombre();
+    }
 }

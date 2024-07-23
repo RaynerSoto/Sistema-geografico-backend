@@ -39,7 +39,6 @@ public class Registro {
     @Column(name = "direccion_IP", nullable = false, length = 15)
     private String ip;
 
-
     @NotNull(message = "El estado no puede ser null")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "estadoID")
@@ -61,12 +60,28 @@ public class Registro {
         this.estado = estado;
     }
 
+    public Registro(RegistroDto registroDto, Estado estado) {
+        this.uuid = registroDto.getUuid();
+        this.idUsuario = null;
+        this.actividad = registroDto.getActividad();
+        this.ip = registroDto.getIp();
+        this.estado = estado;
+    }
+
     public Registro(Optional<Registro> registro) {
         this.uuid = registro.get().getUuid();
         this.idUsuario = registro.get().getIdUsuario();
         this.actividad = registro.get().getActividad();
         this.ip = registro.get().getIp();
         this.estado = registro.get().getEstado();
+    }
+
+    public Registro(RegistroDto registroDto,Long idUsuario,Estado Estado){
+        this.uuid = registroDto.getUuid();
+        this.idUsuario = idUsuario;
+        this.actividad = registroDto.getActividad();
+        this.ip = registroDto.getIp();
+        this.estado = Estado;
     }
 
     @PrePersist

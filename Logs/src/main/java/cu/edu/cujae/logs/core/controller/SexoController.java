@@ -1,16 +1,31 @@
 package cu.edu.cujae.logs.core.controller;
 
+import cu.edu.cujae.logs.core.dto.RegistroDto;
 import cu.edu.cujae.logs.core.dto.SexoDto;
+import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
+import cu.edu.cujae.logs.core.mapping.Estado;
+import cu.edu.cujae.logs.core.mapping.Registro;
+import cu.edu.cujae.logs.core.mapping.Usuario;
+import cu.edu.cujae.logs.core.services.EstadoService;
+import cu.edu.cujae.logs.core.servicesInterfaces.EstadoServiceInterfaces;
+import cu.edu.cujae.logs.core.servicesInterfaces.RegistroServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.SexoServiceInterfaces;
+import cu.edu.cujae.logs.core.utils.IpUtils;
+import cu.edu.cujae.logs.core.utils.RegistroUtils;
+import cu.edu.cujae.logs.core.utils.TokenUtils;
+import cu.edu.cujae.logs.core.utils.Validacion;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/sexo")
@@ -19,15 +34,27 @@ import org.springframework.web.bind.annotation.RestController;
 public class SexoController {
     @Autowired
     private SexoServiceInterfaces sexoService;
+    @Autowired
+    private RegistroServiceInterfaces registroService;
+    @Autowired
+    private EstadoServiceInterfaces estadoService;
+    @Autowired
+    private RegistroUtils registroUtils;
+    @Autowired
+    private TokenUtils tokenUtils;
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Devuelve el listados de los sexos")
     @GetMapping("/")
-    public ResponseEntity<?> listarSexos() {
+    public ResponseEntity<?> listarSexos(HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado completo de los sexos");
         try {
-            return ResponseEntity.ok().body(sexoService.listarSexos().stream().map(SexoDto::new).toList());
+            List<SexoDto> sexos = sexoService.listarSexos().stream().map(SexoDto::new).toList();
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            return ResponseEntity.ok().body(sexos);
         }
         catch (Exception e) {
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

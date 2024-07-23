@@ -1,10 +1,13 @@
 package cu.edu.cujae.logs.core.security;
 
+import cu.edu.cujae.logs.core.dto.RegistroDto;
 import cu.edu.cujae.logs.core.dto.TokenDto;
 import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
 import cu.edu.cujae.logs.core.dto.usuario.UsuarioLoginDto;
 import cu.edu.cujae.logs.core.mapping.Usuario;
 import cu.edu.cujae.logs.core.services.UsuarioService;
+import cu.edu.cujae.logs.core.utils.RegistroUtils;
+import cu.edu.cujae.logs.core.utils.TokenUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,20 +34,27 @@ public class AutentificacionController {
     private UsuarioService usuarioService;
     @Autowired
     private TokenService tokenService;
+    @Autowired
+    private RegistroUtils registroUtils;
+    @Autowired
+    private TokenUtils tokenUtils;
 
     @PostMapping("/")
     @Operation(summary = "Encargado de autentificar el usuario")
-    public ResponseEntity<?> autenticacionUsuario(@RequestBody UsuarioLoginDto usuarioLoginDto, HttpServletRequest httpServletRequest){
+    public ResponseEntity<?> autenticacionUsuario(@RequestBody UsuarioLoginDto usuarioLoginDto, HttpServletRequest request){
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Autenticación de usuario: "+usuarioLoginDto.getUsername());
         try {
-            System.out.println(httpServletRequest.getRemoteHost());//Obtener IP versión V4
+            System.out.println(request.getRemoteHost());//Obtener IP versión V4
             Usuario usuario = usuarioService.obtenerUsuarioPorUsernameAndPassword(usuarioLoginDto.getUsername(), usuarioLoginDto.getPassword());
             usuario = new Usuario(usuario, usuarioLoginDto.getPassword());
             Authentication authenticationToken = new UsernamePasswordAuthenticationToken(usuario.getUsername(),usuario.getPassword());;
             var usuarioAutentificado = authenticationManager.authenticate(authenticationToken);
             var JWTtoken = tokenService.generarToken((Usuario) usuarioAutentificado.getPrincipal());
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
             return ResponseEntity.ok(new TokenDto(JWTtoken));
         }catch (Exception e){
             System.out.println(e);
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

@@ -22,6 +22,8 @@ public interface UsuarioServiceInterfaces {
 
     Usuario buscarUsuario(Long id) throws Exception;
 
+    public Usuario buscarUsuarioReturnedNull(Long id);
+
     Optional<Usuario> usuarioActivo(String email,String username) throws Exception;
 
     Optional<Usuario> usuarioActivoEmail(String email) throws Exception;
