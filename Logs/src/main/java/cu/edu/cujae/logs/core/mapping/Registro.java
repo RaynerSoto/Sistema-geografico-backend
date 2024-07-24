@@ -10,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Entity
@@ -44,12 +46,18 @@ public class Registro {
     @JoinColumn(name = "estadoID")
     private Estado estado;
 
+    @NotNull(message = "La fecha de creación no puede ser null")
+    @Column(name = "fecha",nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp fecha;
+
     public Registro(Registro registro) {
         this.uuid = registro.getUuid();
         this.idUsuario = registro.getIdUsuario();
         this.actividad = registro.getActividad();
         this.ip = registro.getIp();
         this.estado = registro.getEstado();
+        this.fecha = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public Registro(RegistroDto registroDto, Usuario nombreUsuario, Estado estado) {
@@ -58,6 +66,7 @@ public class Registro {
         this.actividad = registroDto.getActividad();
         this.ip = registroDto.getIp();
         this.estado = estado;
+        this.fecha = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public Registro(RegistroDto registroDto, Estado estado) {
@@ -66,6 +75,7 @@ public class Registro {
         this.actividad = registroDto.getActividad();
         this.ip = registroDto.getIp();
         this.estado = estado;
+        this.fecha = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public Registro(Optional<Registro> registro) {
@@ -74,6 +84,7 @@ public class Registro {
         this.actividad = registro.get().getActividad();
         this.ip = registro.get().getIp();
         this.estado = registro.get().getEstado();
+        this.fecha = Timestamp.valueOf(LocalDateTime.now());
     }
 
     public Registro(RegistroDto registroDto,Long idUsuario,Estado Estado){
@@ -82,6 +93,7 @@ public class Registro {
         this.actividad = registroDto.getActividad();
         this.ip = registroDto.getIp();
         this.estado = Estado;
+        this.fecha = Timestamp.valueOf(LocalDateTime.now());
     }
 
     @PrePersist

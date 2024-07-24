@@ -2,6 +2,7 @@ package cu.edu.cujae.logs.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cu.edu.cujae.logs.core.mapping.Registro;
+import cu.edu.cujae.logs.core.utils.FechaFormato;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -34,11 +35,15 @@ public class RegistroDto {
     @NotBlank(message = "El estado no puede estar vacío")
     private String estado;
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private String fechaCreacion;
+
     public RegistroDto(Registro registro,String username){
         this.uuid = registro.getUuid();
         this.usuario = username;
         this.actividad = registro.getActividad();
         this.ip = registro.getIp();
         this.estado = registro.getEstado().getNombre();
+        this.fechaCreacion = FechaFormato.formateoFecha(registro.getFecha());
     }
 }
