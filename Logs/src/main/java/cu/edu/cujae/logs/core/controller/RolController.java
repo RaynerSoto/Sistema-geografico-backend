@@ -1,6 +1,7 @@
 package cu.edu.cujae.logs.core.controller;
 
 
+import cu.edu.cujae.logs.core.dto.RegistroDto;
 import cu.edu.cujae.logs.core.mapping.Rol;
 import cu.edu.cujae.logs.core.dto.RolDto;
 import cu.edu.cujae.logs.core.utils.RegistroUtils;
@@ -10,7 +11,9 @@ import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -32,6 +35,7 @@ public class RolController {
     @PreAuthorize(value = "hasAnyRole('Super Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite insertar un rol")
     //@PostMapping("/")
+    @Deprecated
     public ResponseEntity<?> crearRol(@RequestBody RolDto rol) {
         try{
             Validacion.validarUnsupportedOperationException(rol);
@@ -50,10 +54,14 @@ public class RolController {
     @PreAuthorize(value = "hasAnyRole('Super Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver todos los roles")
     @GetMapping("/")
-    public ResponseEntity<?> listarRoles() {
+    public ResponseEntity<?> listarRoles(HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado de roles");
         try {
-            return ResponseEntity.ok(rolServiceInterfaces.consultarRol().stream().map(RolDto::new).toList());
+            List<RolDto>roles = rolServiceInterfaces.consultarRol().stream().map(RolDto::new).toList();
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            return ResponseEntity.ok(roles);
         }catch (Exception e){
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -61,10 +69,14 @@ public class RolController {
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver solamente los nombres de los roles")
     @GetMapping("/nombresRol")
-    public ResponseEntity<?> listarRolesNombre() {
+    public ResponseEntity<?> listarRolesNombre(HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener los nombres de los roles");
         try {
-            return ResponseEntity.ok(rolServiceInterfaces.consultarRol().stream().map(s-> s.getRol()).toList());
+            List<String> rolDtos = rolServiceInterfaces.consultarRol().stream().map(s-> s.getRol()).toList();
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            return ResponseEntity.ok(rolDtos);
         }catch (Exception e){
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -73,16 +85,20 @@ public class RolController {
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
     ,summary = "Permite consultar un rol por el ID")
     @GetMapping("/{id}")
-    public ResponseEntity<?> consultarRol(@PathVariable Long id) {
+    public ResponseEntity<?> consultarRol(@PathVariable Long id,HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener los nombres de los roles");
         try {
             Optional<Rol> rol = rolServiceInterfaces.consultarRolID(id);
             if (rol.isPresent()) {
+                registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
                 return ResponseEntity.ok(new RolDto(rol.get()));
             }
             else {
+                registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
                 return ResponseEntity.badRequest().body("El rol no existe");
             }
         }catch (Exception e){
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -91,6 +107,7 @@ public class RolController {
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
     ,summary = "Permite modificar un rol")
     //@PutMapping("/{id}")
+    @Deprecated
     public ResponseEntity<?> modificarRol(@PathVariable Long id, @RequestBody RolDto rol){
         try {
             rolServiceInterfaces.modificarRol(new Rol(rol),id);
@@ -104,11 +121,15 @@ public class RolController {
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
     ,summary = "Permite eliminar un rol")
     //@DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminarRol(@PathVariable Long id){
+    @Deprecated
+    public ResponseEntity<?> eliminarRol(@PathVariable Long id,HttpServletRequest request){
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Eliminar un rol por su ID");
         try {
             rolServiceInterfaces.eliminarRol(id);
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
             return ResponseEntity.ok("Eliminado correctamente");
         }catch (Exception e){
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -116,12 +137,16 @@ public class RolController {
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite buscar un rol por su nombre")
     @GetMapping("/buscadorNombre")
-    public ResponseEntity<?> buscadorRolNombre(RolDto rol){
+    public ResponseEntity<?> buscadorRolNombre(RolDto rol,HttpServletRequest request){
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Buscar un rol por su nombre");
         try {
-            return ResponseEntity.ok(new RolDto(rolServiceInterfaces.consultarRol(rol.getNombre())));
+            RolDto rolDto = new RolDto(rolServiceInterfaces.consultarRol(rol.getNombre()));
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            return ResponseEntity.ok(rolDto);
         }
         catch (Exception e){
             System.out.println(e.getMessage());
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
