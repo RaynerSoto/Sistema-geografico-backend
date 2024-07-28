@@ -66,5 +66,5 @@ public class Provincia {
     private List<Entidad> entidades;
 
     @OneToMany(mappedBy = "provincia", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
-    private List<Personal> personals;
+    private List<Empleado> empleados;
 }

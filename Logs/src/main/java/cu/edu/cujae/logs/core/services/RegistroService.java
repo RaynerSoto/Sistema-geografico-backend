@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -39,16 +40,9 @@ public class RegistroService implements RegistroServiceInterfaces {
 
     @Override
     public List<RegistroDto> listadoRegistros() {
-        List<RegistroDto> registroDtos = new ArrayList<>();
-        for(Registro registro:registroRepository.findAll()){
-            Usuario username = usuarioService.buscarUsuarioReturnedNull(registro.getIdUsuario());
-            if (username != null) {
-                registroDtos.add(new RegistroDto(registro,usuarioService.buscarUsuarioReturnedNull(registro.getIdUsuario()).getUsername()));
-            }
-            else {
-                registroDtos.add(new RegistroDto(registro,null));
-            }
-        }
-        return registroDtos;
+        return registroRepository.findAll().stream()
+                .map(registro -> {
+                    return new RegistroDto(registro,usuarioService.buscarUsuarioReturnedNull(registro.getIdUsuario()));
+                }).toList();
     }
 }

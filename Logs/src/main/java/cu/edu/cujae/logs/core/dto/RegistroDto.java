@@ -2,6 +2,7 @@ package cu.edu.cujae.logs.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cu.edu.cujae.logs.core.mapping.Registro;
+import cu.edu.cujae.logs.core.mapping.Usuario;
 import cu.edu.cujae.logs.core.utils.FechaFormato;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -38,9 +39,12 @@ public class RegistroDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String fechaCreacion;
 
-    public RegistroDto(Registro registro,String username){
+    public RegistroDto(Registro registro, Usuario user){
         this.uuid = registro.getUuid();
-        this.usuario = username;
+        if (user != null)
+            this.usuario = user.getUsername();
+        else
+            this.usuario = null;
         this.actividad = registro.getActividad();
         this.ip = registro.getIp();
         this.estado = registro.getEstado().getNombre();
