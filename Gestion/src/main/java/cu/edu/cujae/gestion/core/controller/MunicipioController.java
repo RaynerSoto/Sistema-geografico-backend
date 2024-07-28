@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Comparator;
 
 @RestController
-@RequestMapping("/api/v1/municipio")
+@RequestMapping(value = "/api/v1/municipio",name = "Controlador de municipios")
 public class MunicipioController {
     @Autowired
     private MunicipioServicesInterfaces municipioServices;

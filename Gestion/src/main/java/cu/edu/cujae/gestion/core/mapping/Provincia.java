@@ -54,7 +54,6 @@ public class Provincia {
     @Column(name = "siglas", nullable = false)
     private String siglas;
 
-
     @NotNull(message = "El centroide no puede ser nulo")
     @Column(name = "centroide", nullable = false,columnDefinition = "geometry")
     private Geometry centroide;

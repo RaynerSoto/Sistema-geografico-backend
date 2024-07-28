@@ -1,6 +1,7 @@
 package cu.edu.cujae.gestion.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import cu.edu.cujae.gestion.core.geometry.Geometria;
 import cu.edu.cujae.gestion.core.mapping.AreaSalud;
 import cu.edu.cujae.gestion.core.mapping.Municipio;
 import jakarta.persistence.*;
@@ -9,6 +10,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.locationtech.jts.geom.Geometry;
+
+import java.util.Optional;
 
 @Data
 @AllArgsConstructor
@@ -23,14 +26,6 @@ public class AreaSaludDto {
     private String nombre;
 
     private Long id2;
-
-    @NotNull(message = "El cuerpo geométrico no puede ser nulo")
-    @JsonIgnore
-    private Geometry geometry;
-
-    @NotNull(message = "El centroide no puede ser nulo")
-    @JsonIgnore
-    private Geometry centroide;
 
     @DecimalMin(value = "0.00000000000000000000001",message = "El valor mínimo debe ser 0.00000000000000000000001")
     @NotNull(message = "El valor del área en kilómetros cuadrados no debe ser nulo")
@@ -52,12 +47,49 @@ public class AreaSaludDto {
         this.uuid = areaSalud.getUuid();
         this.nombre = areaSalud.getNombre();
         this.id2 = areaSalud.getId2();
-        this.geometry = areaSalud.getGeometry();
-        this.centroide = areaSalud.getCentroide();
         this.areakm2 = areaSalud.getAreakm2();
         this.poblacion = areaSalud.getPoblacion();
         this.distCentroProv = areaSalud.getDistCentroProv();
         this.distcentromunic = areaSalud.getDistcentromunic();
         this.municipio = areaSalud.getMunicipio().getNombre();
+    }
+
+    public AreaSaludDto(Optional<AreaSalud> areaSalud){
+        uuid = areaSalud.get().getUuid();
+        nombre = areaSalud.get().getNombre();
+        id2 = areaSalud.get().getId2();
+        areakm2 = areaSalud.get().getAreakm2();
+        poblacion = areaSalud.get().getPoblacion();
+        distCentroProv = areaSalud.get().getDistCentroProv();
+        distcentromunic = areaSalud.get().getDistcentromunic();
+        municipio = areaSalud.get().getMunicipio().getNombre();
+    }
+
+
+    public class AreaSaludDtoGeometry extends Geometria {
+
+        public AreaSaludDtoGeometry(AreaSalud areaSalud){
+            super(areaSalud.getGeometry(),areaSalud.getGeometry());
+            uuid = areaSalud.getUuid();
+            nombre = areaSalud.getNombre();
+            id2 = areaSalud.getId2();
+            areakm2 = areaSalud.getAreakm2();
+            poblacion = areaSalud.getPoblacion();
+            distCentroProv = areaSalud.getDistCentroProv();
+            distcentromunic = areaSalud.getDistcentromunic();
+            municipio = areaSalud.getMunicipio().getNombre();
+        }
+
+        public AreaSaludDtoGeometry(Optional<AreaSalud> areaSalud){
+            super(areaSalud.get().getGeometry(),areaSalud.get().getGeometry());
+            uuid = areaSalud.get().getUuid();
+            nombre = areaSalud.get().getNombre();
+            id2 = areaSalud.get().getId2();
+            areakm2 = areaSalud.get().getAreakm2();
+            poblacion = areaSalud.get().getPoblacion();
+            distCentroProv = areaSalud.get().getDistCentroProv();
+            distcentromunic = areaSalud.get().getDistcentromunic();
+            municipio = areaSalud.get().getMunicipio().getNombre();
+        }
     }
 }

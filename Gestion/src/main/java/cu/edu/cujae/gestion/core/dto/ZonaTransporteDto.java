@@ -1,6 +1,7 @@
 package cu.edu.cujae.gestion.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import cu.edu.cujae.gestion.core.geometry.Geometria;
 import cu.edu.cujae.gestion.core.mapping.ZonaTransporte;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -10,18 +11,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.locationtech.jts.geom.Geometry;
 
+import java.util.Optional;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ZonaTransporteDto {
-
-
     @NotNull(message = "El id de la zona de transporte no puede ser nulo")
     private Long uuid;
-
-    @NotNull(message = "El cuerpo geométrico no puede ser nulo")
-    @JsonIgnore
-    private Geometry geometry;
 
     private String direc_centrica;
 
@@ -35,10 +32,6 @@ public class ZonaTransporteDto {
     @NotNull(message = "La población no puede ser nula")
     private Long poblacion;
 
-    @NotNull(message = "El centroide no puede ser nulo")
-    @JsonIgnore
-    private Geometry centroide;
-
     @DecimalMin(value = "0.0000000000000000001", message = "El valor mínimo es: 0.0000000000000000001")
     private Double distCentroProv;
 
@@ -47,17 +40,53 @@ public class ZonaTransporteDto {
 
     private String municipio;
 
-
     public ZonaTransporteDto(ZonaTransporte zonaTransporte){
         this.uuid = zonaTransporte.getUuid();
-        this.geometry = zonaTransporte.getGeometry();
         this.direc_centrica = zonaTransporte.getDirec_centrica();
         this.indice_acc = zonaTransporte.getIndice_acc();
         this.areakm2 = zonaTransporte.getAreakm2();
         this.poblacion = zonaTransporte.getPoblacion();
-        this.centroide = zonaTransporte.getCentroide();
         this.distCentroProv = zonaTransporte.getDistCentroProv();
         this.distcentromunic = zonaTransporte.getDistcentromunic();
         this.municipio = zonaTransporte.getMunicipio().getNombre();
+    }
+
+    public ZonaTransporteDto(Optional<ZonaTransporte> zonaTransporte){
+        this.uuid = zonaTransporte.get().getUuid();
+        this.direc_centrica = zonaTransporte.get().getDirec_centrica();
+        this.indice_acc = zonaTransporte.get().getIndice_acc();
+        this.areakm2 = zonaTransporte.get().getAreakm2();
+        this.poblacion = zonaTransporte.get().getPoblacion();
+        this.distCentroProv = zonaTransporte.get().getDistCentroProv();
+        this.distcentromunic = zonaTransporte.get().getDistcentromunic();
+        this.municipio = zonaTransporte.get().getMunicipio().getNombre();
+    }
+
+
+    public class ZonaTransporteDtoGeoemtry extends Geometria{
+
+        public ZonaTransporteDtoGeoemtry(ZonaTransporte zonaTransporte){
+            super(zonaTransporte.getGeometry(),zonaTransporte.getCentroide());
+            uuid = zonaTransporte.getUuid();
+            direc_centrica = zonaTransporte.getDirec_centrica();
+            indice_acc = zonaTransporte.getIndice_acc();
+            areakm2 = zonaTransporte.getAreakm2();
+            poblacion = zonaTransporte.getPoblacion();
+            distCentroProv = zonaTransporte.getDistCentroProv();
+            distcentromunic = zonaTransporte.getDistcentromunic();
+            municipio = zonaTransporte.getMunicipio().getNombre();
+        }
+
+        public ZonaTransporteDtoGeoemtry(Optional<ZonaTransporte> zonaTransporte){
+            super(zonaTransporte.get().getGeometry(),zonaTransporte.get().getCentroide());
+            uuid = zonaTransporte.get().getUuid();
+            direc_centrica = zonaTransporte.get().getDirec_centrica();
+            indice_acc = zonaTransporte.get().getIndice_acc();
+            areakm2 = zonaTransporte.get().getAreakm2();
+            poblacion = zonaTransporte.get().getPoblacion();
+            distCentroProv = zonaTransporte.get().getDistCentroProv();
+            distcentromunic = zonaTransporte.get().getDistcentromunic();
+            municipio = zonaTransporte.get().getMunicipio().getNombre();
+        }
     }
 }
