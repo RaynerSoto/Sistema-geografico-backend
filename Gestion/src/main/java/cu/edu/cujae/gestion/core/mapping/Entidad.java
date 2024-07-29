@@ -1,5 +1,7 @@
 package cu.edu.cujae.gestion.core.mapping;
 
+import cu.edu.cujae.gestion.core.dto.EntidadDto;
+import cu.edu.cujae.gestion.core.utils.Validacion;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -27,7 +29,7 @@ public class Entidad {
 
     @NotBlank(message = "El nombre no puede estar vacío o estar compuesto solamente por espacios")
     @NotNull(message = "El nombre de la entidad no puede ser null")
-    @Size(min = 3,max = 100,message = "El nombre debe tener entre 3 y 100 caracteres")
+    @Size(min = 3,max = 1000,message = "El nombre debe tener entre 3 y 1000 caracteres")
     @Column(name = "nombre",nullable = false, unique = true,length = 100)
     private String nombre;
 
@@ -36,24 +38,18 @@ public class Entidad {
 
     @NotNull(message = "El municipio no puede ser nulo")
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idmunicipio")
+    @JoinColumn(name = "idmunicipio",nullable = false)
     public Municipio municipio;
 
     @NotNull(message = "La provincia no puede ser nulo")
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idprovincia")
+    @JoinColumn(name = "idprovincia",nullable = false)
     public Provincia provincia;
 
     @NotBlank(message = "La calle principal de la entidad no puede estar vacío o estar compuesto solamente por espacios")
     @NotNull(message = "La calle principal de la entidad no puede ser null")
-    @Column(name = "callePrincipal",nullable = false)
-    public String calle_principal;
-
-    @Column(name = "entrecalle1")
-    private String entrecalle1;
-
-    @Column(name = "entrecalle2")
-    private String entrecalle2;
+    @Column(name = "direccion",nullable = false)
+    public String direccion;
 
     @Column(name = "numero")
     private String numeroCasa;
@@ -106,4 +102,25 @@ public class Entidad {
             ,joinColumns = @JoinColumn(name = "identidad")
             ,inverseJoinColumns = @JoinColumn(name = "idpersonal"))
     private List<Empleado> personal;
+
+    public Entidad(EntidadDto entidadDto, Municipio municipio, Provincia provincia){
+        this.uuid = entidadDto.getUuid();
+        this.nombre = entidadDto.getNombre();
+        this.entidadMadre = entidadDto.getEntidadMadre();
+        this.provincia = provincia;
+        this.municipio = municipio;
+        this.direccion = entidadDto.getDireccion();
+        this.numeroCasa = entidadDto.getNumeroCasa();
+        this.localidad = entidadDto.getLocalidad();
+        this.horario_entrada = entidadDto.getHorario_entrada();
+        this.horario_salida = entidadDto.getHorario_salida();
+        this.horario_propuesto_salida = entidadDto.getHorario_propuesto_salida();
+        this.horario_propuesto_entrada = entidadDto.getHorario_propuesto_entrada();
+        this.datos = entidadDto.getDatos();
+    }
+
+    @PrePersist
+    public void prePersist(){
+        Validacion.validarUnsupportedOperationException(this);
+    }
 }

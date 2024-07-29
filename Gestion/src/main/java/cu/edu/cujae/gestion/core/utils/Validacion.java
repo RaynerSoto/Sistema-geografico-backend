@@ -3,7 +3,6 @@ package cu.edu.cujae.gestion.core.utils;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
 
 public class Validacion {
 
