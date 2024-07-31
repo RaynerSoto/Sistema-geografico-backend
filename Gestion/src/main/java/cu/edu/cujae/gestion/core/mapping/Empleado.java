@@ -3,6 +3,7 @@ package cu.edu.cujae.gestion.core.mapping;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -34,6 +35,7 @@ public class Empleado {
     @NotNull(message = "El carnet de la entidad no puede ser null")
     @Size(min = 11,max = 11,message = "El carnet debe tener 11 caracteres")
     @Column(name = "ci",nullable = false, unique = true, length = 11)
+    @Pattern(regexp = "^[0-9]{2}([0]?[0-9]|[1]?[0-2])([0-2]?[0-9]|[3]?[0-1])\\d{5}$")
     private String ci;
 
     @NotNull(message = "El municipio no puede ser nulo")
@@ -46,19 +48,19 @@ public class Empleado {
     @JoinColumn(name = "idprovincia")
     public Provincia provincia;
 
-    @NotBlank(message = "La calle principal del trabajador no puede estar vacío o estar compuesto solamente por espacios")
-    @NotNull(message = "La calle principal del trabajador no puede ser null")
-    @Column(name = "callePrincipal",nullable = false)
-    public String calle_principal;
-
-    @Column(name = "entrecalle1")
-    private String entrecalle1;
-
-    @Column(name = "entrecalle2")
-    private String entrecalle2;
+    @NotBlank(message = "La calle principal del empleado no puede estar vacío o estar compuesto solamente por espacios")
+    @NotNull(message = "La calle principal del empleado no puede ser null")
+    @Column(name = "direccion",nullable = false)
+    public String direccion;
 
     @Column(name = "datosAdicionales")
     private String datos;
+
+    @Column(name = "numero")
+    private String numero;
+
+    @Column(name = "localidad")
+    private String localidad;
 
     @Column(name = "zona_transporte")
     private Long zona_transporte;
@@ -80,12 +82,6 @@ public class Empleado {
 
     @Column(name = "geolocalizacion",columnDefinition = "geometry")
     private Geometry geometry;
-
-    @Column(name = "numero")
-    private String numero;
-
-    @Column(name = "localidad")
-    private String localidad;
 
     @ManyToMany(mappedBy = "personal")
     private List<Entidad> entidades;

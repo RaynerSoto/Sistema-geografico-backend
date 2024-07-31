@@ -1,0 +1,10 @@
+package cu.edu.cujae.gestion.core.repository;
+
+import cu.edu.cujae.gestion.core.mapping.Empleado;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
+
+public interface EmpleadoRepository extends JpaRepository<Empleado, Long>{
+    public Optional<Empleado> findByCiEqualsIgnoreCase(String ci);
+}

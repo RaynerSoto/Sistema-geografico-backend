@@ -30,15 +30,15 @@ public class EntidadDto {
 
     @NotBlank(message = "El municipio no puede estar vacío o estar compuesto solamente por espacios")
     @NotNull(message = "El municipio no puede ser nulo")
-    public String municipio;
+    private String municipio;
 
     @NotBlank(message = "La provincia no puede estar vacío o estar compuesto solamente por espacios")
     @NotNull(message = "La provincia no puede ser nulo")
-    public String provincia;
+    private String provincia;
 
     @NotBlank(message = "La direccion de la entidad no puede estar vacío o estar compuesto solamente por espacios")
     @NotNull(message = "La direccion de la entidad no puede ser null")
-    public String direccion;
+    private String direccion;
 
     private String numeroCasa;
 

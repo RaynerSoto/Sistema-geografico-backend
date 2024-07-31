@@ -43,5 +43,4 @@ public class ProvinciaController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
 }

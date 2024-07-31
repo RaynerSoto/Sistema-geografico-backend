@@ -39,17 +39,17 @@ public class Entidad {
     @NotNull(message = "El municipio no puede ser nulo")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idmunicipio",nullable = false)
-    public Municipio municipio;
+    private Municipio municipio;
 
     @NotNull(message = "La provincia no puede ser nulo")
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idprovincia",nullable = false)
-    public Provincia provincia;
+    private Provincia provincia;
 
     @NotBlank(message = "La calle principal de la entidad no puede estar vacío o estar compuesto solamente por espacios")
     @NotNull(message = "La calle principal de la entidad no puede ser null")
     @Column(name = "direccion",nullable = false)
-    public String direccion;
+    private String direccion;
 
     @Column(name = "numero")
     private String numeroCasa;
