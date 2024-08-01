@@ -1,5 +1,6 @@
 package cu.edu.cujae.gestion.core.mapping;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import cu.edu.cujae.gestion.core.dto.EntidadDto;
 import cu.edu.cujae.gestion.core.utils.Validacion;
 import jakarta.persistence.*;
@@ -102,7 +103,8 @@ public class Entidad {
     @JoinTable(name = "entidadpersonal"
             ,joinColumns = @JoinColumn(name = "identidad")
             ,inverseJoinColumns = @JoinColumn(name = "idpersonal")
-            ,uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "course_id"}))
+            ,uniqueConstraints = @UniqueConstraint(columnNames = {"identidad", "idpersonal"}))
+    @JsonIgnore
     private List<Empleado> personal = new ArrayList<>();
 
     public Entidad(EntidadDto entidadDto, Municipio municipio, Provincia provincia){

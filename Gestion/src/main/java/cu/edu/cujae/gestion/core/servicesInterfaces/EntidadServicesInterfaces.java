@@ -19,4 +19,6 @@ public interface EntidadServicesInterfaces {
     public void existeEntidadNombreNotId(String nombre, Long id) throws Exception;
 
     public Optional<Entidad> obtenerEntidadNombre(String nombre) throws Exception;
+
+    public Optional<Entidad> obtenerEntidadID(Long id) throws Exception;
 }

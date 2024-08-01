@@ -7,4 +7,6 @@ import java.util.Optional;
 
 public interface EmpleadoRepository extends JpaRepository<Empleado, Long>{
     public Optional<Empleado> findByCiEqualsIgnoreCase(String ci);
+
+    public boolean existsByCiEqualsIgnoreCase(String ci);
 }

@@ -1,10 +1,20 @@
 package cu.edu.cujae.gestion.core.dto.empleadoDtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import cu.edu.cujae.gestion.core.mapping.Empleado;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class EmpleadoDtoRegular extends EmpleadoDto{
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private List<String> entidades;
 
     public EmpleadoDtoRegular(Empleado empleadoDto) {

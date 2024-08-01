@@ -37,4 +37,38 @@ public class EmpleadoService implements EmpleadoServiceInterfaces {
     public void insertarEmpleado(Empleado empleado){
         empleadoRepository.save(empleado);
     }
+
+    @Override
+    public Optional<Empleado> obtenerEmpleadoXId(Long id) throws Exception{
+        return Optional.ofNullable(empleadoRepository.findById(id).orElseThrow(
+                () -> new SearchException("No existe un empleado con dicho ID")
+        ));
+    }
+
+    @Override
+    public void modificarEmpleado(Empleado empleado) throws Exception {
+        if (empleadoRepository.existsById(empleado.getUuid()))
+            empleadoRepository.save(empleado);
+        else{
+            throw new SearchException("No se encuentra el empleado a modiicar");
+        }
+    }
+
+    @Override
+    public void eliminarEmpleado(Long id) throws Exception {
+        if (empleadoRepository.existsById(id))
+            empleadoRepository.deleteById(id);
+        else{
+            throw new SearchException("No se encuentra el empleado a eliminar");
+        }
+    }
+
+    @Override
+    public void eliminarEmpleado(String ci) throws Exception{
+        if (empleadoRepository.existsByCiEqualsIgnoreCase(ci))
+            empleadoRepository.delete(empleadoRepository.findByCiEqualsIgnoreCase(ci).get());
+        else{
+            throw new SearchException("No se encuentra el empleado a eliminar");
+        }
+    }
 }

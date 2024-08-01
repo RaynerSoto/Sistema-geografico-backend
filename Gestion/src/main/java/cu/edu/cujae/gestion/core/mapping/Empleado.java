@@ -22,7 +22,6 @@ public class Empleado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @NotNull(message = "El id del trabajador no puede ser nulo")
     @Column(name = "idpersonal", nullable = false, updatable = false, unique = true)
     private Long uuid;
 

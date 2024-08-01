@@ -13,4 +13,12 @@ public interface EmpleadoServiceInterfaces {
     public Optional<Empleado> obtenerEmpleadoXCi(String ci);
 
     void insertarEmpleado(Empleado empleado);
+
+    public Optional<Empleado> obtenerEmpleadoXId(Long id) throws Exception;
+
+    public void modificarEmpleado(Empleado empleado) throws Exception;
+
+    public void eliminarEmpleado(Long id) throws Exception;
+
+    void eliminarEmpleado(String ci) throws Exception;
 }

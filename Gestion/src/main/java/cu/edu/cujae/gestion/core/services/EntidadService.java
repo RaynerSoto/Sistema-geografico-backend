@@ -61,4 +61,11 @@ public class EntidadService implements EntidadServicesInterfaces {
                 () -> new SearchException("No existe una entidad con el nombre " + nombre)
         ));
     }
+
+    @Override
+    public Optional<Entidad> obtenerEntidadID(Long id) throws Exception {
+        return Optional.ofNullable(entidadRepository.findById(id).orElseThrow(
+                () -> new SearchException("No existe una entidad con el id " + id)
+        ));
+    }
 }
