@@ -8,7 +8,9 @@ import java.util.Optional;
 public interface EmpleadoServiceInterfaces {
     public List<Empleado> obtenerEmpleados();
 
-    public Optional<Empleado> obtenerUsuarioXCiException(String ci) throws Exception;
+    public Optional<Empleado> obtenerEmpleadoXCiException(String ci) throws Exception;
 
-    public Optional<Empleado> obtenerUsuarioXCi(String ci);
+    public Optional<Empleado> obtenerEmpleadoXCi(String ci);
+
+    void insertarEmpleado(Empleado empleado);
 }

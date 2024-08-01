@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EntidadService implements EntidadServicesInterfaces {
@@ -52,5 +53,12 @@ public class EntidadService implements EntidadServicesInterfaces {
     public void existeEntidadNombreNotId(String nombre, Long id) throws Exception {
         if (entidadRepository.existsByNombreEqualsIgnoreCaseAndAndUuidNot(nombre, id))
             throw new SearchException("Existe una entidad que tiene ese nombre ya previamente insertada");
+    }
+
+    @Override
+    public Optional<Entidad> obtenerEntidadNombre(String nombre) throws Exception {
+        return Optional.ofNullable(entidadRepository.findByNombreEqualsIgnoreCase(nombre).orElseThrow(
+                () -> new SearchException("No existe una entidad con el nombre " + nombre)
+        ));
     }
 }

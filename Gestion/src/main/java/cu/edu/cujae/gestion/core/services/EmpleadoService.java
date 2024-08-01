@@ -21,7 +21,7 @@ public class EmpleadoService implements EmpleadoServiceInterfaces {
     }
 
     @Override
-    public Optional<Empleado> obtenerUsuarioXCiException(String ci) throws Exception{
+    public Optional<Empleado> obtenerEmpleadoXCiException(String ci) throws Exception{
         return Optional.ofNullable(empleadoRepository.findByCiEqualsIgnoreCase(ci)
                 .orElseThrow(
                         () -> new SearchException("No se encontro el usuario con ci " + ci)
@@ -29,7 +29,12 @@ public class EmpleadoService implements EmpleadoServiceInterfaces {
     }
 
     @Override
-    public Optional<Empleado> obtenerUsuarioXCi(String ci){
+    public Optional<Empleado> obtenerEmpleadoXCi(String ci){
         return empleadoRepository.findByCiEqualsIgnoreCase(ci);
+    }
+
+    @Override
+    public void insertarEmpleado(Empleado empleado){
+        empleadoRepository.save(empleado);
     }
 }

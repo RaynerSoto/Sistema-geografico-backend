@@ -1,4 +1,5 @@
 package cu.edu.cujae.gestion.core.dto.empleadoDtos;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import cu.edu.cujae.gestion.core.mapping.Empleado;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -14,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class EmpleadoDto {
-
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long uuid;
 
     @NotBlank(message = "El nombre no puede estar vacío o estar compuesto solamente por espacios")
@@ -25,7 +26,8 @@ public class EmpleadoDto {
     @NotBlank(message = "El carnet de identidad no puede estar vacío o estar compuesto solamente por espacios")
     @NotNull(message = "El carnet de la entidad no puede ser null")
     @Size(min = 11,max = 11,message = "El carnet debe tener 11 caracteres")
-    @Pattern(regexp = "^[0-9]{2}([0]?[0-9]|[1]?[0-2])([0-2]?[0-9]|[3]?[0-1])\\d{5}$")
+    @Pattern(regexp = "^[0-9]{2}([0]?[0-9]|[1]?[0-2])([0-2]?[0-9]|[3]?[0-1])\\d{5}$",
+            message = "No se cumple los valores del carnet de identidad")
     private String ci;
 
     @NotNull(message = "El municipio no puede ser nulo")

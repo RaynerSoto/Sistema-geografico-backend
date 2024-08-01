@@ -1,5 +1,6 @@
 package cu.edu.cujae.gestion.core.mapping;
 
+import cu.edu.cujae.gestion.core.dto.empleadoDtos.EmpleadoDto;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -35,7 +36,8 @@ public class Empleado {
     @NotNull(message = "El carnet de la entidad no puede ser null")
     @Size(min = 11,max = 11,message = "El carnet debe tener 11 caracteres")
     @Column(name = "ci",nullable = false, unique = true, length = 11)
-    @Pattern(regexp = "^[0-9]{2}([0]?[0-9]|[1]?[0-2])([0-2]?[0-9]|[3]?[0-1])\\d{5}$")
+    @Pattern(regexp = "^[0-9]{2}([0]?[0-9]|[1]?[0-2])([0-2]?[0-9]|[3]?[0-1])\\d{5}$"
+            ,message = "No se cumple los valores del carnet de identidad")
     private String ci;
 
     @NotNull(message = "El municipio no puede ser nulo")
@@ -85,4 +87,25 @@ public class Empleado {
 
     @ManyToMany(mappedBy = "personal")
     private List<Entidad> entidades;
+
+    public Empleado(EmpleadoDto empleadoDto, Municipio municipio, Provincia provincia){
+        this.uuid = empleadoDto.getUuid();
+        this.nombre = empleadoDto.getNombre();
+        this.ci = empleadoDto.getCi();
+        this.municipio = municipio;
+        this.provincia = provincia;
+        this.direccion = empleadoDto.getDireccion();
+        this.datos = empleadoDto.getDatos();
+    }
+
+    public Empleado(EmpleadoDto empleadoDto, Municipio municipio, Provincia provincia,Entidad entidad){
+        this.uuid = empleadoDto.getUuid();
+        this.nombre = empleadoDto.getNombre();
+        this.ci = empleadoDto.getCi();
+        this.municipio = municipio;
+        this.provincia = provincia;
+        this.direccion = empleadoDto.getDireccion();
+        this.datos = empleadoDto.getDatos();
+        this.entidades = List.of(entidad);
+    }
 }

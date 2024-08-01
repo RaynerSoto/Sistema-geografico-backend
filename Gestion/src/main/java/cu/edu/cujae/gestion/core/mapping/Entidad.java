@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import org.locationtech.jts.geom.Geometry;
 
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -97,11 +98,12 @@ public class Entidad {
     @Column(name = "geolocalizacion",columnDefinition = "geometry")
     private Geometry geometry;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
     @JoinTable(name = "entidadpersonal"
             ,joinColumns = @JoinColumn(name = "identidad")
-            ,inverseJoinColumns = @JoinColumn(name = "idpersonal"))
-    private List<Empleado> personal;
+            ,inverseJoinColumns = @JoinColumn(name = "idpersonal")
+            ,uniqueConstraints = @UniqueConstraint(columnNames = {"student_id", "course_id"}))
+    private List<Empleado> personal = new ArrayList<>();
 
     public Entidad(EntidadDto entidadDto, Municipio municipio, Provincia provincia){
         this.uuid = entidadDto.getUuid();
