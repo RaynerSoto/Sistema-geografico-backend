@@ -6,19 +6,19 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EntidadServicesInterfaces {
-    public void insertarEntidad(Entidad entidad);
+    void insertarEntidad(Entidad entidad);
 
-    public void modificarEntidad(Entidad entidad) throws Exception;
+    void modificarEntidad(Entidad entidad) throws Exception;
 
-    public void eliminarEntidad(Long id) throws Exception;
+    void eliminarEntidad(Long id) throws Exception;
 
-    public List<Entidad> listarEntidad();
+    List<Entidad> listarEntidad();
 
-    public void existeEntidadNombre(String nombre) throws Exception;
+    void existeEntidadNombre(String nombre) throws Exception;
 
-    public void existeEntidadNombreNotId(String nombre, Long id) throws Exception;
+    void existeEntidadNombreNotId(String nombre, Long id) throws Exception;
 
-    public Optional<Entidad> obtenerEntidadNombre(String nombre) throws Exception;
+    Optional<Entidad> obtenerEntidadNombre(String nombre) throws Exception;
 
-    public Optional<Entidad> obtenerEntidadID(Long id) throws Exception;
+    Optional<Entidad> obtenerEntidadID(Long id) throws Exception;
 }

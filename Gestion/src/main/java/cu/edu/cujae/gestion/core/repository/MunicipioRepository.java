@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface MunicipioRepository extends JpaRepository<Municipio,Long> {
-    public Optional<Municipio> findByNombreEqualsIgnoreCase(String nombre);
+    Optional<Municipio> findByNombreEqualsIgnoreCase(String nombre);
 }

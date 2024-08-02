@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface EmpleadoRepository extends JpaRepository<Empleado, Long>{
-    public Optional<Empleado> findByCiEqualsIgnoreCase(String ci);
+    Optional<Empleado> findByCiEqualsIgnoreCase(String ci);
 
-    public boolean existsByCiEqualsIgnoreCase(String ci);
+    boolean existsByCiEqualsIgnoreCase(String ci);
 }

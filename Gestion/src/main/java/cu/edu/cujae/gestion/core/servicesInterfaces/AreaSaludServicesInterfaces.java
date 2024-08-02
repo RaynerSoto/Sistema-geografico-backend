@@ -5,5 +5,5 @@ import cu.edu.cujae.gestion.core.mapping.AreaSalud;
 import java.util.List;
 
 public interface AreaSaludServicesInterfaces {
-    public List<AreaSalud> getAreaSalud();
+    List<AreaSalud> getAreaSalud();
 }

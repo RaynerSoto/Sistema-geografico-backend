@@ -5,5 +5,5 @@ import cu.edu.cujae.gestion.core.mapping.ZonaTransporte;
 import java.util.List;
 
 public interface ZonaTransporteServiceInterfaces {
-    public List<ZonaTransporte> listadoZonaTransporte();
+    List<ZonaTransporte> listadoZonaTransporte();
 }
