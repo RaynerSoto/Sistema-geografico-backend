@@ -11,13 +11,17 @@
 	<groupId>cu.edu.cujae</groupId>
 	<artifactId>SistemaGeoBackend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<packaging>pom</packaging>
 	<name>Sistema Geo Backend</name>
 	<description>Sistema Geo Backend</description>
+	<modules>
+		<module>Gateway</module>
+		<module>Eureka Server</module>
+		<module>Config Server</module>
+	</modules>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
-
 
 	<repositories>
 		<repository>
