@@ -12,7 +12,7 @@ import java.util.Properties;
 @Data
 @AllArgsConstructor
 public class Propertie {
-    private static final String aplication = "src/main/resources/application.properties";
+    private static final String aplication = "src/main/resources/application.yml";
 
     public String getAplication(){
         return aplication;
@@ -22,7 +22,7 @@ public class Propertie {
     public String getKeyPropierties(String key){
         try {
             Properties properties = new Properties();
-            properties.load(new FileReader(new File("src/main/resources/application.properties")));
+            properties.load(new FileReader(new File("src/main/resources/application.yml")));
             return properties.getProperty(key);
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
@@ -37,7 +37,7 @@ public class Propertie {
     public Double getKeyPropiertiesDouble(String key){
         try {
             Properties properties = new Properties();
-            properties.load(new FileReader(new File("src/main/resources/application.properties")));
+            properties.load(new FileReader(new File("src/main/resources/application.yml")));
             return Double.parseDouble(properties.getProperty(key));
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Archivo no encontrado");
@@ -49,7 +49,7 @@ public class Propertie {
     public Integer getKeyPropiertiesInteger(String key){
         try {
             Properties properties = new Properties();
-            properties.load(new FileReader(new File("src/main/resources/application.properties")));
+            properties.load(new FileReader(new File("src/main/resources/application.yml")));
             return Integer.parseInt(properties.getProperty(key));
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Archivo no encontrado");

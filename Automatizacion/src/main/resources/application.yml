@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: Automatizacion
+  banner:
+    location: templates/banner.txt
+
+server:
+  port: 8089
