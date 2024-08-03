@@ -21,6 +21,8 @@ spring:
             timeout : 60000
     database: postgresql
     show-sql: true
+  banner:
+    location: templates/banner.txt
 
 geoIP : /api/v1/geoIp/
 
