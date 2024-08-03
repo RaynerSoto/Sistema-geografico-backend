@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: Gestion
+  datasource:
+    url: postgresql:${GestionDBURL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 60000
+  jpa:
+    format-sql : true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+      javax:
+        persistence:
+          query:
+            timeout : 60000
+    database: postgresql
+    show-sql: true
+
+geoIP : /api/v1/geoIp/
+
+
+#hibernate.dialect = org.hibernate.dialect.HSQLDialect
+hibernate:
+  dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
+
+server:
+  port: 8087
+  error:
+    include-stacktrace: never
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
