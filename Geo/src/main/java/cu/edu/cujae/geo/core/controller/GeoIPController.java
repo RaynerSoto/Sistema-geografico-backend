@@ -11,8 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/geoIp")
 public class GeoIPController {
+
+    private final GeoIP geoIP;
+
     @Autowired
-    private GeoIP geoIP;
+    public GeoIPController(GeoIP geoIP) {
+        this.geoIP = geoIP;
+    }
 
     @GetMapping("/")
     private ResponseEntity<?> geoIP(PosicionIP posicionIP) {

@@ -2,7 +2,6 @@ package cu.edu.cujae.geo.core.services;
 
 import com.google.gson.Gson;
 import cu.edu.cujae.geo.core.dto.CoordenadasIp;
-import cu.edu.cujae.geo.core.file.Propertie;
 import cu.edu.cujae.geo.core.interfacesServices.GeoIP;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +13,7 @@ import java.net.http.HttpResponse;
 
 @Service
 public class GeoIPService implements GeoIP {
+
     @Override
     public CoordenadasIp findMyIp(String ip) {
         try {
