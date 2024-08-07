@@ -25,14 +25,18 @@ import java.util.Optional;
         description = "Controlador encargardo de todo lo referente con los empleados del sistema")
 public class EmpleadoController {
 
+    private final EmpleadoServiceInterfaces empleadoService;
+    private final MunicipioServicesInterfaces municipioService;
+    private final ProvinciaServiceInterfaces provinciaService;
+    private final EntidadServicesInterfaces entidadService;
+
     @Autowired
-    private EmpleadoServiceInterfaces empleadoService;
-    @Autowired
-    private MunicipioServicesInterfaces municipioService;
-    @Autowired
-    private ProvinciaServiceInterfaces provinciaService;
-    @Autowired
-    private EntidadServicesInterfaces entidadService;
+    public EmpleadoController(EmpleadoServiceInterfaces empleadoService, MunicipioServicesInterfaces municipioService, ProvinciaServiceInterfaces provinciaService, EntidadServicesInterfaces entidadService) {
+        this.empleadoService = empleadoService;
+        this.municipioService = municipioService;
+        this.provinciaService = provinciaService;
+        this.entidadService = entidadService;
+    }
 
     @GetMapping("/")
     @Operation(summary = "Listado de empleados"

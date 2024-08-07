@@ -32,16 +32,21 @@ import java.util.List;
 @SecurityRequirement(name = "bearer-key")
 @Tag(name = "Controllador de los sexos", description = "Controlla los sexos admitidos por el sistema")
 public class SexoController {
+
+    private final SexoServiceInterfaces sexoService;
+    private final RegistroServiceInterfaces registroService;
+    private final EstadoServiceInterfaces estadoService;
+    private final RegistroUtils registroUtils;
+    private final TokenUtils tokenUtils;
+
     @Autowired
-    private SexoServiceInterfaces sexoService;
-    @Autowired
-    private RegistroServiceInterfaces registroService;
-    @Autowired
-    private EstadoServiceInterfaces estadoService;
-    @Autowired
-    private RegistroUtils registroUtils;
-    @Autowired
-    private TokenUtils tokenUtils;
+    public SexoController(SexoServiceInterfaces sexoService, RegistroServiceInterfaces registroService, EstadoServiceInterfaces estadoService, RegistroUtils registroUtils, TokenUtils tokenUtils) {
+        this.sexoService = sexoService;
+        this.registroService = registroService;
+        this.estadoService = estadoService;
+        this.registroUtils = registroUtils;
+        this.tokenUtils = tokenUtils;
+    }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Devuelve el listados de los sexos")

@@ -23,12 +23,16 @@ import java.util.Optional;
         ,description = "Es el responsable de controllar todo lo referente con las entidades del sistema")
 public class EntidadController {
 
+    private final EntidadServicesInterfaces entidadServices;
+    private final ProvinciaServiceInterfaces provinciaServices;
+    private final MunicipioServicesInterfaces municipioServices;
+
     @Autowired
-    private EntidadServicesInterfaces entidadServices;
-    @Autowired
-    private ProvinciaServiceInterfaces provinciaServices;
-    @Autowired
-    private MunicipioServicesInterfaces municipioServices;
+    public EntidadController(EntidadServicesInterfaces entidadServices, ProvinciaServiceInterfaces provinciaServices, MunicipioServicesInterfaces municipioServices) {
+        this.entidadServices = entidadServices;
+        this.provinciaServices = provinciaServices;
+        this.municipioServices = municipioServices;
+    }
 
     @GetMapping("/")
     @Operation(description = "Permite listar todas las entidades del sistema",

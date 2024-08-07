@@ -18,8 +18,12 @@ import java.util.Comparator;
 @Tag(name = "Controlador del área de salud"
         ,description = "Permite hacer todas las operaciones relacionadas con el área de salud")
 public class AreaSaludController {
+    private final AreaSaludServicesInterfaces areaSaludServices;
+
     @Autowired
-    private AreaSaludServicesInterfaces areaSaludServices;
+    public AreaSaludController(AreaSaludServicesInterfaces areaSaludServices) {
+        this.areaSaludServices = areaSaludServices;
+    }
 
     @GetMapping("/")
     @Operation(summary = "Listado de áreas de salud",

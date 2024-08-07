@@ -13,8 +13,12 @@ import java.util.Optional;
 @Service
 public class EntidadService implements EntidadServicesInterfaces {
 
+    private final EntidadRepository entidadRepository;
+
     @Autowired
-    private EntidadRepository entidadRepository;
+    public EntidadService(EntidadRepository entidadRepository) {
+        this.entidadRepository = entidadRepository;
+    }
 
     @Override
     public void insertarEntidad(Entidad entidad) {

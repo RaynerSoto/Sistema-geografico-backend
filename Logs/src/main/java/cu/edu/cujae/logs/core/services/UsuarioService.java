@@ -19,10 +19,14 @@ import java.util.Optional;
 @Service
 public class UsuarioService implements UsuarioServiceInterfaces {
 
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    private UsuarioRepository usuarioRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    public UsuarioService(UsuarioRepository usuarioRepository, PasswordEncoder passwordEncoder) {
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public List<Usuario> listarUsuarios() throws Exception{

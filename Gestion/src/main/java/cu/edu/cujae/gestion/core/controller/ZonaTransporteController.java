@@ -16,8 +16,13 @@ import java.util.Comparator;
 @RequestMapping("/api/v1/zonaTransporte")
 @Tag(name = "Controllador de zona de transporte")
 public class ZonaTransporteController {
+
+    private final ZonaTransporteServiceInterfaces zonaTransporteService;
+
     @Autowired
-    private ZonaTransporteServiceInterfaces zonaTransporteService;
+    public ZonaTransporteController(ZonaTransporteServiceInterfaces zonaTransporteService) {
+        this.zonaTransporteService = zonaTransporteService;
+    }
 
     @GetMapping("/")
     @Operation(summary = "Listado de zonas de transportes",

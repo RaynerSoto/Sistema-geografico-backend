@@ -4,9 +4,6 @@ import cu.edu.cujae.logs.core.dto.RegistroDto;
 import cu.edu.cujae.logs.core.mapping.Estado;
 import cu.edu.cujae.logs.core.mapping.Registro;
 import cu.edu.cujae.logs.core.mapping.Usuario;
-import cu.edu.cujae.logs.core.services.EstadoService;
-import cu.edu.cujae.logs.core.services.RegistroService;
-import cu.edu.cujae.logs.core.services.UsuarioService;
 import cu.edu.cujae.logs.core.servicesInterfaces.EstadoServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.RegistroServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
@@ -20,10 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.http.HttpRequest;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,16 +25,21 @@ import java.util.Optional;
 @SecurityRequirement(name = "bearer-key")
 @Tag(name = "Controlador del registro",description = "Determina el registro de logs del usuario")
 public class RegistroController {
+
+    private final RegistroServiceInterfaces registroService;
+    private final UsuarioServiceInterfaces usuarioService;
+    private final EstadoServiceInterfaces estadoService;
+    private final RegistroUtils registroUtils;
+    private final TokenUtils tokenUtils;
+
     @Autowired
-    private RegistroServiceInterfaces registroService;
-    @Autowired
-    private UsuarioServiceInterfaces usuarioService;
-    @Autowired
-    private EstadoServiceInterfaces estadoService;
-    @Autowired
-    private RegistroUtils registroUtils;
-    @Autowired
-    private TokenUtils tokenUtils;
+    public RegistroController(RegistroServiceInterfaces registroService, UsuarioServiceInterfaces usuarioService, EstadoServiceInterfaces estadoService, RegistroUtils registroUtils, TokenUtils tokenUtils) {
+        this.registroService = registroService;
+        this.usuarioService = usuarioService;
+        this.estadoService = estadoService;
+        this.registroUtils = registroUtils;
+        this.tokenUtils = tokenUtils;
+    }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Registra la actividad del usuario")

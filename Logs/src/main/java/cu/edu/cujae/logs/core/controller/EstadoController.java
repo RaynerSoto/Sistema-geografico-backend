@@ -23,14 +23,19 @@ import java.util.List;
 @SecurityRequirement(name = "bearer-key")
 @Tag(name = "Controllador de los estados", description = "Controlla los estados de las peticiones que quedan registradas por los usuarios")
 public class EstadoController {
+
+    private final EstadoServiceInterfaces estadoService;
+    private final RegistroServiceInterfaces registroService;
+    private final RegistroUtils registroUtils;
+    private final TokenUtils tokenUtils;
+
     @Autowired
-    private EstadoServiceInterfaces estadoService;
-    @Autowired
-    private RegistroServiceInterfaces registroService;
-    @Autowired
-    private RegistroUtils registroUtils;
-    @Autowired
-    private TokenUtils tokenUtils;
+    public EstadoController(EstadoServiceInterfaces estadoService, RegistroServiceInterfaces registroService,RegistroUtils registroUtils,TokenUtils tokenUtils){
+        this.estadoService = estadoService;
+        this.registroService = registroService;
+        this.registroUtils = registroUtils;
+        this.tokenUtils = tokenUtils;
+    }
 
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador')")

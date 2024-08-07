@@ -12,9 +12,13 @@ import java.util.Optional;
 
 @Service
 public class MunicipioService implements MunicipioServicesInterfaces {
-    @Autowired
-    private MunicipioRepository municipioRepository;
 
+    private final MunicipioRepository municipioRepository;
+
+    @Autowired
+    public MunicipioService(MunicipioRepository municipioRepository) {
+        this.municipioRepository = municipioRepository;
+    }
 
     @Override
     public List<Municipio> listadoMunicipios() {

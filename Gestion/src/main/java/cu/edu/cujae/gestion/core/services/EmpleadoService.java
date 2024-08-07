@@ -12,8 +12,13 @@ import java.util.Optional;
 
 @Service
 public class EmpleadoService implements EmpleadoServiceInterfaces {
+
+    private final EmpleadoRepository empleadoRepository;
+
     @Autowired
-    private EmpleadoRepository empleadoRepository;
+    public EmpleadoService(EmpleadoRepository empleadoRepository) {
+        this.empleadoRepository = empleadoRepository;
+    }
 
     @Override
     public List<Empleado> obtenerEmpleados() {

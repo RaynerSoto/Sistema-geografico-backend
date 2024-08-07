@@ -34,13 +34,22 @@ spring:
       roles: Administrador
   banner:
     location: templates/banner.txt
+  config: #ConfiguraciÃ³n de config server
+    import: optional:configserver:http::localhost:8888
+
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
 
 jakarta:
   persistence:
    query:
     timeout: 60000
 
-#Configuración de Swagger para poder acceder de manera predifina
+#Configuraciï¿½n de Swagger para poder acceder de manera predifina
 springdoc:
   swagger-ui:
     path: /swagger-ui.html

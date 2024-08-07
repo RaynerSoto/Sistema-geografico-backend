@@ -16,8 +16,13 @@ import java.util.Comparator;
 @Tag(name = "Controllador de provincias",
         description = "Controllador encargado de todo lo relacionado con las provincias del país")
 public class ProvinciaController {
+
+    private final ProvinciaServiceInterfaces provinciaService;
+
     @Autowired
-    private ProvinciaServiceInterfaces provinciaService;
+    public ProvinciaController(ProvinciaServiceInterfaces provinciaService) {
+        this.provinciaService = provinciaService;
+    }
 
     @GetMapping("/")
     @Operation(summary = "Listado de provincias",

@@ -13,8 +13,13 @@ import java.util.Optional;
 @Service
 public class SexoService implements SexoServiceInterfaces {
 
+    private final SexoRepository sexoRepository;
+
     @Autowired
-    private SexoRepository sexoRepository;
+    public SexoService(SexoRepository sexoRepository) {
+        this.sexoRepository = sexoRepository;
+    }
+
 
     @Override
     public void iniciar() {

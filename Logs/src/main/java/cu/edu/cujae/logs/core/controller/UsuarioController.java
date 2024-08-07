@@ -33,18 +33,23 @@ import java.util.Optional;
 @SecurityRequirement(name = "bearer-key")
 @Tag(name = "Controllador de los usuarios del sistema", description = "Controlla los usuarios registrados en el sistema")
 public class UsuarioController {
+
+    private final UsuarioServiceInterfaces usuarioService;
+    private final RolServiceInterfaces rolRepository;
+    private final SexoServiceInterfaces sexoService;
+    private final PasswordEncoder passwordEncoder;
+    private final RegistroUtils registroUtils;
+    private final TokenUtils tokenUtils;
+
     @Autowired
-    private UsuarioServiceInterfaces usuarioService;
-    @Autowired
-    private RolServiceInterfaces rolRepository;
-    @Autowired
-    private SexoServiceInterfaces sexoService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private RegistroUtils registroUtils;
-    @Autowired
-    private TokenUtils tokenUtils;
+    public UsuarioController(UsuarioServiceInterfaces usuarioService, RolServiceInterfaces rolRepository, SexoServiceInterfaces sexoService, PasswordEncoder passwordEncoder, RegistroUtils registroUtils, TokenUtils tokenUtils) {
+        this.usuarioService = usuarioService;
+        this.rolRepository = rolRepository;
+        this.sexoService = sexoService;
+        this.passwordEncoder = passwordEncoder;
+        this.registroUtils = registroUtils;
+        this.tokenUtils = tokenUtils;
+    }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Listado de todos los usuarios independientemente de su estado")

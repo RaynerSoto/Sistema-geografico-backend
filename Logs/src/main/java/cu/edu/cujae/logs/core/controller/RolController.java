@@ -25,12 +25,16 @@ import java.util.*;
 @Tag(name = "Controlador de los roles",description = "Determina todo lo relacionado con las funcionalidades de los roles del proyecto")
 public class RolController {
 
-    @Autowired
     private RolServiceInterfaces rolServiceInterfaces;
-    @Autowired
     private RegistroUtils registroUtils;
-    @Autowired
     private TokenUtils tokenUtils;
+
+    @Autowired
+    public RolController(RolServiceInterfaces rolServiceInterfaces, RegistroUtils registroUtils, TokenUtils tokenUtils) {
+        this.rolServiceInterfaces = rolServiceInterfaces;
+        this.registroUtils = registroUtils;
+        this.tokenUtils = tokenUtils;
+    }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite insertar un rol")

@@ -10,13 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
-
-@AllArgsConstructor
-@NoArgsConstructor
 @Service
 public class RolService implements RolServiceInterfaces {
+
+    private final RolRepository rolRepository;
+
     @Autowired
-    private RolRepository rolRepository;
+    public RolService(RolRepository rolRepository) {
+        this.rolRepository = rolRepository;
+    }
 
     @Override
     public void iniciar() {

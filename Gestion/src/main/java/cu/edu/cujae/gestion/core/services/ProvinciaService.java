@@ -12,8 +12,13 @@ import java.util.Optional;
 
 @Service
 public class ProvinciaService implements ProvinciaServiceInterfaces {
+
+    private final ProvinciaRepository provinciaRepository;
+
     @Autowired
-    private ProvinciaRepository provinciaRepository;
+    public ProvinciaService(ProvinciaRepository provinciaRepository) {
+        this.provinciaRepository = provinciaRepository;
+    }
 
     @Override
     public List<Provincia> listadoProvincia() {

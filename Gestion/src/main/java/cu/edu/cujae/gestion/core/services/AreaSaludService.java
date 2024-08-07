@@ -10,8 +10,12 @@ import java.util.List;
 
 @Service
 public class AreaSaludService implements AreaSaludServicesInterfaces {
+    private final AreaSaludRepository areaSaludRepository;
+
     @Autowired
-    private AreaSaludRepository areaSaludRepository;
+    public AreaSaludService(AreaSaludRepository areaSaludRepository) {
+        this.areaSaludRepository = areaSaludRepository;
+    }
 
     @Override
     public List<AreaSalud> getAreaSalud() {

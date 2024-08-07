@@ -16,8 +16,13 @@ import java.util.Comparator;
 @Tag(name = "Controlador de municipios",
         description = "Permite hacer todas las operaciones de los municipios")
 public class MunicipioController {
+
+    private final MunicipioServicesInterfaces municipioServices;
+
     @Autowired
-    private MunicipioServicesInterfaces municipioServices;
+    public MunicipioController(MunicipioServicesInterfaces municipioServices) {
+        this.municipioServices = municipioServices;
+    }
 
     @GetMapping("/")
     @Operation(summary = "Listado de municipios",

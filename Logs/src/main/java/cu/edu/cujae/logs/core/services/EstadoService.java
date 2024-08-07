@@ -11,9 +11,13 @@ import java.util.Optional;
 
 @Service
 public class EstadoService implements EstadoServiceInterfaces {
-    @Autowired
-    private EstadoRepository estadoRepository;
 
+    private final EstadoRepository estadoRepository;
+
+    @Autowired
+    public EstadoService(EstadoRepository estadoRepository) {
+        this.estadoRepository = estadoRepository;
+    }
 
     @Override
     public void iniciar() {

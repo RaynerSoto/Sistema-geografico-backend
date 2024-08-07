@@ -17,10 +17,15 @@ import java.util.Optional;
 @Tag(name = "Controlador del empleador"
         ,description = "Permite todo el proceso de control de los empleados de diversas entidades")
 public class EntidadEmpleadoController {
+
+    private final EntidadServicesInterfaces entidadServices;
+    private final EmpleadoServiceInterfaces empleadoServices;
+
     @Autowired
-    private EntidadServicesInterfaces entidadServices;
-    @Autowired
-    private EmpleadoServiceInterfaces empleadoServices;
+    public EntidadEmpleadoController(EntidadServicesInterfaces entidadServices, EmpleadoServiceInterfaces empleadoServices) {
+        this.entidadServices = entidadServices;
+        this.empleadoServices = empleadoServices;
+    }
 
     @PostMapping("/{nombre}/{ci}")
     @Operation(summary = "Asignar empleado por nombre y carnet de identidad",

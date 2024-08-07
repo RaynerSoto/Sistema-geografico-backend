@@ -11,8 +11,12 @@ import java.util.List;
 @Service
 public class ZonaTransporteService implements ZonaTransporteServiceInterfaces {
 
+    private final ZonaTransporteRepository zonaTransporteRepository;
+
     @Autowired
-    private ZonaTransporteRepository zonaTransporteRepository;
+    public ZonaTransporteService(ZonaTransporteRepository zonaTransporteRepository) {
+        this.zonaTransporteRepository = zonaTransporteRepository;
+    }
 
     @Override
     public List<ZonaTransporte> listadoZonaTransporte() {

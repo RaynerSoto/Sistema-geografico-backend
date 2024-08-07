@@ -17,12 +17,17 @@ import java.util.List;
 @Service
 public class RegistroService implements RegistroServiceInterfaces {
 
+    private final RegistroRepository registroRepository;
+    private final UsuarioServiceInterfaces usuarioService;
+    private final UsuarioRepository usuarioRepository;
+
     @Autowired
-    private RegistroRepository registroRepository;
-    @Autowired
-    private UsuarioServiceInterfaces usuarioService;
-    @Autowired
-    private UsuarioRepository usuarioRepository;
+    public RegistroService(RegistroRepository registroRepository, UsuarioServiceInterfaces usuarioService, UsuarioRepository usuarioRepository) {
+        this.registroRepository = registroRepository;
+        this.usuarioService = usuarioService;
+        this.usuarioRepository = usuarioRepository;
+    }
+
     @Override
     public void insertarRegistro(Registro registro) {
         registroRepository.save(registro);
