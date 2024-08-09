@@ -38,11 +38,13 @@ spring:
     import: optional:configserver:http::localhost:8888
 
 eureka:
+  server:
+    port : 8761
   instance:
     hostname: localhost
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://localhost:${eureka.server.port}/eureka/
 
 jakarta:
   persistence:

@@ -41,12 +41,10 @@ public class RegistroController {
         this.tokenUtils = tokenUtils;
     }
 
-    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Registra la actividad del usuario")
-    //@PostMapping("/")
-    @Deprecated
+    //@PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
+    @Operation(/*security = { @SecurityRequirement(name = "bearer-key") },*/summary = "Registra la actividad del usuario")
+    @PostMapping("/")
     public ResponseEntity<?> registro(@RequestBody RegistroDto registro,HttpServletRequest request) {
-        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado completo de los usuarios");
         try {
             Optional<Usuario> usuario = usuarioService.buscarUsuarioPorUsernameActivo(registro.getUsuario());
             Optional<Estado> estado = estadoService.obtenerEstado(registro.getEstado());
