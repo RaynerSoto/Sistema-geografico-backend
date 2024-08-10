@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Comparator;
 
 @RestController
-@RequestMapping("/api/v1/zonaTransporte")
+@RequestMapping("/api/v1/gestion/zonaTransporte")
 @Tag(name = "Controllador de zona de transporte")
 public class ZonaTransporteController {
 

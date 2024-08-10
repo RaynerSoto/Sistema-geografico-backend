@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Comparator;
 
 @RestController
-@RequestMapping(value = "/api/v1/municipio")
+@RequestMapping("/api/v1/gestion/municipio")
 @Tag(name = "Controlador de municipios",
         description = "Permite hacer todas las operaciones de los municipios")
 public class MunicipioController {

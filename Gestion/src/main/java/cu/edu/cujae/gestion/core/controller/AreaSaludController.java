@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Comparator;
-
 @RestController
-@RequestMapping("/api/v1/areaSalud")
+@RequestMapping(path = "/api/v1/gestion/areaSalud")
 @Tag(name = "Controlador del área de salud"
         ,description = "Permite hacer todas las operaciones relacionadas con el área de salud")
 public class AreaSaludController {

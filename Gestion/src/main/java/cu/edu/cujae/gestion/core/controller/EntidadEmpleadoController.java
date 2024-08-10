@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/entidadEmpleado")
+@RequestMapping("/api/v1/gestion/entidadEmpleado")
 @Tag(name = "Controlador del empleador"
         ,description = "Permite todo el proceso de control de los empleados de diversas entidades")
 public class EntidadEmpleadoController {

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping(value = "/api/v1/entidad",name = "Controller para las entidades")
+@RequestMapping(value = "/api/v1/gestion/entidad",name = "Controller para las entidades")
 @Tag(name = "Controllador de la entidad"
         ,description = "Es el responsable de controllar todo lo referente con las entidades del sistema")
 public class EntidadController {

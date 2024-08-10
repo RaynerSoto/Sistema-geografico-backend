@@ -1,6 +1,7 @@
 spring:
   application:
     name: Gestion
+  url-endpoint: /gestion/
   datasource:
     url: jdbc:postgresql:${GestionDBURL}
     username: ${DB_USER}

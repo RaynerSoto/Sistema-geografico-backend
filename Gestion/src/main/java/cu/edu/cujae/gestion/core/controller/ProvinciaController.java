@@ -15,7 +15,7 @@ import java.util.Comparator;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/provincia")
+@RequestMapping("/api/v1/gestion/provincia")
 @Tag(name = "Controllador de provincias",
         description = "Controllador encargado de todo lo relacionado con las provincias del país")
 public class ProvinciaController {

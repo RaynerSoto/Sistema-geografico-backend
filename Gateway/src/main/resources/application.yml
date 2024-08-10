@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: Gateway
+  cloud:
+    gateway:
+      routes:
+        - id: Municipio
+          uri: http://localhost:8087
+          predicates:
+            - Path=/api/v1/gestion/municipio/**
