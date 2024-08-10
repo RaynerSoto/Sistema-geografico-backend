@@ -8,3 +8,14 @@ spring:
           uri: http://localhost:8087
           predicates:
             - Path=/api/v1/gestion/municipio/**
+  config: #Configuración de config server
+    import: optional:configserver:http://localhost:8888
+
+eureka:
+  server:
+    port : 8761
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://localhost:${eureka.server.port}/eureka/
