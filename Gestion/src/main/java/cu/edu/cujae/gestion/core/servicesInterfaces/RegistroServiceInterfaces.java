@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 
-@FeignClient(name = "Logs",url = "localhost:8086/api/v1/registro")
+@FeignClient(name = "Logs",url = "http://localhost:8086/api/v1/registro")
 public interface RegistroServiceInterfaces {
 
     @PostMapping("/")

@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/registro")
-@SecurityRequirement(name = "bearer-key")
+//@SecurityRequirement(name = "bearer-key")
 @Tag(name = "Controlador del registro",description = "Determina el registro de logs del usuario")
 public class RegistroController {
 
@@ -41,7 +41,7 @@ public class RegistroController {
         this.tokenUtils = tokenUtils;
     }
 
-    //@PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
+    //@PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor','null')")
     @Operation(/*security = { @SecurityRequirement(name = "bearer-key") },*/summary = "Registra la actividad del usuario")
     @PostMapping("/")
     public ResponseEntity<?> registro(@RequestBody RegistroDto registro,HttpServletRequest request) {
