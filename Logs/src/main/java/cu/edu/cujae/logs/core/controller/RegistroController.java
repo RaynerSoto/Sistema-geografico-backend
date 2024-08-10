@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/registro")
+@RequestMapping("/api/v1/login/registro")
 //@SecurityRequirement(name = "bearer-key")
 @Tag(name = "Controlador del registro",description = "Determina el registro de logs del usuario")
 public class RegistroController {

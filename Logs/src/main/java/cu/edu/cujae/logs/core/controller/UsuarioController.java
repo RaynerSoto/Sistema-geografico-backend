@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/usuario")
+@RequestMapping("/api/v1/login/usuario")
 @SecurityRequirement(name = "bearer-key")
 @Tag(name = "Controllador de los usuarios del sistema", description = "Controlla los usuarios registrados en el sistema")
 public class UsuarioController {

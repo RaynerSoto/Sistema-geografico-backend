@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/v1/estado")
+@RequestMapping(value = "/api/v1/login/estado")
 @SecurityRequirement(name = "bearer-key")
 @Tag(name = "Controllador de los estados", description = "Controlla los estados de las peticiones que quedan registradas por los usuarios")
 public class EstadoController {

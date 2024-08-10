@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api/v1/rol")
+@RequestMapping("/api/v1/login/rol")
 @SecurityRequirement(name = "bearer-key")
 @Tag(name = "Controlador de los roles",description = "Determina todo lo relacionado con las funcionalidades de los roles del proyecto")
 public class RolController {

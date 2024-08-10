@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/sexo")
+@RequestMapping("/api/v1/login/sexo")
 @SecurityRequirement(name = "bearer-key")
 @Tag(name = "Controllador de los sexos", description = "Controlla los sexos admitidos por el sistema")
 public class SexoController {
