@@ -8,6 +8,8 @@ spring:
           uri: http://localhost:8087
           predicates:
             - Path=/api/v1/gestion/municipio/**
+          filters:
+            - name: TokenFilter
         - id: Gestion-Provincia
           uri: http://localhost:8087
           predicates:
@@ -58,6 +60,8 @@ spring:
             - Path=/login/**
   config: #Configuración de config server
     import: optional:configserver:http://localhost:8888
+  main:
+    web-application-type: reactive
 
 eureka:
   server:

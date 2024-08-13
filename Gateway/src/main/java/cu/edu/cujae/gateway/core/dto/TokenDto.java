@@ -1,4 +1,4 @@
-package cu.edu.cujae.logs.core.dto;
+package cu.edu.cujae.gateway.core.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
