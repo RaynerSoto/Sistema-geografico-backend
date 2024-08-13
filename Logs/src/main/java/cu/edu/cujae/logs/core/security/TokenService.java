@@ -54,7 +54,6 @@ public class TokenService {
                     .withIssuer("Sistema Geo Backend")
                     // reusable verifier instance
                     .build();
-
             decodedJWT = verifier.verify(token);
         } catch (JWTVerificationException exception) {
             throw new Exception("No se puede validar el token");
@@ -62,5 +61,12 @@ public class TokenService {
         if (decodedJWT.getSubject() == null)
             throw new RuntimeException("No se puede verificar el token");
         return decodedJWT.getSubject();
+    }
+
+    public boolean isActivoToken(String token) throws Exception{
+        String persona = getSubjetc(token);
+        if (persona == null || persona.equals(""))
+            return false;
+        return true;
     }
 }
