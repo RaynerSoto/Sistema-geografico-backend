@@ -1,5 +1,6 @@
 package cu.edu.cujae.logs.core.security;
 
+import com.google.gson.Gson;
 import cu.edu.cujae.logs.core.dto.RegistroDto;
 import cu.edu.cujae.logs.core.dto.TokenDto;
 import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
@@ -17,10 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 

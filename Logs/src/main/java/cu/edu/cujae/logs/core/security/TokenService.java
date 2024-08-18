@@ -64,9 +64,13 @@ public class TokenService {
     }
 
     public boolean isActivoToken(String token) throws Exception{
-        String persona = getSubjetc(token);
-        if (persona == null || persona.equals(""))
+        try {
+            String persona = getSubjetc(token);
+            if (persona == null || persona.equals(""))
+                return false;
+            return true;
+        }catch (Exception e){
             return false;
-        return true;
+        }
     }
 }

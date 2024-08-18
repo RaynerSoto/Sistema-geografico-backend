@@ -1,7 +1,7 @@
 package cu.edu.cujae.gestion.core.services;
 
 import cu.edu.cujae.gestion.core.dto.RegistroDto;
-import cu.edu.cujae.gestion.core.servicesInterfaces.RegistroServiceInterfaces;
+import cu.edu.cujae.gestion.core.feignclient.RegistroServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

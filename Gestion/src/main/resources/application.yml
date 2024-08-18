@@ -50,3 +50,7 @@ springdoc:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui.html
+
+Logs:
+  ribbon:
+    listOfServers: http://localhost:8080,http://localhost:8086
