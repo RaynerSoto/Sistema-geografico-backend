@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -39,11 +40,12 @@ public class AutentificacionController {
     @Autowired
     private TokenUtils tokenUtils;
 
-    @PostMapping("/")
+    @PostMapping(value = "/")
     @Operation(summary = "Encargado de autentificar el usuario")
     public ResponseEntity<?> autenticacionUsuario(@RequestBody UsuarioLoginDto usuarioLoginDto, HttpServletRequest request){
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Autenticación de usuario: "+usuarioLoginDto.getUsername());
         try {
+            System.out.println("Registro");
             System.out.println(request.getRemoteHost());//Obtener IP versión V4
             Usuario usuario = usuarioService.obtenerUsuarioPorUsernameAndPassword(usuarioLoginDto.getUsername(), usuarioLoginDto.getPassword());
             usuario = new Usuario(usuario, usuarioLoginDto.getPassword());
