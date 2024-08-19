@@ -1,5 +1,6 @@
 package cu.edu.cujae.logs.core.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import cu.edu.cujae.logs.core.dto.RegistroDto;
 import cu.edu.cujae.logs.core.mapping.Estado;
 import cu.edu.cujae.logs.core.mapping.Registro;
@@ -33,6 +34,7 @@ public class RegistroController {
     private final RegistroUtils registroUtils;
     private final TokenUtils tokenUtils;
     private final TokenService tokenService;
+    ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     public RegistroController(RegistroServiceInterfaces registroService, UsuarioServiceInterfaces usuarioService, EstadoServiceInterfaces estadoService, RegistroUtils registroUtils, TokenUtils tokenUtils,TokenService tokenService) {
