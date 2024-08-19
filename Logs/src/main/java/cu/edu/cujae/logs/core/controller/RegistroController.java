@@ -4,6 +4,7 @@ import cu.edu.cujae.logs.core.dto.RegistroDto;
 import cu.edu.cujae.logs.core.mapping.Estado;
 import cu.edu.cujae.logs.core.mapping.Registro;
 import cu.edu.cujae.logs.core.mapping.Usuario;
+import cu.edu.cujae.logs.core.security.TokenService;
 import cu.edu.cujae.logs.core.servicesInterfaces.EstadoServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.RegistroServiceInterfaces;
 import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
@@ -31,9 +32,11 @@ public class RegistroController {
     private final EstadoServiceInterfaces estadoService;
     private final RegistroUtils registroUtils;
     private final TokenUtils tokenUtils;
+    private final TokenService tokenService;
 
     @Autowired
-    public RegistroController(RegistroServiceInterfaces registroService, UsuarioServiceInterfaces usuarioService, EstadoServiceInterfaces estadoService, RegistroUtils registroUtils, TokenUtils tokenUtils) {
+    public RegistroController(RegistroServiceInterfaces registroService, UsuarioServiceInterfaces usuarioService, EstadoServiceInterfaces estadoService, RegistroUtils registroUtils, TokenUtils tokenUtils,TokenService tokenService) {
+        this.tokenService = tokenService;
         this.registroService = registroService;
         this.usuarioService = usuarioService;
         this.estadoService = estadoService;
@@ -42,21 +45,31 @@ public class RegistroController {
     }
 
     //@PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor','null')")
-    @Operation(/*security = { @SecurityRequirement(name = "bearer-key") },*/summary = "Registra la actividad del usuario")
+    @Operation(summary = "Registra la actividad del usuario")
     @PostMapping("/")
-    public ResponseEntity<?> registro(@RequestBody RegistroDto registro,HttpServletRequest request) {
+    public ResponseEntity<?> registro(@RequestBody RegistroDto registro,@RequestHeader String username) {
         try {
-            Optional<Usuario> usuario = usuarioService.buscarUsuarioPorUsernameActivo(registro.getUsuario());
-            Optional<Estado> estado = estadoService.obtenerEstado(registro.getEstado());
-            Registro regis = new Registro(registro, usuario.get(), estado.get());
-            registroService.insertarRegistro(regis);
-            return ResponseEntity.ok("Registro creado correctamente");
+            if ((username.isBlank() || username.isEmpty() || username.equals(null)) == false){
+                try {
+                    if(username.equals(registro.getUsuario()) == false)
+                        throw new Exception("No es posible registrar la actividad");
+                    Optional<Usuario> usuario = usuarioService.buscarUsuarioPorUsernameActivo(registro.getUsuario());
+                    Optional<Estado> estado = estadoService.obtenerEstado(registro.getEstado());
+                    Registro regis = new Registro(registro, usuario.get(), estado.get());
+                    registroService.insertarRegistro(regis);
+                    return ResponseEntity.ok("Registro creado correctamente");
+                }
+                catch (Exception e) {
+                    return ResponseEntity.badRequest().body(e.getMessage());
+                }
+            }else{
+                return ResponseEntity.badRequest().body("No se encuentra autenticaciòn");
+            }
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
-        catch (Exception e) {
-            return ResponseEntity.badRequest().body(e);
-        }
-    }
 
+    }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver el listado de actividades de todos los usuarios")

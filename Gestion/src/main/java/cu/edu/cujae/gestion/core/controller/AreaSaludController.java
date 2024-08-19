@@ -1,10 +1,17 @@
 package cu.edu.cujae.gestion.core.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import cu.edu.cujae.gestion.core.dto.AreaSaludDto;
-import cu.edu.cujae.gestion.core.mapping.AreaSalud;
+import cu.edu.cujae.gestion.core.dto.TokenDto;
+import cu.edu.cujae.gestion.core.dto.UsuarioDto;
+import cu.edu.cujae.gestion.core.feignclient.TokenServiceInterfaces;
+import cu.edu.cujae.gestion.core.libs.RegistroUtils;
+import cu.edu.cujae.gestion.core.libs.TokenUtils;
+import cu.edu.cujae.gestion.core.services.RegistroService;
 import cu.edu.cujae.gestion.core.servicesInterfaces.AreaSaludServicesInterfaces;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,28 +19,43 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Comparator;
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/api/v1/gestion/areaSalud")
 @Tag(name = "Controlador del área de salud"
         ,description = "Permite hacer todas las operaciones relacionadas con el área de salud")
 public class AreaSaludController {
+
     private final AreaSaludServicesInterfaces areaSaludServices;
+    private final RegistroService registroService;
+    private final RegistroUtils registroUtils;
+    private final TokenServiceInterfaces tokenService;
+    ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
-    public AreaSaludController(AreaSaludServicesInterfaces areaSaludServices) {
+    public AreaSaludController(AreaSaludServicesInterfaces areaSaludServices, RegistroService registroService, RegistroUtils registroUtils,TokenServiceInterfaces tokenService) {
         this.areaSaludServices = areaSaludServices;
+        this.registroService = registroService;
+        this.registroUtils = registroUtils;
+        this.tokenService = tokenService;
     }
 
     @GetMapping("/")
     @Operation(summary = "Listado de áreas de salud",
             description = "Permite obtener todo el listado de las áreas de salud")
-    private ResponseEntity<?> getAreaSalud() {
+    private ResponseEntity<?> getAreaSalud(HttpServletRequest request) {
+        String actividad = "Obtener todo el listado de las áreas de salud";
+        TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try{
-            return ResponseEntity.ok(areaSaludServices.getAreaSalud().stream()
+            List<AreaSaludDto> areaSaludDtos = areaSaludServices.getAreaSalud().stream()
                     .map(AreaSaludDto::new)
                     .sorted(Comparator.comparing(AreaSaludDto::getUuid))
-                    .toList());
+                    .toList();
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            return ResponseEntity.ok(areaSaludDtos);
         }catch (Exception e){
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

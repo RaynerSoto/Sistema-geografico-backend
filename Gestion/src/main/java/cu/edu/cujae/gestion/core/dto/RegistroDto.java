@@ -38,4 +38,11 @@ public class RegistroDto {
     public RegistroDto(String actividad) {
         this.actividad = actividad;
     }
+
+    public RegistroDto(String username, String actividad, String ip, String estado) {
+        this.usuario = username;
+        this.actividad = actividad;
+        this.ip = ip;
+        this.estado = estado;
+    }
 }

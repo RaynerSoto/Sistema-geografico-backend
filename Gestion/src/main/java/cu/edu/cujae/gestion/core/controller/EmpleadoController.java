@@ -10,7 +10,7 @@ import cu.edu.cujae.gestion.core.servicesInterfaces.EmpleadoServiceInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.EntidadServicesInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.MunicipioServicesInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.ProvinciaServiceInterfaces;
-import cu.edu.cujae.gestion.core.utils.Validacion;
+import cu.edu.cujae.gestion.core.libs.Validacion;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

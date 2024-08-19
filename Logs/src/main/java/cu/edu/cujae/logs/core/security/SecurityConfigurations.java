@@ -44,7 +44,8 @@ public class SecurityConfigurations {
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(reques ->
                         reques.requestMatchers("/login**").permitAll()
-                                .requestMatchers("/api/v1**").authenticated()
+                                .requestMatchers("/api/v1/login/registro/").permitAll()
+                                .requestMatchers("/api/v1/login/**").authenticated()
                                 .anyRequest().permitAll())
                 .addFilterBefore(new SimpleCorsFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(this.securityFilter, UsernamePasswordAuthenticationFilter.class)

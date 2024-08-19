@@ -40,22 +40,8 @@ public class ProvinciaController {
                     .map(ProvinciaDto::new)
                     .sorted(Comparator.comparing(ProvinciaDto::getUuid))
                     .toList();
-            try {
-                registroDto.setEstado("Aceptado");
-                registroDto.setIp("127.0.0.1");
-                registroService.insertarRegistro(registroDto);
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-            }
             return ResponseEntity.ok(pronvincias);
         }catch (Exception e){
-            try {
-                registroDto.setEstado("Rechazado");
-                registroDto.setIp("127.0.0.1");
-                registroService.insertarRegistro(registroDto);
-            }catch (Exception e1){
-                System.out.println(e1.getMessage());
-            }
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

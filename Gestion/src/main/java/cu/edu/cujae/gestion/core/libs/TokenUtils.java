@@ -1,4 +1,4 @@
-package cu.edu.cujae.gestion.core.utils;
+package cu.edu.cujae.gestion.core.libs;
 import cu.edu.cujae.gestion.core.dto.TokenDto;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;

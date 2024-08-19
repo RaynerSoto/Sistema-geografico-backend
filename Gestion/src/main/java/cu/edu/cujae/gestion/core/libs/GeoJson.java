@@ -1,7 +1,6 @@
-package cu.edu.cujae.gestion.core.utils;
+package cu.edu.cujae.gestion.core.libs;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 public class GeoJson {

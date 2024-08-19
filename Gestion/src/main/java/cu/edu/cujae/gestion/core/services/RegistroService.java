@@ -15,7 +15,7 @@ public class RegistroService {
         this.registroServiceInterfaces = registroServiceInterfaces;
     }
 
-    public void insertarRegistro(RegistroDto registroDto){
-        registroServiceInterfaces.insertarRegistro(registroDto);
+    public void insertarRegistro(RegistroDto registroDto,String username){
+        registroServiceInterfaces.insertarRegistro(registroDto,username);
     }
 }

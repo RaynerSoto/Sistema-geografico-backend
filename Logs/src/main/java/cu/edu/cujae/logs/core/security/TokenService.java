@@ -40,7 +40,7 @@ public class TokenService {
     }
 
     private Instant generarFechaExpiracion(){
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-05:00"));
+        return LocalDateTime.now().plusHours(8).toInstant(ZoneOffset.of("-05:00"));
     }
 
     public String getSubjetc(String token) throws Exception {

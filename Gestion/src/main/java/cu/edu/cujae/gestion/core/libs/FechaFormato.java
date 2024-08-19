@@ -1,4 +1,4 @@
-package cu.edu.cujae.gestion.core.utils;
+package cu.edu.cujae.gestion.core.libs;
 
 import java.sql.Date;
 import java.sql.Timestamp;
