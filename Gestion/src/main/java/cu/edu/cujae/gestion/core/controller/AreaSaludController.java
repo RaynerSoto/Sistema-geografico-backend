@@ -10,10 +10,12 @@ import cu.edu.cujae.gestion.core.libs.TokenUtils;
 import cu.edu.cujae.gestion.core.services.RegistroService;
 import cu.edu.cujae.gestion.core.servicesInterfaces.AreaSaludServicesInterfaces;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +27,7 @@ import java.util.List;
 @RequestMapping(path = "/api/v1/gestion/areaSalud")
 @Tag(name = "Controlador del área de salud"
         ,description = "Permite hacer todas las operaciones relacionadas con el área de salud")
+@SecurityRequirement(name = "bearer-key")
 public class AreaSaludController {
 
     private final AreaSaludServicesInterfaces areaSaludServices;
@@ -43,7 +46,9 @@ public class AreaSaludController {
 
     @GetMapping("/")
     @Operation(summary = "Listado de áreas de salud",
-            description = "Permite obtener todo el listado de las áreas de salud")
+            description = "Permite obtener todo el listado de las áreas de salud",
+            security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     private ResponseEntity<?> getAreaSalud(HttpServletRequest request) {
         String actividad = "Obtener todo el listado de las áreas de salud";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);

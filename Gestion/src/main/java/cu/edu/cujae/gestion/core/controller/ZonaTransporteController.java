@@ -9,10 +9,12 @@ import cu.edu.cujae.gestion.core.libs.RegistroUtils;
 import cu.edu.cujae.gestion.core.libs.TokenUtils;
 import cu.edu.cujae.gestion.core.servicesInterfaces.ZonaTransporteServiceInterfaces;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/gestion/zonaTransporte")
 @Tag(name = "Controllador de zona de transporte")
+@SecurityRequirement(name = "bearer-key")
 public class ZonaTransporteController {
 
     private final ZonaTransporteServiceInterfaces zonaTransporteService;
@@ -39,7 +42,9 @@ public class ZonaTransporteController {
 
     @GetMapping("/")
     @Operation(summary = "Listado de zonas de transportes",
-            description = "Permite obtener el listado de todas las zonas de transportes del sistema")
+            description = "Permite obtener el listado de todas las zonas de transportes del sistema"
+    ,security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     private ResponseEntity<?> getZonaTransporte(HttpServletRequest request) {
         String actividad = "Obtener el listado de todas las zonas de transportes del sistema";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);

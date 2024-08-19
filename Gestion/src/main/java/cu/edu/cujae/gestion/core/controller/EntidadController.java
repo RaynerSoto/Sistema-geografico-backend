@@ -16,10 +16,12 @@ import cu.edu.cujae.gestion.core.servicesInterfaces.MunicipioServicesInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.ProvinciaServiceInterfaces;
 import cu.edu.cujae.gestion.core.libs.Validacion;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,6 +31,7 @@ import java.util.Optional;
 @RequestMapping(value = "/api/v1/gestion/entidad",name = "Controller para las entidades")
 @Tag(name = "Controllador de la entidad"
         ,description = "Es el responsable de controllar todo lo referente con las entidades del sistema")
+@SecurityRequirement(name = "bearer-key")
 public class EntidadController {
 
     private final EntidadServicesInterfaces entidadServices;
@@ -51,7 +54,8 @@ public class EntidadController {
 
     @GetMapping("/")
     @Operation(description = "Permite listar todas las entidades del sistema",
-    summary = "Listar Entidades")
+    summary = "Listar Entidades",security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> listadoEntidades(HttpServletRequest request){
         String actividad = "Listar todas las entidades del sistema";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -67,7 +71,8 @@ public class EntidadController {
 
     @PostMapping("/")
     @Operation(summary = "Insertar Entidad",
-    description = "Permite insertar una entidad")
+    description = "Permite insertar una entidad",security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> insertarEntidad(@RequestBody EntidadDto entidad,HttpServletRequest request){
         String actividad = "Insertar una entidad en el sistema";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -89,7 +94,8 @@ public class EntidadController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Modificar entidad",
-    description = "Permite modificar una entidad a través de su ID")
+    description = "Permite modificar una entidad a través de su ID",security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> modificarEntidad(@RequestBody EntidadDto entidad,@PathVariable Long id,HttpServletRequest request){
         String actividad = "Modificar una entidad a travès de su ID";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -112,7 +118,8 @@ public class EntidadController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar entidad",
-    description = "Permite eliminar entidades a través de su ID")
+    description = "Permite eliminar entidades a través de su ID",security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> eliminarEntidad(@PathVariable Long id,HttpServletRequest request){
         String actividad = "Eliminar una entidad del sistema por su ID";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);

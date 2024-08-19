@@ -12,10 +12,12 @@ import cu.edu.cujae.gestion.core.services.RegistroService;
 import cu.edu.cujae.gestion.core.servicesInterfaces.EmpleadoServiceInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.EntidadServicesInterfaces;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -24,6 +26,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/gestion/entidadEmpleado")
 @Tag(name = "Controlador del empleador"
         ,description = "Permite todo el proceso de control de los empleados de diversas entidades")
+@SecurityRequirement(name = "bearer-key")
 public class EntidadEmpleadoController {
 
     private final EntidadServicesInterfaces entidadServices;
@@ -44,7 +47,9 @@ public class EntidadEmpleadoController {
 
     @PostMapping("/{nombre}/{ci}")
     @Operation(summary = "Asignar empleado por nombre y carnet de identidad",
-    description = "Permite asignar un empleado a una entidad a través del nombre del centro y el carnet del empleado")
+    description = "Permite asignar un empleado a una entidad a través del nombre del centro y el carnet del empleado",
+            security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> asignacionEmpleados(@PathVariable String nombre, @PathVariable String ci, HttpServletRequest request){
         String actividad = "Asignar un empleado a una entidad a través del nombre del centro y el carnet del empleado";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -65,7 +70,9 @@ public class EntidadEmpleadoController {
 
     @PostMapping("/{nombre}/{id}")
     @Operation(summary = "Asignar empleado por nombre e id",
-            description = "Permite asignar un empleado a una entidad a través del nombre del centro y el id del empleado")
+            description = "Permite asignar un empleado a una entidad a través del nombre del centro y el id del empleado",
+            security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> asignacionEmpleados(@PathVariable String nombre,@PathVariable Long id, HttpServletRequest request){
         String actividad = "Asignar un empleado a una entidad a través del nombre del centro y el id del empleado";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -86,7 +93,9 @@ public class EntidadEmpleadoController {
 
     @PostMapping("/{id}/{ci}")
     @Operation(summary = "Asignar empleado por id y carnet de identidad",
-            description = "Permite asignar un emplado a una entidad a través del id del centro y el carnet del empleado")
+            description = "Permite asignar un emplado a una entidad a través del id del centro y el carnet del empleado",
+            security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> asignacionEmpleados(@PathVariable Long id,@PathVariable String ci, HttpServletRequest request){
         String actividad = "Asignar un emplado a una entidad a través del id del centro y el carnet del empleado";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -107,7 +116,9 @@ public class EntidadEmpleadoController {
 
     @PostMapping("/{id}/{id1}")
     @Operation(summary = "Asignar empleado por id e id",
-            description = "Permite asignar un empleado a una entidad a través del id del centro y el id del empleado")
+            description = "Permite asignar un empleado a una entidad a través del id del centro y el id del empleado",
+            security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> asignacionEmpleados(@PathVariable(value = "id") Long idEntidad,@PathVariable(value = "id1") Long idEmpleado,HttpServletRequest request){
         String actividad = "Asignar un empleado a una entidad a través del id del centro y el id del empleado";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -128,7 +139,9 @@ public class EntidadEmpleadoController {
 
     @DeleteMapping("/{nombre1}/{ci1}")
     @Operation(summary = "Eliminar empleado por nombre y carnet de identidad",
-            description = "Permite eliminar un empleado a una entidad a través del nombre del centro y el carnet del empleado")
+            description = "Permite eliminar un empleado a una entidad a través del nombre del centro y el carnet del empleado",
+            security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> eliminarEmpleados(@PathVariable(value = "nombre1") String nombre,@PathVariable(value = "ci1") String ci, HttpServletRequest request){
         String actividad = "Eliminar un empleado a una entidad a través del nombre del centro y el carnet del empleado";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -150,7 +163,9 @@ public class EntidadEmpleadoController {
 
     @DeleteMapping("/{nombre1}/{id1}")
     @Operation(summary = "Eliminar empleado por nombre e id",
-            description = "Permite eliminar un empleado a una entidad a través del nombre del centro y el id del empleado")
+            description = "Permite eliminar un empleado a una entidad a través del nombre del centro y el id del empleado",
+            security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> eliminarEmpleados(@PathVariable(value = "nombre1") String nombre,@PathVariable(value = "id1") Long id, HttpServletRequest request){
         String actividad = "Eliminar un empleado a una entidad a través del nombre del centro y el id del empleado";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -171,7 +186,9 @@ public class EntidadEmpleadoController {
 
     @PostMapping("/{id1}/{ci1}")
     @Operation(summary = "Eliminar empleado por id y carnet de identidad",
-            description = "Permite eliminar un emplado a una entidad a través del id del centro y el carnet del empleado")
+            description = "Permite eliminar un emplado a una entidad a través del id del centro y el carnet del empleado",
+            security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> eliminarEmpleados(@PathVariable(value = "id1") Long id,@PathVariable(value = "ci1") String ci, HttpServletRequest request){
         String actividad = "Eliminar un emplado a una entidad a través del id del centro y el carnet del empleado";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -192,7 +209,9 @@ public class EntidadEmpleadoController {
 
     @PostMapping("/{id}/{id2}")
     @Operation(summary = "Eliminar empleado por id e id",
-            description = "Permite eliminar un empleado a una entidad a través del id del centro y el id del empleado")
+            description = "Permite eliminar un empleado a una entidad a través del id del centro y el id del empleado",
+            security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> eliminarEmpleados(@PathVariable(value = "id") Long idEntidad,@PathVariable(value = "id2") Long idEmpleado, HttpServletRequest request){
         String actividad = "Eliminar un empleado a una entidad a través del id del centro y el id del empleado";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);

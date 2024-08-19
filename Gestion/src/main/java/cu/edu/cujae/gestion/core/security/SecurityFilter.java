@@ -5,11 +5,15 @@ import cu.edu.cujae.gestion.core.dto.TokenDto;
 import cu.edu.cujae.gestion.core.dto.UsuarioDto;
 import cu.edu.cujae.gestion.core.feignclient.TokenServiceInterfaces;
 import cu.edu.cujae.gestion.core.libs.TokenUtils;
+import cu.edu.cujae.gestion.core.mappingSecurity.Usuario;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -29,7 +33,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (request.getHeader("Authorization") == null) {
-            throw new ServletException("Error de autorizaciòn");
+            filterChain.doFilter(request,response);
         }
         else {
             TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -42,8 +46,12 @@ public class SecurityFilter extends OncePerRequestFilter {
                     if (user == null) {
                         throw new ServletException("Error en el usuario autenticado");
                     }
-                    else
+                    else{
+                        Usuario usuario = new Usuario(user);
+                        var autenticacion = new UsernamePasswordAuthenticationToken(usuario,null,usuario.getAuthorities());
+                        SecurityContextHolder.getContext().setAuthentication(autenticacion);
                         filterChain.doFilter(request, response);
+                    }
                 }catch (Exception e){
                     throw new ServletException("Error en el autenticado");
                 }

@@ -11,11 +11,13 @@ import cu.edu.cujae.gestion.core.libs.TokenUtils;
 import cu.edu.cujae.gestion.core.services.RegistroService;
 import cu.edu.cujae.gestion.core.servicesInterfaces.ProvinciaServiceInterfaces;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,7 @@ import java.util.List;
 @RequestMapping("/api/v1/gestion/provincia")
 @Tag(name = "Controllador de provincias",
         description = "Controllador encargado de todo lo relacionado con las provincias del país")
+@SecurityRequirement(name = "bearer-key")
 public class ProvinciaController {
 
     private final ProvinciaServiceInterfaces provinciaService;
@@ -45,7 +48,8 @@ public class ProvinciaController {
 
     @GetMapping("/")
     @Operation(summary = "Listado de provincias",
-            description = "Permite obtener el listado de todos las provincias del sistema")
+            description = "Permite obtener el listado de todos las provincias del sistema",security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> getAllProvincia(HttpServletRequest request) {
         String actividad = "Obtener listado de todos las provincias del sistema";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -64,7 +68,8 @@ public class ProvinciaController {
 
     @GetMapping("/nombre")
     @Operation(summary = "Obtener provincias por nombre",
-            description = "Obtener todos los datos de la provincia según su nombre")
+            description = "Obtener todos los datos de la provincia según su nombre",security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> getProvinciaNombre(@PathVariable String nombre, HttpServletRequest request) {
         String actividad = "Obtener todos los datos de la provincia según su nombre";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);

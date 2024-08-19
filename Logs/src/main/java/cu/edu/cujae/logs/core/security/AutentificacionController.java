@@ -6,6 +6,7 @@ import cu.edu.cujae.logs.core.dto.TokenDto;
 import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
 import cu.edu.cujae.logs.core.dto.usuario.UsuarioLoginDto;
 import cu.edu.cujae.logs.core.mapping.Usuario;
+import cu.edu.cujae.logs.core.repository.UsuarioRepository;
 import cu.edu.cujae.logs.core.services.UsuarioService;
 import cu.edu.cujae.logs.core.utils.RegistroUtils;
 import cu.edu.cujae.logs.core.utils.TokenUtils;
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -27,16 +29,22 @@ import java.util.Optional;
 @Tag(name = "Controlador de la autentificación",description = "Determina el funcionamiento de la seguridad")
 public class AutentificacionController {
 
+    private final AuthenticationManager authenticationManager;
+    private final UsuarioService usuarioService;
+    private final TokenService tokenService;
+    private final RegistroUtils registroUtils;
+    private final TokenUtils tokenUtils;
+    private final UsuarioRepository usuarioRepository;
+
     @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private UsuarioService usuarioService;
-    @Autowired
-    private TokenService tokenService;
-    @Autowired
-    private RegistroUtils registroUtils;
-    @Autowired
-    private TokenUtils tokenUtils;
+    public AutentificacionController(UsuarioRepository usuarioRepository, TokenUtils tokenUtils, RegistroUtils registroUtils, TokenService tokenService, UsuarioService usuarioService, AuthenticationManager authenticationManager) {
+        this.usuarioRepository = usuarioRepository;
+        this.tokenUtils = tokenUtils;
+        this.registroUtils = registroUtils;
+        this.tokenService = tokenService;
+        this.usuarioService = usuarioService;
+        this.authenticationManager = authenticationManager;
+    }
 
     @PostMapping(value = "/")
     @Operation(summary = "Encargado de autentificar el usuario")
@@ -70,7 +78,26 @@ public class AutentificacionController {
             Optional<Usuario> user = Optional.ofNullable(usuarioService.usuarioActivoUsername(nombre).orElseThrow(
                     () -> new RuntimeException("No se encontró al usuario del token")
             ));
-            return ResponseEntity.ok(new UsuarioDto(user.get()));
+            return ResponseEntity.ok(new UsuarioDto(user));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/userdetails")
+    @Operation(summary = "Encargado de retornar el UserDetails")
+    public ResponseEntity<?> retornoUserDetails(@RequestBody TokenDto tokenDto){
+        try{
+            if (tokenDto.getToken().equals(null) || tokenDto.getToken().equals("")) {
+                throw new Exception("Token nulo o inválido");
+            }
+            String nombre = tokenService.getSubjetc(tokenDto.getToken());
+            if (nombre.isEmpty() || nombre.isBlank())
+                return ResponseEntity.badRequest().body("Usuario no valido");
+            UserDetails usuario = usuarioRepository.findByUsernameEqualsIgnoreCase(nombre);
+            if (usuario != null)
+                return ResponseEntity.ok(usuario);
+            return ResponseEntity.badRequest().body("No se encontró el usuario");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

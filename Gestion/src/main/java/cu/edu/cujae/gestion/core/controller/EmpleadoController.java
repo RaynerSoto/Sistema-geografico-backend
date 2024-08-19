@@ -19,10 +19,12 @@ import cu.edu.cujae.gestion.core.servicesInterfaces.MunicipioServicesInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.ProvinciaServiceInterfaces;
 import cu.edu.cujae.gestion.core.libs.Validacion;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +34,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1/gestion/empleado")
 @Tag(name = "Controlador de empleados",
         description = "Controlador encargardo de todo lo referente con los empleados del sistema")
+@SecurityRequirement(name = "bearer-key")
 public class EmpleadoController {
 
     private final EmpleadoServiceInterfaces empleadoService;
@@ -55,8 +58,10 @@ public class EmpleadoController {
     }
 
     @GetMapping("/")
-    @Operation(summary = "Listado de empleados"
-            ,description = "Permite listar todos los empleados del sistema junto con sus centros laborales")
+    @Operation(summary = "Listado de empleados",
+            description = "Permite listar todos los empleados del sistema junto con sus centros laborales",
+            security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> listarEmpleados(HttpServletRequest request){
         String actividad = "Listado de empleados del sistema junto con sus centros laborales";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -73,7 +78,9 @@ public class EmpleadoController {
 
     @PostMapping("/")
     @Operation(summary = "Insertar empleado sin trabajo",
-    description = "Permite insertar un empleado que no está afiliado a un centro laboral")
+    description = "Permite insertar un empleado que no está afiliado a un centro laboral",
+            security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> insertarEmpleadoSinCompañia(@RequestBody EmpleadoDto empleadoDto,HttpServletRequest request){
         String actividad = "Insertar un empleado que no está afiliado a un centro laboral";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -94,7 +101,9 @@ public class EmpleadoController {
 
     @PostMapping("/compannia")
     @Operation(summary = "Insertar empleado con trabajo",
-    description = "Permite insertar un empleado que está afiliado a un centro laboral")
+    description = "Permite insertar un empleado que está afiliado a un centro laboral",
+            security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> insertarEmpleadoConCompañia(@RequestBody EmpleadoDtoInsert empleadoDto,HttpServletRequest request){
         String actividad = "Insertar un empleado que está afiliado a un centro laboral";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -117,7 +126,8 @@ public class EmpleadoController {
 
     @GetMapping("/{ci}")
     @Operation(summary = "Obtener empleado por CI",
-    description = "Permite obtener un empleado a raíz de su carnet de identidad")
+    description = "Permite obtener un empleado a raíz de su carnet de identidad",security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> obtenerEmpleadosPorCi(@PathVariable String ci,HttpServletRequest request){
         String actividad = "Obtener un empleado a raìz del CI";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -133,7 +143,9 @@ public class EmpleadoController {
     
     @GetMapping("/{id}")
     @Operation(summary = "Obtener empleado por ID",
-            description = "Permite obtener un empleado a raíz de su ID")
+            description = "Permite obtener un empleado a raíz de su ID",
+            security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> obtenerEmpleadosPorId(@PathVariable Long id,HttpServletRequest request){
         String actividad = "Obtener un empleado a raìz de su ID";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -149,7 +161,8 @@ public class EmpleadoController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Modificar empleado por ID",
-            description = "Permite modificar un empleado a raíz de su ID")
+            description = "Permite modificar un empleado a raíz de su ID",security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> modificarEmpleadoXId(@PathVariable Long id,@RequestBody EmpleadoDto empleadoDto,HttpServletRequest request){
         String actividad = "Modificar un empleado a raìz de su ID";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -171,7 +184,8 @@ public class EmpleadoController {
 
     @DeleteMapping("/{id}")
     @Operation(summary = "Eliminar empleado por ID",
-            description = "Permite eliminar un empleado a raíz de su ID")
+            description = "Permite eliminar un empleado a raíz de su ID",security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> eliminarEmpleadoXId(@PathVariable Long id,HttpServletRequest request){
         String actividad = "Eliminar un empleado a raíz de su ID";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -187,7 +201,8 @@ public class EmpleadoController {
 
     @DeleteMapping("/{ci}")
     @Operation(summary = "Eliminar empleado por CI",
-            description = "Permite eliminar un empleado a raíz de su carnet de identidad")
+            description = "Permite eliminar un empleado a raíz de su carnet de identidad",security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> eliminarEmpleadoXCi(@PathVariable String ci,HttpServletRequest request){
         String actividad = "Eliminar un empleado a raìz de su carnet de identidad";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);

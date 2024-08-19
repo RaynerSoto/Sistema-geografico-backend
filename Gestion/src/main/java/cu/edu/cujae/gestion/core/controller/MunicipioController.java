@@ -8,10 +8,12 @@ import cu.edu.cujae.gestion.core.libs.RegistroUtils;
 import cu.edu.cujae.gestion.core.libs.TokenUtils;
 import cu.edu.cujae.gestion.core.servicesInterfaces.MunicipioServicesInterfaces;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,7 @@ import java.util.List;
 @RequestMapping("/api/v1/gestion/municipio")
 @Tag(name = "Controlador de municipios",
         description = "Permite hacer todas las operaciones de los municipios")
+@SecurityRequirement(name = "bearer-key")
 public class MunicipioController {
 
     private final MunicipioServicesInterfaces municipioServices;
@@ -40,7 +43,8 @@ public class MunicipioController {
 
     @GetMapping("/")
     @Operation(summary = "Listado de municipios",
-    description = "Permite obtener el listado de todos los municipios del sistema")
+    description = "Permite obtener el listado de todos los municipios del sistema",security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> getAllMunicipios(HttpServletRequest request) {
         String actividad = "Listar todos todos los municipios del sistema";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
@@ -59,7 +63,8 @@ public class MunicipioController {
 
     @GetMapping("/Provincia")
     @Operation(summary = "Listado de municipios por provincia",
-            description = "Permite obtener el listado de todos los municipios pertenecientes a una provincia")
+            description = "Permite obtener el listado de todos los municipios pertenecientes a una provincia",security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> getAllMunicipiosXProvincia(@PathVariable String provincia, HttpServletRequest request) {
         String actividad = "Listar todos los municipios pertenecientes a una provincia";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
