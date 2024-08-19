@@ -44,14 +44,14 @@ public class EmpleadoController {
     ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
-    public EmpleadoController(EmpleadoServiceInterfaces empleadoService, MunicipioServicesInterfaces municipioService, ProvinciaServiceInterfaces provinciaService, EntidadServicesInterfaces entidadService,RegistroUtils registroUtils,RegistroService registroService,TokenServiceInterfaces tokenService) {
-        this.tokenService = tokenService;
-        this.registroService = registroService;
-        this.registroUtils = registroUtils;
+    public EmpleadoController(EmpleadoServiceInterfaces empleadoService, MunicipioServicesInterfaces municipioService, ProvinciaServiceInterfaces provinciaService, EntidadServicesInterfaces entidadService, RegistroService registroService, RegistroUtils registroUtils, TokenServiceInterfaces tokenService) {
         this.empleadoService = empleadoService;
         this.municipioService = municipioService;
         this.provinciaService = provinciaService;
         this.entidadService = entidadService;
+        this.registroService = registroService;
+        this.registroUtils = registroUtils;
+        this.tokenService = tokenService;
     }
 
     @GetMapping("/")
