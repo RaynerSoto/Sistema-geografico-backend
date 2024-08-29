@@ -8,15 +8,17 @@ import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.springframework.stereotype.Service;
 
+@Service
 public class FileServices {
-	//Crear libro sin importar la situaci�n
+	//Crear libro sin importar la situaciòn
 	public Workbook construccion_libro(Object object) throws EncryptedDocumentException, IOException {
 		return object instanceof String ? creacion_libro((String)object):creacion_libro((File)object);
 	}
 	
 	
-	//Crear el libro de Excel a partir de la direcci�n
+	//Crear el libro de Excel a partir de la direcciòn
 	public Workbook creacion_libro(String direccion) throws EncryptedDocumentException, IOException {
 		return WorkbookFactory.create(new File(direccion));
 	}
