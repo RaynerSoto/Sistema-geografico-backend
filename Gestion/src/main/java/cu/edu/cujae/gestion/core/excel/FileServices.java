@@ -9,6 +9,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class FileServices {
@@ -19,12 +20,12 @@ public class FileServices {
 	
 	
 	//Crear el libro de Excel a partir de la direcciòn
-	public Workbook creacion_libro(String direccion) throws EncryptedDocumentException, IOException {
+	private Workbook creacion_libro(String direccion) throws EncryptedDocumentException, IOException {
 		return WorkbookFactory.create(new File(direccion));
 	}
 	
 	//Crear libro a partir del fichero
-	public Workbook creacion_libro(File file) throws EncryptedDocumentException, IOException {
+	private Workbook creacion_libro(File file) throws EncryptedDocumentException, IOException {
 		return WorkbookFactory.create(file);
 	}
 	
@@ -36,5 +37,18 @@ public class FileServices {
 			hojas.add((Sheet) libro.getSheetAt(contador));
 		}
 		return hojas;
+	}
+
+	//Convertir de MultipartFile a File
+	public File convertMultipartFileToFile(MultipartFile multipartFile) throws Exception {
+		try{
+			// Crear un archivo temporal con el mismo nombre que el archivo original
+			File convFile = new File(System.getProperty("java.io.tmpdir") + "/" + multipartFile.getOriginalFilename());
+			// Transferir el contenido del MultipartFile al archivo temporal
+			multipartFile.transferTo(convFile);
+			return convFile;
+		}catch (Exception e){
+			throw new Exception("No se ha podido procesar el fichero ");
+		}
 	}
 }
