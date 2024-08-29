@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class FileServices {
+public class FileServicesIntern {
 	//Crear libro sin importar la situaciòn
 	public Workbook construccion_libro(Object object) throws EncryptedDocumentException, IOException {
 		return object instanceof String ? creacion_libro((String)object):creacion_libro((File)object);

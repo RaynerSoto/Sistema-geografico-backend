@@ -3,7 +3,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ExcelServices {
+public class ExcelServicesIntern {
     public boolean isEntidadSheet(Sheet hoja){
         if(hoja.getSheetName().toLowerCase().trim().equalsIgnoreCase("entidad") ||
                 hoja.getSheetName().toLowerCase().trim().equalsIgnoreCase("entidades") ||

@@ -1,6 +1,7 @@
 package cu.edu.cujae.gestion.core.dto.empleadoDtos;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import cu.edu.cujae.gestion.core.mapping.Empleado;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -42,6 +43,10 @@ public class EmpleadoDto {
 
     private String datos;
 
+    private String numero;
+
+    private String localidad;
+
     public EmpleadoDto(Empleado empleado){
         this.uuid = empleado.getUuid();
         this.nombre = empleado.getNombre();
@@ -50,15 +55,19 @@ public class EmpleadoDto {
         this.provincia = empleado.getProvincia().getNombre();
         this.direccion = empleado.getDireccion();
         this.datos = empleado.getDatos();
+        this.numero = empleado.getNumero();
+        this.localidad = empleado.getLocalidad();
     }
 
     public EmpleadoDto(EmpleadoDto empleado){
         this.uuid = empleado.getUuid();
         this.nombre = empleado.getNombre();
         this.ci = empleado.getCi();
-        this.municipio = empleado.getNombre();
-        this.provincia = empleado.getNombre();
+        this.municipio = empleado.getMunicipio();
+        this.provincia = empleado.getProvincia();
         this.direccion = empleado.getDireccion();
         this.datos = empleado.getDatos();
+        this.numero = empleado.getNumero();
+        this.localidad = empleado.getLocalidad();
     }
 }
