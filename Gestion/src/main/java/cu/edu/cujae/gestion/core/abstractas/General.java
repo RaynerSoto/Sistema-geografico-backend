@@ -1,4 +1,4 @@
-package cu.edu.cujae.gestion.core.dto;
+package cu.edu.cujae.gestion.core.abstractas;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotBlank;

@@ -1,6 +1,7 @@
 package cu.edu.cujae.gestion.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import cu.edu.cujae.gestion.core.abstractas.General;
 import cu.edu.cujae.gestion.core.mapping.Entidad;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -10,13 +11,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Time;
-import java.sql.Timestamp;
 import java.util.Optional;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EntidadDto extends General{
+public class EntidadDto extends General {
 
     @NotBlank(message = "El nombre no puede estar vacío o estar compuesto solamente por espacios")
     @NotNull(message = "El nombre de la entidad no puede ser null")

@@ -1,9 +1,12 @@
 package cu.edu.cujae.gestion.core.controller;
 
+import cu.edu.cujae.gestion.core.abstractas.General;
 import cu.edu.cujae.gestion.core.dto.EntidadDto;
 import cu.edu.cujae.gestion.core.dto.empleadoDtos.EmpleadoDto;
+import cu.edu.cujae.gestion.core.excel.EntidadServicesIntern;
 import cu.edu.cujae.gestion.core.excel.ExcelServicesIntern;
 import cu.edu.cujae.gestion.core.excel.FileServicesIntern;
+import cu.edu.cujae.gestion.core.excel.PersonaServicesIntern;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -25,11 +28,15 @@ public class ExcelController {
 
     private final FileServicesIntern fileServicesIntern;
     private final ExcelServicesIntern excelServicesIntern;
+    private final EntidadServicesIntern entidadServicesIntern;
+    private final PersonaServicesIntern personaServicesIntern;
 
     @Autowired
-    public ExcelController(FileServicesIntern fileServicesIntern, ExcelServicesIntern excelServicesIntern) {
+    public ExcelController(FileServicesIntern fileServicesIntern, ExcelServicesIntern excelServicesIntern, EntidadServicesIntern entidadServicesIntern, PersonaServicesIntern personaServicesIntern) {
         this.fileServicesIntern = fileServicesIntern;
         this.excelServicesIntern = excelServicesIntern;
+        this.entidadServicesIntern = entidadServicesIntern;
+        this.personaServicesIntern = personaServicesIntern;
     }
 
     @PostMapping("/")
@@ -43,8 +50,7 @@ public class ExcelController {
                 Workbook libro = fileServicesIntern.construccion_libro(fichero);
                 ArrayList<Sheet>hojas = fileServicesIntern.listado_hojas(libro);
                 if (hojas.size() == 2) {
-                    ArrayList<EntidadDto> entidades = new ArrayList<>();
-                    ArrayList<EmpleadoDto> empleados = new ArrayList<>();
+                    ArrayList<General> datos = new ArrayList<>();
                     for(Sheet hoja : hojas){
                         int cantidad_filas = hoja.getLastRowNum()+1;
                         int cantida_columnas;
@@ -55,10 +61,10 @@ public class ExcelController {
                         }
                         if(cantidad_filas != 0 && cantida_columnas != 0){
                             if (excelServicesIntern.isEntidadSheet(hoja)){
-
+                                datos.addAll(entidadServicesIntern.extraer_entidades(hoja));
                             }
                             else if(excelServicesIntern.isPersonalSheet(hoja)) {
-
+                                datos.addAll(personaServicesIntern.extraer_personas(hoja));
                             }
                         }
                     }

@@ -1,8 +1,6 @@
 package cu.edu.cujae.gestion.core.dto.empleadoDtos;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import cu.edu.cujae.gestion.core.dto.General;
+import cu.edu.cujae.gestion.core.abstractas.General;
 import cu.edu.cujae.gestion.core.mapping.Empleado;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -10,8 +8,6 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @AllArgsConstructor
