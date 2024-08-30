@@ -16,10 +16,7 @@ import java.util.Optional;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class EntidadDto {
-
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long uuid;
+public class EntidadDto extends General{
 
     @NotBlank(message = "El nombre no puede estar vacío o estar compuesto solamente por espacios")
     @NotNull(message = "El nombre de la entidad no puede ser null")
@@ -27,18 +24,6 @@ public class EntidadDto {
     private String nombre;
 
     private String entidadMadre;
-
-    @NotBlank(message = "El municipio no puede estar vacío o estar compuesto solamente por espacios")
-    @NotNull(message = "El municipio no puede ser nulo")
-    private String municipio;
-
-    @NotBlank(message = "La provincia no puede estar vacío o estar compuesto solamente por espacios")
-    @NotNull(message = "La provincia no puede ser nulo")
-    private String provincia;
-
-    @NotBlank(message = "La direccion de la entidad no puede estar vacío o estar compuesto solamente por espacios")
-    @NotNull(message = "La direccion de la entidad no puede ser null")
-    private String direccion;
 
     private String numeroCasa;
 
@@ -58,12 +43,9 @@ public class EntidadDto {
     private Long zona_transporte;
 
     public EntidadDto(Entidad entidad) {
-        this.uuid = entidad.getUuid();
+        super(entidad.getUuid(), entidad.getMunicipio().getNombre(), entidad.getProvincia().getNombre(),entidad.getDireccion());
         this.nombre = entidad.getNombre();
         this.entidadMadre = entidad.getEntidadMadre();
-        this.municipio = entidad.getMunicipio().getNombre();
-        this.provincia = entidad.getProvincia().getNombre();
-        this.direccion = entidad.getDireccion();
         this.numeroCasa = entidad.getNumeroCasa();
         this.localidad = entidad.getLocalidad();
         this.horario_entrada = entidad.getHorario_entrada();
@@ -75,12 +57,9 @@ public class EntidadDto {
     }
 
     public EntidadDto(Optional<Entidad> entidad) {
-        this.uuid = entidad.get().getUuid();
+        super(entidad.get().getUuid(), entidad.get().getMunicipio().getNombre(), entidad.get().getProvincia().getNombre(),entidad.get().getDireccion());
         this.nombre = entidad.get().getNombre();
         this.entidadMadre = entidad.get().getEntidadMadre();
-        this.municipio = entidad.get().getMunicipio().getNombre();
-        this.provincia = entidad.get().getProvincia().getNombre();
-        this.direccion = entidad.get().getDireccion();
         this.numeroCasa = entidad.get().getNumeroCasa();
         this.localidad = entidad.get().getLocalidad();
         this.horario_entrada = entidad.get().getHorario_entrada();
