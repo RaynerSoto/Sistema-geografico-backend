@@ -72,27 +72,6 @@ public class PersonaServicesIntern {
 						empleadoDto.setDireccion(direccion);
 					}
 				}
-				else if(hoja.getRow(0).getCell(contador_columna).getStringCellValue().trim().equalsIgnoreCase("Calle") || hoja.getRow(0).getCell(contador_columna).getStringCellValue().trim().equalsIgnoreCase("calles")) {
-					try {
-						calle = hoja.getRow(contador_fila).getCell(contador_columna).getStringCellValue();
-					} catch (Exception e2) {
-						calle = "";
-					}
-				}
-				else if(hoja.getRow(0).getCell(contador_columna).getStringCellValue().trim().equalsIgnoreCase("entrecalle1") || hoja.getRow(0).getCell(contador_columna).getStringCellValue().trim().equalsIgnoreCase("entrecalles1")) {
-					try {
-						entrecalle1 = hoja.getRow(contador_fila).getCell(contador_columna).getStringCellValue();
-					} catch (Exception e2) {
-						entrecalle1 = "";
-					}
-				}
-				else if(hoja.getRow(0).getCell(contador_columna).getStringCellValue().trim().equalsIgnoreCase("entrecalle2") || hoja.getRow(0).getCell(contador_columna).getStringCellValue().trim().equalsIgnoreCase("entrecalles2")) {
-					try {
-						entrecalle2 = hoja.getRow(contador_fila).getCell(contador_columna).getStringCellValue();
-					} catch (Exception e2) {
-						entrecalle2 = "";
-					}
-				}
 				else if(hoja.getRow(0).getCell(contador_columna).getStringCellValue().trim().equalsIgnoreCase("numero") || hoja.getRow(0).getCell(contador_columna).getStringCellValue().trim().equalsIgnoreCase("n�mero")) {
 					try {
 						numero = hoja.getRow(contador_fila).getCell(contador_columna).getStringCellValue();
