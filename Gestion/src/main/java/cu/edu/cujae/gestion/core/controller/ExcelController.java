@@ -1,12 +1,10 @@
 package cu.edu.cujae.gestion.core.controller;
 
 import cu.edu.cujae.gestion.core.abstractas.General;
-import cu.edu.cujae.gestion.core.dto.EntidadDto;
-import cu.edu.cujae.gestion.core.dto.empleadoDtos.EmpleadoDto;
-import cu.edu.cujae.gestion.core.excel.EntidadServicesIntern;
-import cu.edu.cujae.gestion.core.excel.ExcelServicesIntern;
-import cu.edu.cujae.gestion.core.excel.FileServicesIntern;
-import cu.edu.cujae.gestion.core.excel.PersonaServicesIntern;
+import cu.edu.cujae.gestion.core.servicesIntern.EntidadServicesIntern;
+import cu.edu.cujae.gestion.core.servicesIntern.ExcelServicesIntern;
+import cu.edu.cujae.gestion.core.servicesIntern.FileServicesIntern;
+import cu.edu.cujae.gestion.core.servicesIntern.EmpleadoServicesIntern;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -29,14 +27,14 @@ public class ExcelController {
     private final FileServicesIntern fileServicesIntern;
     private final ExcelServicesIntern excelServicesIntern;
     private final EntidadServicesIntern entidadServicesIntern;
-    private final PersonaServicesIntern personaServicesIntern;
+    private final EmpleadoServicesIntern empleadoServicesIntern;
 
     @Autowired
-    public ExcelController(FileServicesIntern fileServicesIntern, ExcelServicesIntern excelServicesIntern, EntidadServicesIntern entidadServicesIntern, PersonaServicesIntern personaServicesIntern) {
+    public ExcelController(FileServicesIntern fileServicesIntern, ExcelServicesIntern excelServicesIntern, EntidadServicesIntern entidadServicesIntern, EmpleadoServicesIntern empleadoServicesIntern) {
         this.fileServicesIntern = fileServicesIntern;
         this.excelServicesIntern = excelServicesIntern;
         this.entidadServicesIntern = entidadServicesIntern;
-        this.personaServicesIntern = personaServicesIntern;
+        this.empleadoServicesIntern = empleadoServicesIntern;
     }
 
     @PostMapping("/")
@@ -64,7 +62,7 @@ public class ExcelController {
                                 datos.addAll(entidadServicesIntern.extraer_entidades(hoja));
                             }
                             else if(excelServicesIntern.isPersonalSheet(hoja)) {
-                                datos.addAll(personaServicesIntern.extraer_personas(hoja));
+                                datos.addAll(empleadoServicesIntern.extraer_personas(hoja));
                             }
                         }
                     }

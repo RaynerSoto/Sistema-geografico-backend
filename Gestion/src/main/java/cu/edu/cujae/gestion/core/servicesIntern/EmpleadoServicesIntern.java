@@ -1,15 +1,52 @@
-package cu.edu.cujae.gestion.core.excel;
+package cu.edu.cujae.gestion.core.servicesIntern;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import cu.edu.cujae.gestion.core.dto.empleadoDtos.EmpleadoDto;
 import cu.edu.cujae.gestion.core.dto.empleadoDtos.EmpleadoDtoInsert;
+import cu.edu.cujae.gestion.core.dto.empleadoDtos.EmpleadoDtoRegular;
+import cu.edu.cujae.gestion.core.feignclient.TokenServiceInterfaces;
+import cu.edu.cujae.gestion.core.libs.RegistroUtils;
+import cu.edu.cujae.gestion.core.libs.Validacion;
 import cu.edu.cujae.gestion.core.mapping.Empleado;
+import cu.edu.cujae.gestion.core.mapping.Entidad;
+import cu.edu.cujae.gestion.core.mapping.Municipio;
+import cu.edu.cujae.gestion.core.mapping.Provincia;
+import cu.edu.cujae.gestion.core.services.RegistroService;
+import cu.edu.cujae.gestion.core.servicesInterfaces.EmpleadoServiceInterfaces;
+import cu.edu.cujae.gestion.core.servicesInterfaces.EntidadServicesInterfaces;
+import cu.edu.cujae.gestion.core.servicesInterfaces.MunicipioServicesInterfaces;
+import cu.edu.cujae.gestion.core.servicesInterfaces.ProvinciaServiceInterfaces;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PersonaServicesIntern {
+public class EmpleadoServicesIntern {
+
+	private final EmpleadoServiceInterfaces empleadoService;
+	private final MunicipioServicesInterfaces municipioService;
+	private final ProvinciaServiceInterfaces provinciaService;
+	private final EntidadServicesInterfaces entidadService;
+	private final RegistroService registroService;
+	private final RegistroUtils registroUtils;
+	private final TokenServiceInterfaces tokenService;
+	private final EmpleadoServicesIntern empleadoServicesIntern;
+
+	@Autowired
+	public EmpleadoServicesIntern(EmpleadoServiceInterfaces empleadoService, MunicipioServicesInterfaces municipioService, ProvinciaServiceInterfaces provinciaService, EntidadServicesInterfaces entidadService, RegistroService registroService, RegistroUtils registroUtils, TokenServiceInterfaces tokenService, EmpleadoServicesIntern empleadoServicesIntern) {
+		this.empleadoService = empleadoService;
+		this.municipioService = municipioService;
+		this.provinciaService = provinciaService;
+		this.entidadService = entidadService;
+		this.registroService = registroService;
+		this.registroUtils = registroUtils;
+		this.tokenService = tokenService;
+		this.empleadoServicesIntern = empleadoServicesIntern;
+	}
 
 	//Cargar persona en una lista
 	public ArrayList<EmpleadoDtoInsert> extraer_personas(Sheet hoja) {
@@ -118,5 +155,40 @@ public class PersonaServicesIntern {
 			}
 		}
 		return listado_personas;
+	}
+
+	public void insertarEmpleadoSinTrabajo(EmpleadoDto empleadoDto) throws Exception{
+		Validacion.validarUnsupportedOperationException(empleadoDto);
+		Optional<Provincia> provincia = provinciaService.buscarProvinciaPorNombre(empleadoDto.getProvincia());
+		Optional<Municipio> municipio = municipioService.obtenerMunicipioNombre(empleadoDto.getMunicipio());
+		if (!municipioService.isMuncipioinProvincia(provincia.get().getNombre(),municipio.get().getNombre()))
+			throw new Exception("Este municipio no pertenece a la provincia");
+		empleadoService.insertarEmpleado(new Empleado(empleadoDto,municipio.get(),provincia.get()));
+	}
+
+	public void insertarEmpleadoConTrabajo(EmpleadoDtoInsert empleadoDto) throws Exception{
+		Validacion.validarUnsupportedOperationException(empleadoDto);
+		Optional<Entidad> entidad = entidadService.obtenerEntidadNombre(empleadoDto.getEntidad());
+		Optional<Provincia> provincia = provinciaService.buscarProvinciaPorNombre(empleadoDto.getProvincia());
+		Optional<Municipio> municipio = municipioService.obtenerMunicipioNombre(empleadoDto.getMunicipio());
+		if (!municipioService.isMuncipioinProvincia(provincia.get().getNombre(),municipio.get().getNombre()))
+			throw new Exception("Este municipio no pertenece a la provincia");
+		entidad.get().getPersonal().add(new Empleado(empleadoDto,municipio.get(),provincia.get()));
+		entidadService.modificarEntidad(entidad.get());
+	}
+
+	public List<EmpleadoDtoRegular> listadoEmpleadoDtoRegular() throws Exception{
+		return empleadoService.obtenerEmpleados().stream()
+				.map(empleado -> new EmpleadoDtoRegular(empleado)).toList();
+	}
+
+	public void modificarEmpleadoXId(EmpleadoDto empleadoDto,Long id) throws Exception{
+		Validacion.validarUnsupportedOperationException(empleadoDto);
+		empleadoDto.setUuid(id);
+		Optional<Provincia> provincia = provinciaService.buscarProvinciaPorNombre(empleadoDto.getProvincia());
+		Optional<Municipio> municipio = municipioService.obtenerMunicipioNombre(empleadoDto.getMunicipio());
+		if (!municipioService.isMuncipioinProvincia(provincia.get().getNombre(),municipio.get().getNombre()))
+			throw new Exception("Este municipio no pertenece a la provincia");
+		empleadoService.modificarEmpleado(new Empleado(empleadoDto,municipio.get(),provincia.get()));
 	}
 }

@@ -18,6 +18,7 @@ import cu.edu.cujae.gestion.core.servicesInterfaces.EntidadServicesInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.MunicipioServicesInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.ProvinciaServiceInterfaces;
 import cu.edu.cujae.gestion.core.libs.Validacion;
+import cu.edu.cujae.gestion.core.servicesIntern.EmpleadoServicesIntern;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -44,10 +45,11 @@ public class EmpleadoController {
     private final RegistroService registroService;
     private final RegistroUtils registroUtils;
     private final TokenServiceInterfaces tokenService;
+    private final EmpleadoServicesIntern empleadoServicesIntern;
     ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
-    public EmpleadoController(EmpleadoServiceInterfaces empleadoService, MunicipioServicesInterfaces municipioService, ProvinciaServiceInterfaces provinciaService, EntidadServicesInterfaces entidadService, RegistroService registroService, RegistroUtils registroUtils, TokenServiceInterfaces tokenService) {
+    public EmpleadoController(EmpleadoServiceInterfaces empleadoService, MunicipioServicesInterfaces municipioService, ProvinciaServiceInterfaces provinciaService, EntidadServicesInterfaces entidadService, RegistroService registroService, RegistroUtils registroUtils, TokenServiceInterfaces tokenService, EmpleadoServicesIntern empleadoServicesIntern) {
         this.empleadoService = empleadoService;
         this.municipioService = municipioService;
         this.provinciaService = provinciaService;
@@ -55,6 +57,7 @@ public class EmpleadoController {
         this.registroService = registroService;
         this.registroUtils = registroUtils;
         this.tokenService = tokenService;
+        this.empleadoServicesIntern = empleadoServicesIntern;
     }
 
     @GetMapping("/")
@@ -66,8 +69,7 @@ public class EmpleadoController {
         String actividad = "Listado de empleados del sistema junto con sus centros laborales";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
-            List<EmpleadoDtoRegular> empleados = empleadoService.obtenerEmpleados().stream()
-                    .map(empleado -> new EmpleadoDtoRegular(empleado)).toList();
+            List<EmpleadoDtoRegular> empleados = empleadoServicesIntern.listadoEmpleadoDtoRegular();
             registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
             return ResponseEntity.ok(empleados);
         }catch (Exception e){
@@ -85,12 +87,7 @@ public class EmpleadoController {
         String actividad = "Insertar un empleado que no está afiliado a un centro laboral";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
-            Validacion.validarUnsupportedOperationException(empleadoDto);
-            Optional<Provincia> provincia = provinciaService.buscarProvinciaPorNombre(empleadoDto.getProvincia());
-            Optional<Municipio> municipio = municipioService.obtenerMunicipioNombre(empleadoDto.getMunicipio());
-            if (!municipioService.isMuncipioinProvincia(provincia.get().getNombre(),municipio.get().getNombre()))
-                return ResponseEntity.badRequest().body("Este municipio no pertenece a la provincia");
-            empleadoService.insertarEmpleado(new Empleado(empleadoDto,municipio.get(),provincia.get()));
+            empleadoServicesIntern.insertarEmpleadoSinTrabajo(empleadoDto);
             registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
             return ResponseEntity.ok("Usuario insertado con éxito");
         }catch (Exception e){
@@ -108,14 +105,7 @@ public class EmpleadoController {
         String actividad = "Insertar un empleado que está afiliado a un centro laboral";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
-            Validacion.validarUnsupportedOperationException(empleadoDto);
-            Optional<Entidad> entidad = entidadService.obtenerEntidadNombre(empleadoDto.getEntidad());
-            Optional<Provincia> provincia = provinciaService.buscarProvinciaPorNombre(empleadoDto.getProvincia());
-            Optional<Municipio> municipio = municipioService.obtenerMunicipioNombre(empleadoDto.getMunicipio());
-            if (!municipioService.isMuncipioinProvincia(provincia.get().getNombre(),municipio.get().getNombre()))
-                return ResponseEntity.badRequest().body("Este municipio no pertenece a la provincia");
-            entidad.get().getPersonal().add(new Empleado(empleadoDto,municipio.get(),provincia.get()));
-            entidadService.modificarEntidad(entidad.get());
+            empleadoServicesIntern.insertarEmpleadoConTrabajo(empleadoDto);
             registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
             return ResponseEntity.ok("Usuario insertado con éxito");
         }catch (Exception e){
@@ -167,13 +157,7 @@ public class EmpleadoController {
         String actividad = "Modificar un empleado a raìz de su ID";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
-            Validacion.validarUnsupportedOperationException(empleadoDto);
-            empleadoDto.setUuid(id);
-            Optional<Provincia> provincia = provinciaService.buscarProvinciaPorNombre(empleadoDto.getProvincia());
-            Optional<Municipio> municipio = municipioService.obtenerMunicipioNombre(empleadoDto.getMunicipio());
-            if (!municipioService.isMuncipioinProvincia(provincia.get().getNombre(),municipio.get().getNombre()))
-                return ResponseEntity.badRequest().body("Este municipio no pertenece a la provincia");
-            empleadoService.modificarEmpleado(new Empleado(empleadoDto,municipio.get(),provincia.get()));
+
             registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
             return ResponseEntity.ok("Usuario insertado con éxito");
         }catch (Exception e){

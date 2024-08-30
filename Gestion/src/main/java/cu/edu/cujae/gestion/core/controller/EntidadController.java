@@ -15,6 +15,7 @@ import cu.edu.cujae.gestion.core.servicesInterfaces.EntidadServicesInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.MunicipioServicesInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.ProvinciaServiceInterfaces;
 import cu.edu.cujae.gestion.core.libs.Validacion;
+import cu.edu.cujae.gestion.core.servicesIntern.EntidadServicesIntern;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -40,16 +41,18 @@ public class EntidadController {
     private final RegistroService registroService;
     private final RegistroUtils registroUtils;
     private final TokenServiceInterfaces tokenService;
+    private final EntidadServicesIntern entidadServicesIntern;
     ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
-    public EntidadController(EntidadServicesInterfaces entidadServices, ProvinciaServiceInterfaces provinciaServices, MunicipioServicesInterfaces municipioServices, RegistroService registroService, RegistroUtils registroUtils, TokenServiceInterfaces tokenService) {
+    public EntidadController(EntidadServicesInterfaces entidadServices, ProvinciaServiceInterfaces provinciaServices, MunicipioServicesInterfaces municipioServices, RegistroService registroService, RegistroUtils registroUtils, TokenServiceInterfaces tokenService, EntidadServicesIntern entidadServicesIntern) {
         this.entidadServices = entidadServices;
         this.provinciaServices = provinciaServices;
         this.municipioServices = municipioServices;
         this.registroService = registroService;
         this.registroUtils = registroUtils;
         this.tokenService = tokenService;
+        this.entidadServicesIntern = entidadServicesIntern;
     }
 
     @GetMapping("/")
@@ -60,7 +63,7 @@ public class EntidadController {
         String actividad = "Listar todas las entidades del sistema";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
-            List<EntidadDto> entidades = entidadServices.listarEntidad().stream().map(EntidadDto::new).toList();
+            List<EntidadDto> entidades = entidadServicesIntern.obtenerListadoEntidadDto();
             registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
             return ResponseEntity.ok(entidades);
         }catch (Exception e){
@@ -77,13 +80,7 @@ public class EntidadController {
         String actividad = "Insertar una entidad en el sistema";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
-            entidadServices.existeEntidadNombre(entidad.getNombre());
-            Validacion.validarUnsupportedOperationException(entidad);
-            Optional<Provincia> provincia = provinciaServices.buscarProvinciaPorNombre(entidad.getProvincia());
-            Optional<Municipio> municipio = municipioServices.obtenerMunicipioNombre(entidad.getMunicipio());
-            if (!municipioServices.isMuncipioinProvincia(provincia.get().getNombre(),municipio.get().getNombre()))
-                return ResponseEntity.badRequest().body("Este municipio no pertenece a la provincia");
-            entidadServices.insertarEntidad(new Entidad(entidad,municipio.get(),provincia.get()));
+            entidadServicesIntern.insertarEntidad(entidad);
             registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
             return ResponseEntity.ok("Entidad insertada");
         }catch (Exception e){
@@ -100,14 +97,7 @@ public class EntidadController {
         String actividad = "Modificar una entidad a travès de su ID";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
-            entidad.setUuid(id);
-            entidadServices.existeEntidadNombreNotId(entidad.getNombre(),entidad.getUuid());
-            Validacion.validarUnsupportedOperationException(entidad);
-            Optional<Provincia> provincia = provinciaServices.buscarProvinciaPorNombre(entidad.getProvincia());
-            Optional<Municipio> municipio = municipioServices.obtenerMunicipioNombre(entidad.getMunicipio());
-            if (!municipioServices.isMuncipioinProvincia(provincia.get().getNombre(),municipio.get().getNombre()))
-                return ResponseEntity.badRequest().body("Este municipio no pertenece a la provincia");
-            entidadServices.modificarEntidad(new Entidad(entidad,municipio.get(),provincia.get()));
+            entidadServicesIntern.modificarEntidad(entidad,id);
             registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
             return ResponseEntity.ok("Entidad modificada con éxito");
         }catch (Exception e){

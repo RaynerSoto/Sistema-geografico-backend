@@ -1,13 +1,45 @@
-package cu.edu.cujae.gestion.core.excel;
+package cu.edu.cujae.gestion.core.servicesIntern;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 import cu.edu.cujae.gestion.core.dto.EntidadDto;
+import cu.edu.cujae.gestion.core.feignclient.TokenServiceInterfaces;
+import cu.edu.cujae.gestion.core.libs.RegistroUtils;
+import cu.edu.cujae.gestion.core.libs.Validacion;
+import cu.edu.cujae.gestion.core.mapping.Entidad;
+import cu.edu.cujae.gestion.core.mapping.Municipio;
+import cu.edu.cujae.gestion.core.mapping.Provincia;
+import cu.edu.cujae.gestion.core.services.RegistroService;
+import cu.edu.cujae.gestion.core.servicesInterfaces.EntidadServicesInterfaces;
+import cu.edu.cujae.gestion.core.servicesInterfaces.MunicipioServicesInterfaces;
+import cu.edu.cujae.gestion.core.servicesInterfaces.ProvinciaServiceInterfaces;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EntidadServicesIntern {
+
+	private final EntidadServicesInterfaces entidadServices;
+	private final ProvinciaServiceInterfaces provinciaServices;
+	private final MunicipioServicesInterfaces municipioServices;
+	private final RegistroService registroService;
+	private final RegistroUtils registroUtils;
+	private final TokenServiceInterfaces tokenService;
+
+	@Autowired
+	public EntidadServicesIntern(EntidadServicesInterfaces entidadServices, ProvinciaServiceInterfaces provinciaServices, MunicipioServicesInterfaces municipioServices, RegistroService registroService, RegistroUtils registroUtils, TokenServiceInterfaces tokenService) {
+		this.entidadServices = entidadServices;
+		this.provinciaServices = provinciaServices;
+		this.municipioServices = municipioServices;
+		this.registroService = registroService;
+		this.registroUtils = registroUtils;
+		this.tokenService = tokenService;
+	}
+
 	//Cargar entidades en una lista
 	public ArrayList<EntidadDto> extraer_entidades(Sheet hoja) {
 		ArrayList<EntidadDto>listado_entidades = new ArrayList<>();
@@ -145,5 +177,30 @@ public class EntidadServicesIntern {
 			}
 		}
 		return listado_entidades;
+	}
+
+	public void insertarEntidad(EntidadDto entidad) throws Exception{
+		entidadServices.existeEntidadNombre(entidad.getNombre());
+		Validacion.validarUnsupportedOperationException(entidad);
+		Optional<Provincia> provincia = provinciaServices.buscarProvinciaPorNombre(entidad.getProvincia());
+		Optional<Municipio> municipio = municipioServices.obtenerMunicipioNombre(entidad.getMunicipio());
+		if (!municipioServices.isMuncipioinProvincia(provincia.get().getNombre(),municipio.get().getNombre()))
+			throw new Exception("Este municipio no pertenece a la provincia");
+		entidadServices.insertarEntidad(new Entidad(entidad,municipio.get(),provincia.get()));
+	}
+
+	public void modificarEntidad(EntidadDto entidad, Long id) throws Exception{
+		entidad.setUuid(id);
+		entidadServices.existeEntidadNombreNotId(entidad.getNombre(),entidad.getUuid());
+		Validacion.validarUnsupportedOperationException(entidad);
+		Optional<Provincia> provincia = provinciaServices.buscarProvinciaPorNombre(entidad.getProvincia());
+		Optional<Municipio> municipio = municipioServices.obtenerMunicipioNombre(entidad.getMunicipio());
+		if (!municipioServices.isMuncipioinProvincia(provincia.get().getNombre(),municipio.get().getNombre()))
+			throw new Exception("Este municipio no pertenece a la provincia");
+		entidadServices.modificarEntidad(new Entidad(entidad,municipio.get(),provincia.get()));
+	}
+
+	public List<EntidadDto> obtenerListadoEntidadDto()throws Exception{
+		return entidadServices.listarEntidad().stream().map(EntidadDto::new).toList();
 	}
 }
