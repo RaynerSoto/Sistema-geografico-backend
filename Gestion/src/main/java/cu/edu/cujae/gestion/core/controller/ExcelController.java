@@ -1,6 +1,8 @@
 package cu.edu.cujae.gestion.core.controller;
 
 import cu.edu.cujae.gestion.core.abstractas.General;
+import cu.edu.cujae.gestion.core.dto.EntidadDto;
+import cu.edu.cujae.gestion.core.dto.empleadoDtos.EmpleadoDtoInsert;
 import cu.edu.cujae.gestion.core.servicesIntern.EntidadServicesIntern;
 import cu.edu.cujae.gestion.core.servicesIntern.ExcelServicesIntern;
 import cu.edu.cujae.gestion.core.servicesIntern.FileServicesIntern;
@@ -64,6 +66,24 @@ public class ExcelController {
                             else if(excelServicesIntern.isPersonalSheet(hoja)) {
                                 datos.addAll(empleadoServicesIntern.extraer_personas(hoja));
                             }
+                        }
+                        for(General elemento: datos){
+                            try {
+                                if (elemento instanceof EntidadDto) {
+                                    entidadServicesIntern.insertarEntidad((EntidadDto) elemento);
+                                } else {
+                                    empleadoServicesIntern.insertarEmpleadoConTrabajo((EmpleadoDtoInsert) elemento);
+                                }
+                                datos.remove(elemento);
+                            }catch (Exception e){
+                                System.out.println(e);
+                            }
+                        }
+                        if (datos.isEmpty()) {
+                            return ResponseEntity.ok("Datos analizados y procesados con éxito");
+                        }
+                        else {
+                            return ResponseEntity.badRequest().body(datos);
                         }
                     }
                 }
