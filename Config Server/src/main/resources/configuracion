@@ -1,0 +1,4 @@
+LogsDBURL = //localhost:5432/Sistema Geo Login/
+GestionDBURL = //localhost:5432/Sistema Geo Gestion/
+DB_USER = postgres
+DB_PASSWORD = 0000
