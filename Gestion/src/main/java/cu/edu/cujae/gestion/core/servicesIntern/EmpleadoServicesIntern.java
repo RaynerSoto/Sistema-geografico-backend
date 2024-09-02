@@ -34,10 +34,9 @@ public class EmpleadoServicesIntern {
 	private final RegistroService registroService;
 	private final RegistroUtils registroUtils;
 	private final TokenServiceInterfaces tokenService;
-	private final EmpleadoServicesIntern empleadoServicesIntern;
 
 	@Autowired
-	public EmpleadoServicesIntern(EmpleadoServiceInterfaces empleadoService, MunicipioServicesInterfaces municipioService, ProvinciaServiceInterfaces provinciaService, EntidadServicesInterfaces entidadService, RegistroService registroService, RegistroUtils registroUtils, TokenServiceInterfaces tokenService, EmpleadoServicesIntern empleadoServicesIntern) {
+	public EmpleadoServicesIntern(EmpleadoServiceInterfaces empleadoService, MunicipioServicesInterfaces municipioService, ProvinciaServiceInterfaces provinciaService, EntidadServicesInterfaces entidadService, RegistroService registroService, RegistroUtils registroUtils, TokenServiceInterfaces tokenService) {
 		this.empleadoService = empleadoService;
 		this.municipioService = municipioService;
 		this.provinciaService = provinciaService;
@@ -45,7 +44,6 @@ public class EmpleadoServicesIntern {
 		this.registroService = registroService;
 		this.registroUtils = registroUtils;
 		this.tokenService = tokenService;
-		this.empleadoServicesIntern = empleadoServicesIntern;
 	}
 
 	//Cargar persona en una lista
