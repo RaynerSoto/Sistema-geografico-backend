@@ -2,6 +2,7 @@ package cu.edu.cujae.gestion.core.controller;
 
 import cu.edu.cujae.gestion.core.abstractas.General;
 import cu.edu.cujae.gestion.core.dto.EntidadDto;
+import cu.edu.cujae.gestion.core.dto.ErrorDto;
 import cu.edu.cujae.gestion.core.dto.empleadoDtos.EmpleadoDtoInsert;
 import cu.edu.cujae.gestion.core.servicesIntern.EntidadServicesIntern;
 import cu.edu.cujae.gestion.core.servicesIntern.ExcelServicesIntern;
@@ -51,6 +52,7 @@ public class ExcelController {
                 fichero.deleteOnExit();
                 if (hojas.size() == 2) {
                     ArrayList<General> datos = new ArrayList<>();
+                    ArrayList<ErrorDto> datosIncorrectos = new ArrayList<>();
                     for(Sheet hoja : hojas){
                         int cantidad_filas = hoja.getLastRowNum()+1;
                         int cantida_columnas;
@@ -75,16 +77,17 @@ public class ExcelController {
                             } else {
                                 empleadoServicesIntern.insertarEmpleadoConTrabajo((EmpleadoDtoInsert) elemento);
                             }
-                            datos.remove(elemento);
+
                         }catch (Exception e){
-                            System.out.println(e);
+                            datosIncorrectos.add(new ErrorDto(elemento,e.getMessage()));
+                            System.out.println(e.getMessage());
                         }
                     }
-                    if (datos.isEmpty()) {
+                    if (datosIncorrectos.isEmpty()) {
                         return ResponseEntity.ok("Datos analizados y procesados con éxito");
                     }
                     else {
-                        return ResponseEntity.badRequest().body(datos);
+                        return ResponseEntity.badRequest().body(datosIncorrectos);
                     }
                 }
                 else {
