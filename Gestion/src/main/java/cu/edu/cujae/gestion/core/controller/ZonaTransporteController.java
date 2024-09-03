@@ -5,8 +5,9 @@ import cu.edu.cujae.gestion.core.dto.TokenDto;
 import cu.edu.cujae.gestion.core.dto.UsuarioDto;
 import cu.edu.cujae.gestion.core.dto.ZonaTransporteDto;
 import cu.edu.cujae.gestion.core.feignclient.TokenServiceInterfaces;
-import cu.edu.cujae.gestion.core.libs.RegistroUtils;
-import cu.edu.cujae.gestion.core.libs.TokenUtils;
+import cu.edu.cujae.gestion.core.utils.IpUtils;
+import cu.edu.cujae.gestion.core.utils.RegistroUtils;
+import cu.edu.cujae.gestion.core.utils.TokenUtils;
 import cu.edu.cujae.gestion.core.servicesInterfaces.ZonaTransporteServiceInterfaces;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -52,12 +53,11 @@ public class ZonaTransporteController {
             List<ZonaTransporteDto> zonaTransporteDtos =  zonaTransporteService.listadoZonaTransporte().stream()
                     .map(ZonaTransporteDto::new).sorted(Comparator.comparing(ZonaTransporteDto::getUuid))
                     .toList();
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad, IpUtils.hostIpV4Http(request),"Aceptado");
             return ResponseEntity.ok(zonaTransporteDtos);
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-
 }

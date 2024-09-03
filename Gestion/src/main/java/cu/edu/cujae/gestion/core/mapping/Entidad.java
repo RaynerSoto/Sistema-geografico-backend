@@ -2,7 +2,7 @@ package cu.edu.cujae.gestion.core.mapping;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import cu.edu.cujae.gestion.core.dto.EntidadDto;
-import cu.edu.cujae.gestion.core.libs.Validacion;
+import cu.edu.cujae.gestion.core.utils.Validacion;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

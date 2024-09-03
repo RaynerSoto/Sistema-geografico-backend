@@ -6,18 +6,14 @@ import cu.edu.cujae.gestion.core.dto.empleadoDtos.EmpleadoDto;
 import cu.edu.cujae.gestion.core.dto.empleadoDtos.EmpleadoDtoInsert;
 import cu.edu.cujae.gestion.core.dto.empleadoDtos.EmpleadoDtoRegular;
 import cu.edu.cujae.gestion.core.feignclient.TokenServiceInterfaces;
-import cu.edu.cujae.gestion.core.libs.RegistroUtils;
-import cu.edu.cujae.gestion.core.libs.TokenUtils;
-import cu.edu.cujae.gestion.core.mapping.Empleado;
-import cu.edu.cujae.gestion.core.mapping.Entidad;
-import cu.edu.cujae.gestion.core.mapping.Municipio;
-import cu.edu.cujae.gestion.core.mapping.Provincia;
+import cu.edu.cujae.gestion.core.utils.IpUtils;
+import cu.edu.cujae.gestion.core.utils.RegistroUtils;
+import cu.edu.cujae.gestion.core.utils.TokenUtils;
 import cu.edu.cujae.gestion.core.services.RegistroService;
 import cu.edu.cujae.gestion.core.servicesInterfaces.EmpleadoServiceInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.EntidadServicesInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.MunicipioServicesInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.ProvinciaServiceInterfaces;
-import cu.edu.cujae.gestion.core.libs.Validacion;
 import cu.edu.cujae.gestion.core.servicesIntern.EmpleadoServicesIntern;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -29,7 +25,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/gestion/empleado")
@@ -88,10 +83,10 @@ public class EmpleadoController {
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
             empleadoServicesIntern.insertarEmpleadoSinTrabajo(empleadoDto);
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad, IpUtils.hostIpV4Http(request),"Aceptado");
             return ResponseEntity.ok("Usuario insertado con éxito");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -106,10 +101,10 @@ public class EmpleadoController {
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
             empleadoServicesIntern.insertarEmpleadoConTrabajo(empleadoDto);
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
             return ResponseEntity.ok("Usuario insertado con éxito");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -123,10 +118,10 @@ public class EmpleadoController {
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
             EmpleadoDtoRegular empleado = new EmpleadoDtoRegular(empleadoService.obtenerEmpleadoXCi(ci).get());
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
             return ResponseEntity.ok(empleado);
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -141,10 +136,10 @@ public class EmpleadoController {
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
             EmpleadoDtoRegular empleado = new EmpleadoDtoRegular(empleadoService.obtenerEmpleadoXId(id).get());
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
             return ResponseEntity.ok(empleado);
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -158,10 +153,10 @@ public class EmpleadoController {
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
 
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
             return ResponseEntity.ok("Usuario insertado con éxito");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -175,10 +170,10 @@ public class EmpleadoController {
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
             empleadoService.eliminarEmpleado(id);
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
             return ResponseEntity.ok("Empleado eliminado");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -192,10 +187,10 @@ public class EmpleadoController {
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
             empleadoService.eliminarEmpleado(ci);
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
             return ResponseEntity.ok("Empleado eliminado");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

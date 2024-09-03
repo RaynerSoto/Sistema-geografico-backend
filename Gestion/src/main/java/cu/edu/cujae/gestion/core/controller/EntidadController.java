@@ -5,16 +5,13 @@ import cu.edu.cujae.gestion.core.dto.EntidadDto;
 import cu.edu.cujae.gestion.core.dto.TokenDto;
 import cu.edu.cujae.gestion.core.dto.UsuarioDto;
 import cu.edu.cujae.gestion.core.feignclient.TokenServiceInterfaces;
-import cu.edu.cujae.gestion.core.libs.RegistroUtils;
-import cu.edu.cujae.gestion.core.libs.TokenUtils;
-import cu.edu.cujae.gestion.core.mapping.Entidad;
-import cu.edu.cujae.gestion.core.mapping.Municipio;
-import cu.edu.cujae.gestion.core.mapping.Provincia;
+import cu.edu.cujae.gestion.core.utils.IpUtils;
+import cu.edu.cujae.gestion.core.utils.RegistroUtils;
+import cu.edu.cujae.gestion.core.utils.TokenUtils;
 import cu.edu.cujae.gestion.core.services.RegistroService;
 import cu.edu.cujae.gestion.core.servicesInterfaces.EntidadServicesInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.MunicipioServicesInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.ProvinciaServiceInterfaces;
-import cu.edu.cujae.gestion.core.libs.Validacion;
 import cu.edu.cujae.gestion.core.servicesIntern.EntidadServicesIntern;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -26,7 +23,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping(value = "/api/v1/gestion/entidad",name = "Controller para las entidades")
@@ -64,10 +60,10 @@ public class EntidadController {
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
             List<EntidadDto> entidades = entidadServicesIntern.obtenerListadoEntidadDto();
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad, IpUtils.hostIpV4Http(request),"Aceptado");
             return ResponseEntity.ok(entidades);
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
             return ResponseEntity.badRequest().body("Error en cargar el listado de entidades");
         }
     }
@@ -81,10 +77,10 @@ public class EntidadController {
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
             entidadServicesIntern.insertarEntidad(entidad);
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
             return ResponseEntity.ok("Entidad insertada");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -98,10 +94,10 @@ public class EntidadController {
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
             entidadServicesIntern.modificarEntidad(entidad,id);
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
             return ResponseEntity.ok("Entidad modificada con éxito");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -115,10 +111,10 @@ public class EntidadController {
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
             entidadServices.eliminarEntidad(id);
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
             return ResponseEntity.ok("Entidad eliminada con éxito");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

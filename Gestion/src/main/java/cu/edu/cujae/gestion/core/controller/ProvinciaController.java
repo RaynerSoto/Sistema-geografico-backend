@@ -2,19 +2,18 @@ package cu.edu.cujae.gestion.core.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cu.edu.cujae.gestion.core.dto.ProvinciaDto;
-import cu.edu.cujae.gestion.core.dto.RegistroDto;
 import cu.edu.cujae.gestion.core.dto.TokenDto;
 import cu.edu.cujae.gestion.core.dto.UsuarioDto;
 import cu.edu.cujae.gestion.core.feignclient.TokenServiceInterfaces;
-import cu.edu.cujae.gestion.core.libs.RegistroUtils;
-import cu.edu.cujae.gestion.core.libs.TokenUtils;
+import cu.edu.cujae.gestion.core.utils.IpUtils;
+import cu.edu.cujae.gestion.core.utils.RegistroUtils;
+import cu.edu.cujae.gestion.core.utils.TokenUtils;
 import cu.edu.cujae.gestion.core.services.RegistroService;
 import cu.edu.cujae.gestion.core.servicesInterfaces.ProvinciaServiceInterfaces;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.ws.rs.Path;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -58,10 +57,10 @@ public class ProvinciaController {
                     .map(ProvinciaDto::new)
                     .sorted(Comparator.comparing(ProvinciaDto::getUuid))
                     .toList();
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad, IpUtils.hostIpV4Http(request),"Aceptado");
             return ResponseEntity.ok(pronvincias);
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -75,10 +74,10 @@ public class ProvinciaController {
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
             ProvinciaDto provinciaDto = new ProvinciaDto(provinciaService.buscarProvinciaPorNombre(nombre));
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
             return ResponseEntity.ok(provinciaDto);
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,request.getRemoteHost(),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

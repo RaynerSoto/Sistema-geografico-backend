@@ -6,8 +6,8 @@ import java.util.Optional;
 
 import cu.edu.cujae.gestion.core.dto.EntidadDto;
 import cu.edu.cujae.gestion.core.feignclient.TokenServiceInterfaces;
-import cu.edu.cujae.gestion.core.libs.RegistroUtils;
-import cu.edu.cujae.gestion.core.libs.Validacion;
+import cu.edu.cujae.gestion.core.utils.RegistroUtils;
+import cu.edu.cujae.gestion.core.utils.Validacion;
 import cu.edu.cujae.gestion.core.mapping.Entidad;
 import cu.edu.cujae.gestion.core.mapping.Municipio;
 import cu.edu.cujae.gestion.core.mapping.Provincia;
@@ -17,7 +17,6 @@ import cu.edu.cujae.gestion.core.servicesInterfaces.MunicipioServicesInterfaces;
 import cu.edu.cujae.gestion.core.servicesInterfaces.ProvinciaServiceInterfaces;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
