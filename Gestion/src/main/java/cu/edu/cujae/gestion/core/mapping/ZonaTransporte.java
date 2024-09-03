@@ -18,7 +18,7 @@ public class ZonaTransporte {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @NotNull(message = "El id de la zona de transporte no puede ser nulo")
-    @Column(name = "id", nullable = false, updatable = false, unique = true)
+    @Column(name = "idzona", nullable = false, updatable = false, unique = true)
     private Long uuid;
 
     @Column(name = "geom", nullable = false,columnDefinition = "geometry")

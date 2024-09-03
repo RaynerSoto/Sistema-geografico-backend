@@ -1,7 +1,6 @@
 spring:
   application:
     name: Gestion
-  url-endpoint: /gestion/
   datasource:
     url: jdbc:postgresql:${GestionDBURL}
     username: ${DB_USER}
@@ -26,7 +25,11 @@ spring:
     location: templates/banner.txt
   config: #Configuración de config server
     import: optional:configserver:http://localhost:8888
-
+  servlet:
+    multipart:
+      max-file-size: 10MB   # Tamaño máximo de un archivo individual
+      max-request-size: 20MB # Tamaño máximo de la solicitud completa (incluyendo todos los archivos)
+      
 eureka:
   instance:
     hostname: localhost

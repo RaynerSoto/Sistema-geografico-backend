@@ -49,7 +49,7 @@ public class AreaSaludController {
             description = "Permite obtener todo el listado de las áreas de salud",
             security = { @SecurityRequirement(name = "bearer-key") })
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
-    private ResponseEntity<?> getAreaSalud(HttpServletRequest request) {
+    public ResponseEntity<?> getAreaSalud(HttpServletRequest request) {
         String actividad = "Obtener todo el listado de las áreas de salud";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try{

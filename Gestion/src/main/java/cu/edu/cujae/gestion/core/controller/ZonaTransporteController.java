@@ -45,7 +45,7 @@ public class ZonaTransporteController {
             description = "Permite obtener el listado de todas las zonas de transportes del sistema"
     ,security = { @SecurityRequirement(name = "bearer-key") })
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
-    private ResponseEntity<?> getZonaTransporte(HttpServletRequest request) {
+    public ResponseEntity<?> getZonaTransporte(HttpServletRequest request) {
         String actividad = "Obtener el listado de todas las zonas de transportes del sistema";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {

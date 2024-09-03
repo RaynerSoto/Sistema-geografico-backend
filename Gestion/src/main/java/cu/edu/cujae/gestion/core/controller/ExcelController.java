@@ -48,6 +48,7 @@ public class ExcelController {
                 File fichero = fileServicesIntern.convertMultipartFileToFile(file);
                 Workbook libro = fileServicesIntern.construccion_libro(fichero);
                 ArrayList<Sheet>hojas = fileServicesIntern.listado_hojas(libro);
+                fichero.deleteOnExit();
                 if (hojas.size() == 2) {
                     ArrayList<General> datos = new ArrayList<>();
                     for(Sheet hoja : hojas){
@@ -66,34 +67,32 @@ public class ExcelController {
                                 datos.addAll(empleadoServicesIntern.extraer_personas(hoja));
                             }
                         }
-                        for(General elemento: datos){
-                            try {
-                                if (elemento instanceof EntidadDto) {
-                                    entidadServicesIntern.insertarEntidad((EntidadDto) elemento);
-                                } else {
-                                    empleadoServicesIntern.insertarEmpleadoConTrabajo((EmpleadoDtoInsert) elemento);
-                                }
-                                datos.remove(elemento);
-                            }catch (Exception e){
-                                System.out.println(e);
+                    }
+                    for(General elemento: datos){
+                        try {
+                            if (elemento instanceof EntidadDto) {
+                                entidadServicesIntern.insertarEntidad((EntidadDto) elemento);
+                            } else {
+                                empleadoServicesIntern.insertarEmpleadoConTrabajo((EmpleadoDtoInsert) elemento);
                             }
+                            datos.remove(elemento);
+                        }catch (Exception e){
+                            System.out.println(e);
                         }
-                        if (datos.isEmpty()) {
-                            return ResponseEntity.ok("Datos analizados y procesados con éxito");
-                        }
-                        else {
-                            return ResponseEntity.badRequest().body(datos);
-                        }
+                    }
+                    if (datos.isEmpty()) {
+                        return ResponseEntity.ok("Datos analizados y procesados con éxito");
+                    }
+                    else {
+                        return ResponseEntity.badRequest().body(datos);
                     }
                 }
                 else {
                     throw new Exception("Libro con una cantidad de hojas no computables");
                 }
-                fichero.deleteOnExit();
             }catch (Exception e) {
                 return ResponseEntity.badRequest().body(e.getMessage());
             }
-            return null;
         }
     }
 }
