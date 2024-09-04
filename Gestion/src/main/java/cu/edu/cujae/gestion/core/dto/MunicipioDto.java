@@ -1,13 +1,11 @@
 package cu.edu.cujae.gestion.core.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import cu.edu.cujae.gestion.core.geometry.Geometria;
-import cu.edu.cujae.gestion.core.mapping.Municipio;
+import cu.edu.cujae.gestion.core.model.Geometria;
+import cu.edu.cujae.gestion.core.model.Municipio;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.locationtech.jts.geom.Geometry;
 
 import java.util.Optional;
 

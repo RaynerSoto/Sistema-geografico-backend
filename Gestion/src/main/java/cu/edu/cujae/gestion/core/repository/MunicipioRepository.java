@@ -1,6 +1,6 @@
 package cu.edu.cujae.gestion.core.repository;
 
-import cu.edu.cujae.gestion.core.mapping.Municipio;
+import cu.edu.cujae.gestion.core.model.Municipio;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

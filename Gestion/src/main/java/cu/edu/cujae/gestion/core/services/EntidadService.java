@@ -1,9 +1,8 @@
 package cu.edu.cujae.gestion.core.services;
 
 import cu.edu.cujae.gestion.core.exception.SearchException;
-import cu.edu.cujae.gestion.core.mapping.Entidad;
+import cu.edu.cujae.gestion.core.model.Entidad;
 import cu.edu.cujae.gestion.core.repository.EntidadRepository;
-import cu.edu.cujae.gestion.core.servicesInterfaces.EntidadServicesInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

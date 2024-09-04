@@ -1,15 +1,13 @@
 package cu.edu.cujae.gestion.core.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import cu.edu.cujae.gestion.core.geometry.Geometria;
-import cu.edu.cujae.gestion.core.mapping.ZonaTransporte;
+import cu.edu.cujae.gestion.core.model.Geometria;
+import cu.edu.cujae.gestion.core.model.ZonaTransporte;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.locationtech.jts.geom.Geometry;
 
 import java.util.Optional;
 

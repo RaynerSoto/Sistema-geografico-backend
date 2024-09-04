@@ -50,11 +50,10 @@ server:
     include-stacktrace: never
   address: 0.0.0.0
   tomcat:
-    connection-timeout: 100000
+    connection-timeout: 40000
     max-wait: 100000
 springdoc:
   api-docs:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui.html
-

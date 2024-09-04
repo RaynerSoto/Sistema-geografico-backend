@@ -1,8 +1,7 @@
 package cu.edu.cujae.gestion.core.services;
 
-import cu.edu.cujae.gestion.core.mapping.AreaSalud;
+import cu.edu.cujae.gestion.core.model.AreaSalud;
 import cu.edu.cujae.gestion.core.repository.AreaSaludRepository;
-import cu.edu.cujae.gestion.core.servicesInterfaces.AreaSaludServicesInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

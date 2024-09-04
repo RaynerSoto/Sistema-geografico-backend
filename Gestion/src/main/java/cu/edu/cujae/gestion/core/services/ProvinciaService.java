@@ -1,9 +1,8 @@
 package cu.edu.cujae.gestion.core.services;
 
 import cu.edu.cujae.gestion.core.exception.SearchException;
-import cu.edu.cujae.gestion.core.mapping.Provincia;
+import cu.edu.cujae.gestion.core.model.Provincia;
 import cu.edu.cujae.gestion.core.repository.ProvinciaRepository;
-import cu.edu.cujae.gestion.core.servicesInterfaces.ProvinciaServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

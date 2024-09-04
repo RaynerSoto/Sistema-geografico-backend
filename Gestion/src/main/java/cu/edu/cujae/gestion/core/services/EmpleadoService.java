@@ -1,9 +1,8 @@
 package cu.edu.cujae.gestion.core.services;
 
 import cu.edu.cujae.gestion.core.exception.SearchException;
-import cu.edu.cujae.gestion.core.mapping.Empleado;
+import cu.edu.cujae.gestion.core.model.Empleado;
 import cu.edu.cujae.gestion.core.repository.EmpleadoRepository;
-import cu.edu.cujae.gestion.core.servicesInterfaces.EmpleadoServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

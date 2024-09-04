@@ -1,15 +1,19 @@
 package cu.edu.cujae.gestion.core.controller;
 
-import cu.edu.cujae.gestion.core.abstractas.General;
+import cu.edu.cujae.gestion.core.dto.abstractas.General;
 import cu.edu.cujae.gestion.core.dto.EntidadDto;
 import cu.edu.cujae.gestion.core.dto.ErrorDto;
 import cu.edu.cujae.gestion.core.dto.empleadoDtos.EmpleadoDtoInsert;
-import cu.edu.cujae.gestion.core.servicesIntern.EntidadServicesIntern;
-import cu.edu.cujae.gestion.core.servicesIntern.ExcelServicesIntern;
-import cu.edu.cujae.gestion.core.servicesIntern.FileServicesIntern;
-import cu.edu.cujae.gestion.core.servicesIntern.EmpleadoServicesIntern;
+import cu.edu.cujae.gestion.core.services.servicesIntern.EntidadServicesIntern;
+import cu.edu.cujae.gestion.core.services.servicesIntern.ExcelServicesIntern;
+import cu.edu.cujae.gestion.core.services.servicesIntern.FileServicesIntern;
+import cu.edu.cujae.gestion.core.services.servicesIntern.EmpleadoServicesIntern;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotNull;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +45,7 @@ public class ExcelController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<?> cargarUnExcel(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> cargarUnExcel(@RequestParam("file") @NotNull MultipartFile file) {
         if (file.isEmpty()) {
             return ResponseEntity.badRequest().body("Archivo vacío o no recibido");
         }else {

@@ -1,6 +1,6 @@
 package cu.edu.cujae.gestion.core.dto.empleadoDtos;
-import cu.edu.cujae.gestion.core.abstractas.General;
-import cu.edu.cujae.gestion.core.mapping.Empleado;
+import cu.edu.cujae.gestion.core.dto.abstractas.General;
+import cu.edu.cujae.gestion.core.model.Empleado;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

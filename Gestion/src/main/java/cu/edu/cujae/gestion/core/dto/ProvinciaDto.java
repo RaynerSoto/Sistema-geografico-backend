@@ -1,8 +1,8 @@
 package cu.edu.cujae.gestion.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import cu.edu.cujae.gestion.core.geometry.Geometria;
-import cu.edu.cujae.gestion.core.mapping.Provincia;
+import cu.edu.cujae.gestion.core.model.Geometria;
+import cu.edu.cujae.gestion.core.model.Provincia;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
