@@ -2,18 +2,17 @@ package cu.edu.cujae.logs.core.controller;
 
 
 import cu.edu.cujae.logs.core.dto.RegistroDto;
-import cu.edu.cujae.logs.core.mapping.Rol;
+import cu.edu.cujae.logs.core.mapper.Rol;
 import cu.edu.cujae.logs.core.dto.RolDto;
 import cu.edu.cujae.logs.core.utils.RegistroUtils;
 import cu.edu.cujae.logs.core.utils.TokenUtils;
 import cu.edu.cujae.logs.core.utils.Validacion;
-import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
+import cu.edu.cujae.logs.core.services.RolServiceInterfaces;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

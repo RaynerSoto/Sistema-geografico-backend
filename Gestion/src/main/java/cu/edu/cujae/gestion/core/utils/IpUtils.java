@@ -1,4 +1,4 @@
-package cu.edu.cujae.gestion.core.util;
+package cu.edu.cujae.gestion.core.utils;
 
 import jakarta.servlet.http.HttpServletRequest;
 

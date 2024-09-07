@@ -1,7 +1,7 @@
 package cu.edu.cujae.logs.core.repository;
 
-import cu.edu.cujae.logs.core.mapping.Sexo;
-import cu.edu.cujae.logs.core.mapping.Usuario;
+import cu.edu.cujae.logs.core.mapper.Sexo;
+import cu.edu.cujae.logs.core.mapper.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,4 +1,4 @@
-package cu.edu.cujae.gestion.core.util;
+package cu.edu.cujae.gestion.core.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.gson.Gson;

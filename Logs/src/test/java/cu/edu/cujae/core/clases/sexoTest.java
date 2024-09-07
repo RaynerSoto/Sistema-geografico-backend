@@ -1,6 +1,6 @@
 package cu.edu.cujae.core.clases;
 
-import cu.edu.cujae.logs.core.enums.SexoEnums;
+import cu.edu.cujae.logs.core.utils.enums.SexoEnums;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.ValidatorFactory;

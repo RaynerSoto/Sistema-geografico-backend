@@ -1,9 +1,9 @@
-package cu.edu.cujae.logs.core.services;
+package cu.edu.cujae.logs.core.services.servicesimpl;
 
-import cu.edu.cujae.logs.core.mapping.Sexo;
-import cu.edu.cujae.logs.core.enums.SexoEnums;
+import cu.edu.cujae.logs.core.mapper.Sexo;
+import cu.edu.cujae.logs.core.utils.enums.SexoEnums;
 import cu.edu.cujae.logs.core.repository.SexoRepository;
-import cu.edu.cujae.logs.core.servicesInterfaces.SexoServiceInterfaces;
+import cu.edu.cujae.logs.core.services.SexoServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

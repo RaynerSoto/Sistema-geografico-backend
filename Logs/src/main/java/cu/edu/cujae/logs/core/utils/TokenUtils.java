@@ -3,7 +3,7 @@ package cu.edu.cujae.logs.core.utils;
 import cu.edu.cujae.logs.core.dto.TokenDto;
 import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
 import cu.edu.cujae.logs.core.security.TokenService;
-import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
+import cu.edu.cujae.logs.core.services.UsuarioServiceInterfaces;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -6,8 +6,8 @@ import java.util.Optional;
 
 import cu.edu.cujae.gestion.core.dto.EntidadDto;
 import cu.edu.cujae.gestion.core.feignclient.TokenServiceInterfaces;
-import cu.edu.cujae.gestion.core.util.RegistroUtils;
-import cu.edu.cujae.gestion.core.util.Validacion;
+import cu.edu.cujae.gestion.core.utils.RegistroUtils;
+import cu.edu.cujae.gestion.core.utils.Validacion;
 import cu.edu.cujae.gestion.core.mapper.Entidad;
 import cu.edu.cujae.gestion.core.mapper.Municipio;
 import cu.edu.cujae.gestion.core.mapper.Provincia;

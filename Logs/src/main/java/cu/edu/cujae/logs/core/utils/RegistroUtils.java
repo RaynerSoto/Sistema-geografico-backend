@@ -2,10 +2,10 @@ package cu.edu.cujae.logs.core.utils;
 
 import cu.edu.cujae.logs.core.dto.RegistroDto;
 import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
-import cu.edu.cujae.logs.core.mapping.Estado;
-import cu.edu.cujae.logs.core.mapping.Registro;
-import cu.edu.cujae.logs.core.servicesInterfaces.EstadoServiceInterfaces;
-import cu.edu.cujae.logs.core.servicesInterfaces.RegistroServiceInterfaces;
+import cu.edu.cujae.logs.core.mapper.Estado;
+import cu.edu.cujae.logs.core.mapper.Registro;
+import cu.edu.cujae.logs.core.services.EstadoServiceInterfaces;
+import cu.edu.cujae.logs.core.services.RegistroServiceInterfaces;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

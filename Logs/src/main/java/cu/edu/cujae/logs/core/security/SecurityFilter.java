@@ -1,26 +1,20 @@
 package cu.edu.cujae.logs.core.security;
 
 import cu.edu.cujae.logs.core.dto.TokenDto;
-import cu.edu.cujae.logs.core.mapping.Usuario;
 import cu.edu.cujae.logs.core.repository.UsuarioRepository;
 import cu.edu.cujae.logs.core.utils.TokenUtils;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import jakarta.servlet.*;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.SneakyThrows;
-import org.hsqldb.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.List;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {

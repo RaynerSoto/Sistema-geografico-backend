@@ -1,7 +1,7 @@
 package cu.edu.cujae.logs;
-import cu.edu.cujae.logs.core.servicesInterfaces.EstadoServiceInterfaces;
-import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
-import cu.edu.cujae.logs.core.servicesInterfaces.SexoServiceInterfaces;
+import cu.edu.cujae.logs.core.services.EstadoServiceInterfaces;
+import cu.edu.cujae.logs.core.services.RolServiceInterfaces;
+import cu.edu.cujae.logs.core.services.SexoServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

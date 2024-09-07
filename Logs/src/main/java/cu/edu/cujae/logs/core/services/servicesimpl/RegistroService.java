@@ -1,17 +1,14 @@
-package cu.edu.cujae.logs.core.services;
+package cu.edu.cujae.logs.core.services.servicesimpl;
 
 import cu.edu.cujae.logs.core.dto.RegistroDto;
-import cu.edu.cujae.logs.core.mapping.Registro;
-import cu.edu.cujae.logs.core.mapping.Usuario;
+import cu.edu.cujae.logs.core.mapper.Registro;
 import cu.edu.cujae.logs.core.repository.RegistroRepository;
 import cu.edu.cujae.logs.core.repository.UsuarioRepository;
-import cu.edu.cujae.logs.core.servicesInterfaces.RegistroServiceInterfaces;
-import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
+import cu.edu.cujae.logs.core.services.RegistroServiceInterfaces;
+import cu.edu.cujae.logs.core.services.UsuarioServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @Service

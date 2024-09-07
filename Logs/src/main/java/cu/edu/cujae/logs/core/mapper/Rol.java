@@ -1,8 +1,7 @@
-package cu.edu.cujae.logs.core.mapping;
+package cu.edu.cujae.logs.core.mapper;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import cu.edu.cujae.logs.core.dto.RolDto;
-import cu.edu.cujae.logs.core.enums.RolEnums;
+import cu.edu.cujae.logs.core.utils.enums.RolEnums;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -12,7 +11,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.naming.OperationNotSupportedException;
 import java.util.List;
 import java.util.Optional;
 

@@ -1,7 +1,7 @@
 package cu.edu.cujae.logs.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import cu.edu.cujae.logs.core.mapping.Sexo;
+import cu.edu.cujae.logs.core.mapper.Sexo;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

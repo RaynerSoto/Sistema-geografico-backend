@@ -1,4 +1,4 @@
-package cu.edu.cujae.logs.core.mapping;
+package cu.edu.cujae.logs.core.mapper;
 
 import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
 import cu.edu.cujae.logs.core.exception.GoodException;

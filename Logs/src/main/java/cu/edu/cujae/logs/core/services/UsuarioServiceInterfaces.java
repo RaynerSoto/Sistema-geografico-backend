@@ -1,8 +1,8 @@
-package cu.edu.cujae.logs.core.servicesInterfaces;
+package cu.edu.cujae.logs.core.services;
 
 import cu.edu.cujae.logs.core.exception.SearchException;
-import cu.edu.cujae.logs.core.mapping.Sexo;
-import cu.edu.cujae.logs.core.mapping.Usuario;
+import cu.edu.cujae.logs.core.mapper.Sexo;
+import cu.edu.cujae.logs.core.mapper.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

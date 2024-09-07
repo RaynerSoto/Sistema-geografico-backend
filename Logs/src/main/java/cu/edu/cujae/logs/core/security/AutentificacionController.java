@@ -1,20 +1,18 @@
 package cu.edu.cujae.logs.core.security;
 
-import com.google.gson.Gson;
 import cu.edu.cujae.logs.core.dto.RegistroDto;
 import cu.edu.cujae.logs.core.dto.TokenDto;
 import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
 import cu.edu.cujae.logs.core.dto.usuario.UsuarioLoginDto;
-import cu.edu.cujae.logs.core.mapping.Usuario;
+import cu.edu.cujae.logs.core.mapper.Usuario;
 import cu.edu.cujae.logs.core.repository.UsuarioRepository;
-import cu.edu.cujae.logs.core.services.UsuarioService;
+import cu.edu.cujae.logs.core.services.servicesimpl.UsuarioService;
 import cu.edu.cujae.logs.core.utils.RegistroUtils;
 import cu.edu.cujae.logs.core.utils.TokenUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

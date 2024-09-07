@@ -1,8 +1,8 @@
 package cu.edu.cujae.logs.core.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import cu.edu.cujae.logs.core.mapping.Registro;
-import cu.edu.cujae.logs.core.mapping.Usuario;
+import cu.edu.cujae.logs.core.mapper.Registro;
+import cu.edu.cujae.logs.core.mapper.Usuario;
 import cu.edu.cujae.logs.core.utils.FechaFormato;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

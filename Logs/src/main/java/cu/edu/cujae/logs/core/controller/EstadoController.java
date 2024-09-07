@@ -1,8 +1,8 @@
 package cu.edu.cujae.logs.core.controller;
 import cu.edu.cujae.logs.core.dto.EstadoDto;
 import cu.edu.cujae.logs.core.dto.RegistroDto;
-import cu.edu.cujae.logs.core.servicesInterfaces.EstadoServiceInterfaces;
-import cu.edu.cujae.logs.core.servicesInterfaces.RegistroServiceInterfaces;
+import cu.edu.cujae.logs.core.services.EstadoServiceInterfaces;
+import cu.edu.cujae.logs.core.services.RegistroServiceInterfaces;
 import cu.edu.cujae.logs.core.utils.RegistroUtils;
 import cu.edu.cujae.logs.core.utils.TokenUtils;
 import io.swagger.v3.oas.annotations.Operation;

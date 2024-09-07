@@ -1,10 +1,7 @@
-package cu.edu.cujae.logs.core.mapping;
+package cu.edu.cujae.logs.core.mapper;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import cu.edu.cujae.logs.core.dto.SexoDto;
-import cu.edu.cujae.logs.core.enums.SexoEnums;
-import cu.edu.cujae.logs.core.repository.SexoRepository;
-import cu.edu.cujae.logs.core.services.SexoService;
+import cu.edu.cujae.logs.core.utils.enums.SexoEnums;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -12,11 +9,6 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.annotation.Bean;
 
 import java.util.List;
 import java.util.Optional;

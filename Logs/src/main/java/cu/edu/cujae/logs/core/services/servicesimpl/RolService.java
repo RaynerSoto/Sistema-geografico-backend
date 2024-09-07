@@ -1,11 +1,9 @@
-package cu.edu.cujae.logs.core.services;
+package cu.edu.cujae.logs.core.services.servicesimpl;
 
-import cu.edu.cujae.logs.core.mapping.Rol;
-import cu.edu.cujae.logs.core.enums.RolEnums;
+import cu.edu.cujae.logs.core.mapper.Rol;
+import cu.edu.cujae.logs.core.utils.enums.RolEnums;
 import cu.edu.cujae.logs.core.repository.RolRepository;
-import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import cu.edu.cujae.logs.core.services.RolServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;

@@ -1,7 +1,7 @@
-package cu.edu.cujae.logs.core.servicesInterfaces;
+package cu.edu.cujae.logs.core.services;
 
 import cu.edu.cujae.logs.core.dto.RegistroDto;
-import cu.edu.cujae.logs.core.mapping.Registro;
+import cu.edu.cujae.logs.core.mapper.Registro;
 
 import java.util.List;
 

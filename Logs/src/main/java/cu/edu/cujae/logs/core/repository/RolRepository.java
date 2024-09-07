@@ -1,6 +1,6 @@
 package cu.edu.cujae.logs.core.repository;
 
-import cu.edu.cujae.logs.core.mapping.Rol;
+import cu.edu.cujae.logs.core.mapper.Rol;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

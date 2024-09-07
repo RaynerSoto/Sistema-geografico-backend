@@ -1,4 +1,4 @@
-package cu.edu.cujae.logs.core.enums;
+package cu.edu.cujae.logs.core.utils.enums;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

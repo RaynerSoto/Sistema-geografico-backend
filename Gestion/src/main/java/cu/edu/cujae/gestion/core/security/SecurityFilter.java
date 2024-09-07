@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import cu.edu.cujae.gestion.core.dto.TokenDto;
 import cu.edu.cujae.gestion.core.feignclient.TokenServiceInterfaces;
 import cu.edu.cujae.gestion.core.dto.UsuarioDto;
-import cu.edu.cujae.gestion.core.util.TokenUtils;
+import cu.edu.cujae.gestion.core.utils.TokenUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

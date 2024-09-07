@@ -1,6 +1,6 @@
-package cu.edu.cujae.logs.core.servicesInterfaces;
+package cu.edu.cujae.logs.core.services;
 
-import cu.edu.cujae.logs.core.mapping.Rol;
+import cu.edu.cujae.logs.core.mapper.Rol;
 
 import java.util.List;
 import java.util.Optional;

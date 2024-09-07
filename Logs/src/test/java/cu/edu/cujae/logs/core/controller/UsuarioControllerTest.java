@@ -1,12 +1,12 @@
 package cu.edu.cujae.logs.core.controller;
 
 import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
-import cu.edu.cujae.logs.core.mapping.Rol;
-import cu.edu.cujae.logs.core.mapping.Sexo;
-import cu.edu.cujae.logs.core.mapping.Usuario;
-import cu.edu.cujae.logs.core.servicesInterfaces.RolServiceInterfaces;
-import cu.edu.cujae.logs.core.servicesInterfaces.SexoServiceInterfaces;
-import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
+import cu.edu.cujae.logs.core.mapper.Rol;
+import cu.edu.cujae.logs.core.mapper.Sexo;
+import cu.edu.cujae.logs.core.mapper.Usuario;
+import cu.edu.cujae.logs.core.services.RolServiceInterfaces;
+import cu.edu.cujae.logs.core.services.SexoServiceInterfaces;
+import cu.edu.cujae.logs.core.services.UsuarioServiceInterfaces;
 import cu.edu.cujae.logs.core.utils.Validacion;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

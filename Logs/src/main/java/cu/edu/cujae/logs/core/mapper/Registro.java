@@ -1,4 +1,4 @@
-package cu.edu.cujae.logs.core.mapping;
+package cu.edu.cujae.logs.core.mapper;
 
 import cu.edu.cujae.logs.core.dto.RegistroDto;
 import cu.edu.cujae.logs.core.utils.Validacion;

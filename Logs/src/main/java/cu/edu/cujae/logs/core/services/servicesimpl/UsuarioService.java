@@ -1,10 +1,10 @@
-package cu.edu.cujae.logs.core.services;
+package cu.edu.cujae.logs.core.services.servicesimpl;
 
 import cu.edu.cujae.logs.core.exception.SearchException;
-import cu.edu.cujae.logs.core.mapping.Sexo;
-import cu.edu.cujae.logs.core.mapping.Usuario;
+import cu.edu.cujae.logs.core.mapper.Sexo;
+import cu.edu.cujae.logs.core.mapper.Usuario;
 import cu.edu.cujae.logs.core.repository.UsuarioRepository;
-import cu.edu.cujae.logs.core.servicesInterfaces.UsuarioServiceInterfaces;
+import cu.edu.cujae.logs.core.services.UsuarioServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -1,8 +1,8 @@
-package cu.edu.cujae.logs.core.services;
-import cu.edu.cujae.logs.core.mapping.Estado;
-import cu.edu.cujae.logs.core.enums.EstadoEnums;
+package cu.edu.cujae.logs.core.services.servicesimpl;
+import cu.edu.cujae.logs.core.mapper.Estado;
+import cu.edu.cujae.logs.core.utils.enums.EstadoEnums;
 import cu.edu.cujae.logs.core.repository.EstadoRepository;
-import cu.edu.cujae.logs.core.servicesInterfaces.EstadoServiceInterfaces;
+import cu.edu.cujae.logs.core.services.EstadoServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
