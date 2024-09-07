@@ -13,7 +13,7 @@ public class RegistroUtils {
         this.registroService = registroService;
     }
 
-    public void insertarRegistro(String username, String actividad, String ip, String estado){
-        registroService.insertarRegistro(new RegistroDto(username, actividad,ip,estado),username);
+    public void insertarRegistro(String username, String actividad, String ip, String estado,String mensaje){
+        registroService.insertarRegistro(new RegistroDto(username, actividad,ip,estado,mensaje),username);
     }
 }

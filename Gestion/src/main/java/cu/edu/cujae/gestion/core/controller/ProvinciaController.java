@@ -57,11 +57,11 @@ public class ProvinciaController {
                     .map(ProvinciaDto::new)
                     .sorted(Comparator.comparing(ProvinciaDto::getUuid))
                     .toList();
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad, IpUtils.hostIpV4Http(request),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad, IpUtils.hostIpV4Http(request),"Aceptado",null);
             return ResponseEntity.ok(pronvincias);
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
-            return ResponseEntity.badRequest().body(e.getMessage());
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se ha podido obtener el listado de provincias, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
         }
     }
 
@@ -74,11 +74,11 @@ public class ProvinciaController {
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
             ProvinciaDto provinciaDto = new ProvinciaDto(provinciaService.buscarProvinciaPorNombre(nombre));
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado",null);
             return ResponseEntity.ok(provinciaDto);
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
-            return ResponseEntity.badRequest().body(e.getMessage());
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se ha podido obtener el listado de provincias, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
         }
     }
 }

@@ -71,6 +71,7 @@ public class Registro {
         this.ip = registroDto.getIp();
         this.estado = estado;
         this.fecha = Timestamp.valueOf(LocalDateTime.now());
+        this.message = registroDto.getMessage();
     }
 
     public Registro(RegistroDto registroDto, Estado estado) {
@@ -80,6 +81,7 @@ public class Registro {
         this.ip = registroDto.getIp();
         this.estado = estado;
         this.fecha = Timestamp.valueOf(LocalDateTime.now());
+        this.message = registroDto.getMessage();
     }
 
     public Registro(Optional<Registro> registro) {
@@ -89,6 +91,7 @@ public class Registro {
         this.ip = registro.get().getIp();
         this.estado = registro.get().getEstado();
         this.fecha = Timestamp.valueOf(LocalDateTime.now());
+        this.message = registro.get().getMessage();
     }
 
     public Registro(RegistroDto registroDto,Long idUsuario,Estado Estado){
@@ -98,6 +101,7 @@ public class Registro {
         this.ip = registroDto.getIp();
         this.estado = Estado;
         this.fecha = Timestamp.valueOf(LocalDateTime.now());
+        this.message = registroDto.getMessage();
     }
 
     @PrePersist

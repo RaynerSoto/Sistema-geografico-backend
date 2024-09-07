@@ -35,6 +35,8 @@ public class RegistroDto {
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private String fechaCreacion;
 
+    private String message;
+
     public RegistroDto(String actividad) {
         this.actividad = actividad;
     }
@@ -44,5 +46,13 @@ public class RegistroDto {
         this.actividad = actividad;
         this.ip = ip;
         this.estado = estado;
+    }
+
+    public RegistroDto(String username, String actividad, String ip, String estado,String mensaje) {
+        this.usuario = username;
+        this.actividad = actividad;
+        this.ip = ip;
+        this.estado = estado;
+        this.message = mensaje;
     }
 }

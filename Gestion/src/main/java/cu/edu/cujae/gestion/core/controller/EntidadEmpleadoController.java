@@ -59,10 +59,10 @@ public class EntidadEmpleadoController {
             Optional<Empleado> empleado = empleadoServices.obtenerEmpleadoXCiException(ci);
             entidad.get().getPersonal().add(empleado.get());
             entidadServices.modificarEntidad(entidad.get());
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad, IpUtils.hostIpV4Http(request),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad, IpUtils.hostIpV4Http(request),"Aceptado",null);
             return ResponseEntity.ok("Trabajador asignado correctamente");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado",e.getMessage());
             if (e.getMessage().contains("ukgnv576a6jw8egptmch4dph4xx"))
                 return ResponseEntity.badRequest().body("Ya fue asignado dicho trabajador a la entidad");
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -82,10 +82,10 @@ public class EntidadEmpleadoController {
             Optional<Empleado> empleado = empleadoServices.obtenerEmpleadoXId(id);
             entidad.get().getPersonal().add(empleado.get());
             entidadServices.modificarEntidad(entidad.get());
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado",null);
             return ResponseEntity.ok("Trabajador asignado correctamente");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado",e.getMessage());
             if (e.getMessage().contains("ukgnv576a6jw8egptmch4dph4xx"))
                 return ResponseEntity.badRequest().body("Ya fue asignado dicho trabajador a la entidad");
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -105,10 +105,10 @@ public class EntidadEmpleadoController {
             Optional<Empleado> empleado = empleadoServices.obtenerEmpleadoXCiException(ci);
             entidad.get().getPersonal().add(empleado.get());
             entidadServices.modificarEntidad(entidad.get());
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado",null);
             return ResponseEntity.ok("Trabajador asignado correctamente");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado",e.getMessage());
             if (e.getMessage().contains("ukgnv576a6jw8egptmch4dph4xx"))
                 return ResponseEntity.badRequest().body("Ya fue asignado dicho trabajador a la entidad");
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -128,10 +128,10 @@ public class EntidadEmpleadoController {
             Optional<Empleado> empleado = empleadoServices.obtenerEmpleadoXId(idEmpleado);
             entidad.get().getPersonal().add(empleado.get());
             entidadServices.modificarEntidad(entidad.get());
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado",null);
             return ResponseEntity.ok("Trabajador asignado correctamente");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado",e.getMessage());
             if (e.getMessage().contains("ukgnv576a6jw8egptmch4dph4xx"))
                 return ResponseEntity.badRequest().body("Ya fue asignado dicho trabajador a la entidad");
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -151,10 +151,10 @@ public class EntidadEmpleadoController {
             Optional<Empleado> empleado = empleadoServices.obtenerEmpleadoXCiException(ci);
             entidad.get().getPersonal().remove(empleado.get());
             entidadServices.modificarEntidad(entidad.get());
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado",null);
             return ResponseEntity.ok("Trabajador asignado correctamente");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado",e.getMessage());
             if (e.getMessage().contains("ukgnv576a6jw8egptmch4dph4xx"))
                 return ResponseEntity.badRequest().body("Ya fue asignado dicho trabajador a la entidad");
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -175,10 +175,10 @@ public class EntidadEmpleadoController {
             Optional<Empleado> empleado = empleadoServices.obtenerEmpleadoXId(id);
             entidad.get().getPersonal().remove(empleado.get());
             entidadServices.modificarEntidad(entidad.get());
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado",null);
             return ResponseEntity.ok("Trabajador asignado correctamente");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado",e.getMessage());
             if (e.getMessage().contains("ukgnv576a6jw8egptmch4dph4xx"))
                 return ResponseEntity.badRequest().body("Ya fue asignado dicho trabajador a la entidad");
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -198,10 +198,10 @@ public class EntidadEmpleadoController {
             Optional<Empleado> empleado = empleadoServices.obtenerEmpleadoXCiException(ci);
             entidad.get().getPersonal().remove(empleado.get());
             entidadServices.modificarEntidad(entidad.get());
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado",null);
             return ResponseEntity.ok("Trabajador asignado correctamente");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado",e.getMessage());
             if (e.getMessage().contains("ukgnv576a6jw8egptmch4dph4xx"))
                 return ResponseEntity.badRequest().body("Ya fue asignado dicho trabajador a la entidad");
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -221,10 +221,10 @@ public class EntidadEmpleadoController {
             Optional<Empleado> empleado = empleadoServices.obtenerEmpleadoXId(idEmpleado);
             entidad.get().getPersonal().remove(empleado.get());
             entidadServices.modificarEntidad(entidad.get());
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado",null);
             return ResponseEntity.ok("Trabajador asignado correctamente");
         }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado");
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado",e.getMessage());
             if (e.getMessage().contains("ukgnv576a6jw8egptmch4dph4xx"))
                 return ResponseEntity.badRequest().body("Ya fue asignado dicho trabajador a la entidad");
             return ResponseEntity.badRequest().body(e.getMessage());

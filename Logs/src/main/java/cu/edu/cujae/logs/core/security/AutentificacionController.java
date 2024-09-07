@@ -56,12 +56,12 @@ public class AutentificacionController {
             Authentication authenticationToken = new UsernamePasswordAuthenticationToken(usuario.getUsername(),usuario.getPassword());;
             var usuarioAutentificado = authenticationManager.authenticate(authenticationToken);
             var JWTtoken = tokenService.generarToken((Usuario) usuarioAutentificado.getPrincipal());
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok(new TokenDto(JWTtoken));
         }catch (Exception e){
             System.out.println(e);
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
-            return ResponseEntity.badRequest().body(e.getMessage());
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se pudo autentificar el usuario: "+usuarioLoginDto.getUsername());
         }
     }
 
