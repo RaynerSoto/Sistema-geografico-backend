@@ -25,7 +25,7 @@ public class DemografíaController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<?> movilidadPoblacional(){
+    public ResponseEntity<?> movilidadPoblacionalInterProvincial(){
         return null;
     }
 
