@@ -1,4 +1,4 @@
-package cu.edu.cujae.geo.core.clases;
+package cu.edu.cujae.geo.core.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,8 +1,8 @@
-package cu.edu.cujae.geo.core.services;
+package cu.edu.cujae.geo.core.services.servicesImpl;
 
 import com.google.gson.Gson;
 import cu.edu.cujae.geo.core.dto.CoordenadasIp;
-import cu.edu.cujae.geo.core.interfacesServices.GeoIP;
+import cu.edu.cujae.geo.core.services.GeoIP;
 import org.springframework.stereotype.Service;
 
 import java.io.*;

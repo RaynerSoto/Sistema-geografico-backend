@@ -1,4 +1,4 @@
-package cu.edu.cujae.geo.core.clases;
+package cu.edu.cujae.geo.core.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
