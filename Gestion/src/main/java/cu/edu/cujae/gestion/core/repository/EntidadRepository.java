@@ -1,6 +1,6 @@
 package cu.edu.cujae.gestion.core.repository;
 
-import cu.edu.cujae.gestion.core.model.Entidad;
+import cu.edu.cujae.gestion.core.mapper.Entidad;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -8,7 +8,7 @@ import cu.edu.cujae.gestion.core.feignclient.TokenServiceInterfaces;
 import cu.edu.cujae.gestion.core.util.IpUtils;
 import cu.edu.cujae.gestion.core.util.RegistroUtils;
 import cu.edu.cujae.gestion.core.util.TokenUtils;
-import cu.edu.cujae.gestion.core.services.RegistroService;
+import cu.edu.cujae.gestion.core.services.servicesImpl.RegistroService;
 import cu.edu.cujae.gestion.core.services.ProvinciaServiceInterfaces;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

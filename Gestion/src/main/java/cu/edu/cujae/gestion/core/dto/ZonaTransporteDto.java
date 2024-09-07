@@ -1,7 +1,7 @@
 package cu.edu.cujae.gestion.core.dto;
 
-import cu.edu.cujae.gestion.core.model.Geometria;
-import cu.edu.cujae.gestion.core.model.ZonaTransporte;
+import cu.edu.cujae.gestion.core.mapper.Geometria;
+import cu.edu.cujae.gestion.core.mapper.ZonaTransporte;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;

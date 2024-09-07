@@ -1,4 +1,4 @@
-package cu.edu.cujae.gestion.core.config.security;
+package cu.edu.cujae.gestion.core.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

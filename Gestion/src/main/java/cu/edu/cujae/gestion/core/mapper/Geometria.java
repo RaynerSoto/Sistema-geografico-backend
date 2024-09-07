@@ -1,4 +1,4 @@
-package cu.edu.cujae.gestion.core.model;
+package cu.edu.cujae.gestion.core.mapper;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;

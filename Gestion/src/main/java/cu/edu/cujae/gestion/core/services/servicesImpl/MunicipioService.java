@@ -1,8 +1,9 @@
-package cu.edu.cujae.gestion.core.services;
+package cu.edu.cujae.gestion.core.services.servicesImpl;
 
 import cu.edu.cujae.gestion.core.exception.SearchException;
-import cu.edu.cujae.gestion.core.model.Municipio;
+import cu.edu.cujae.gestion.core.mapper.Municipio;
 import cu.edu.cujae.gestion.core.repository.MunicipioRepository;
+import cu.edu.cujae.gestion.core.services.MunicipioServicesInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

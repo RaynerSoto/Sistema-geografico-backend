@@ -1,6 +1,6 @@
 package cu.edu.cujae.gestion.core.services;
 
-import cu.edu.cujae.gestion.core.model.Empleado;
+import cu.edu.cujae.gestion.core.mapper.Empleado;
 
 import java.util.List;
 import java.util.Optional;

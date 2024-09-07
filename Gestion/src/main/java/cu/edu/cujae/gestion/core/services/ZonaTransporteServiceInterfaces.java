@@ -1,6 +1,6 @@
 package cu.edu.cujae.gestion.core.services;
 
-import cu.edu.cujae.gestion.core.model.ZonaTransporte;
+import cu.edu.cujae.gestion.core.mapper.ZonaTransporte;
 
 import java.util.List;
 

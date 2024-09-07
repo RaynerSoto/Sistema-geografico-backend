@@ -1,4 +1,4 @@
-package cu.edu.cujae.gestion.core.config.security;
+package cu.edu.cujae.gestion.core.security;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.HttpServletRequest;

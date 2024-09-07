@@ -1,6 +1,6 @@
 package cu.edu.cujae.gestion.core.services;
 
-import cu.edu.cujae.gestion.core.model.AreaSalud;
+import cu.edu.cujae.gestion.core.mapper.AreaSalud;
 
 import java.util.List;
 

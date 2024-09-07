@@ -1,4 +1,4 @@
-package cu.edu.cujae.gestion.core.model;
+package cu.edu.cujae.gestion.core.mapper;
 
 import cu.edu.cujae.gestion.core.dto.empleadoDtos.EmpleadoDto;
 import jakarta.persistence.*;

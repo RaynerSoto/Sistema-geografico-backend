@@ -1,6 +1,6 @@
 package cu.edu.cujae.gestion.core.dto.empleadoDtos;
 
-import cu.edu.cujae.gestion.core.model.Empleado;
+import cu.edu.cujae.gestion.core.mapper.Empleado;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

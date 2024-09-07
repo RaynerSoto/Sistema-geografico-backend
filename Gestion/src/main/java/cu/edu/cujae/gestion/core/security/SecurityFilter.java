@@ -1,4 +1,4 @@
-package cu.edu.cujae.gestion.core.config.security;
+package cu.edu.cujae.gestion.core.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import cu.edu.cujae.gestion.core.dto.TokenDto;

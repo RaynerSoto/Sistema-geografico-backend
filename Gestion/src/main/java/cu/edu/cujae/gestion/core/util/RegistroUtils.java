@@ -1,6 +1,6 @@
 package cu.edu.cujae.gestion.core.util;
 import cu.edu.cujae.gestion.core.dto.RegistroDto;
-import cu.edu.cujae.gestion.core.services.RegistroService;
+import cu.edu.cujae.gestion.core.services.servicesImpl.RegistroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package cu.edu.cujae.gestion.core.config.security;
+package cu.edu.cujae.gestion.core.security;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

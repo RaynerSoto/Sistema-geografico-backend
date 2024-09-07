@@ -1,7 +1,8 @@
-package cu.edu.cujae.gestion.core.services;
+package cu.edu.cujae.gestion.core.services.servicesImpl;
 
-import cu.edu.cujae.gestion.core.model.ZonaTransporte;
+import cu.edu.cujae.gestion.core.mapper.ZonaTransporte;
 import cu.edu.cujae.gestion.core.repository.ZonaTransporteRepository;
+import cu.edu.cujae.gestion.core.services.ZonaTransporteServiceInterfaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

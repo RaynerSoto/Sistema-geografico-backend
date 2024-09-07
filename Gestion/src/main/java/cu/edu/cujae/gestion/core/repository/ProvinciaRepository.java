@@ -1,6 +1,6 @@
 package cu.edu.cujae.gestion.core.repository;
 
-import cu.edu.cujae.gestion.core.model.Provincia;
+import cu.edu.cujae.gestion.core.mapper.Provincia;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

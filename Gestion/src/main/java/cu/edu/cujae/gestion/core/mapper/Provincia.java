@@ -1,4 +1,4 @@
-package cu.edu.cujae.gestion.core.model;
+package cu.edu.cujae.gestion.core.mapper;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;

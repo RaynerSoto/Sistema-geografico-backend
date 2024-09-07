@@ -1,7 +1,7 @@
 package cu.edu.cujae.gestion.core.dto;
 
-import cu.edu.cujae.gestion.core.model.Geometria;
-import cu.edu.cujae.gestion.core.model.Municipio;
+import cu.edu.cujae.gestion.core.mapper.Geometria;
+import cu.edu.cujae.gestion.core.mapper.Municipio;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
