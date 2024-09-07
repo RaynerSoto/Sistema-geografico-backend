@@ -46,6 +46,7 @@ public class SecurityConfigurations {
                         reques.requestMatchers("/login**").permitAll()
                                 .requestMatchers("/api/v1/login/registro/").permitAll()
                                 .requestMatchers("/api/v1/login/**").authenticated()
+                                .requestMatchers("/api/v1/login/rol/denegado/**").denyAll()
                                 .anyRequest().permitAll())
                 .addFilterBefore(new SimpleCorsFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(this.securityFilter, UsernamePasswordAuthenticationFilter.class)

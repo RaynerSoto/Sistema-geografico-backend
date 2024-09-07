@@ -39,6 +39,10 @@ public class RolService implements RolServiceInterfaces {
         return rolRepository.findAll();
     }
 
+    public List<Rol> consultarRolNoSuperAdministrador(){
+        return rolRepository.findAll().stream().filter(s-> s.getRol().equalsIgnoreCase("Super Administrador") == false).toList();
+    }
+
 
     public void modificarRol(Rol rol, Long id) throws Exception {
         if (rolRepository.existsById(id)){

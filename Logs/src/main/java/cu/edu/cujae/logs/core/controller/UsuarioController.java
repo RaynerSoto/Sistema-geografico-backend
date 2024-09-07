@@ -58,12 +58,12 @@ public class UsuarioController {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado completo de los usuarios");
         try {
             List<UsuarioDto> user = usuarioService.listarUsuarios().stream().map(UsuarioDto::new).toList();
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok().body(user);
         }
         catch (Exception e) {
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
-            return ResponseEntity.badRequest().body(e.getMessage());
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se ha podido obtener el listado de usuarios, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
         }
     }
 
@@ -75,12 +75,12 @@ public class UsuarioController {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado completo de los usuarios como un archivo paginable");
         try {
             List<UsuarioDto> usuarioDtos = usuarioService.listarUsuarios(pageable).filter(s-> s.isActivo()).map(UsuarioDto::new).toList();
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok().body(usuarioDtos);
         }
         catch (Exception e) {
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
-            return ResponseEntity.badRequest().body(e.getMessage());
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",null);
+            return ResponseEntity.badRequest().body("No se ha podido obtener el listado de usuarios, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
         }
     }
 
@@ -93,12 +93,12 @@ public class UsuarioController {
         try {
             List<UsuarioDto> usuarioDtos = usuarioService.listarUsuarios().stream().filter(s-> s.isActivo())
                     .map(UsuarioDto::new).toList();
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok().body(usuarioDtos);
         }
         catch (Exception e) {
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
-            return ResponseEntity.badRequest().body(e.getMessage());
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se ha podido obtener el listado de usuarios, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
         }
     }
 
@@ -111,12 +111,12 @@ public class UsuarioController {
         try {
             List<UsuarioDto> usuarioDtos = usuarioService.listarUsuariosNoSuperAdministrador().stream().filter(s-> s.isActivo())
                     .map(UsuarioDto::new).toList();
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok().body(usuarioDtos);
         }
         catch (Exception e) {
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
-            return ResponseEntity.badRequest().body(e.getMessage());
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se ha podido obtener el listado de usuarios, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
         }
     }
 
@@ -128,12 +128,12 @@ public class UsuarioController {
         try {
             List<UsuarioDto> usuarios = usuarioService.listarUsuarios(pageable).filter(s-> !s.isActivo())
                     .map(UsuarioDto::new).toList();
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok().body(usuarios);
         }
         catch (Exception e) {
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
-            return ResponseEntity.badRequest().body(e.getMessage());
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se ha podido obtener el listado de usuarios, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
         }
     }
 
@@ -146,12 +146,12 @@ public class UsuarioController {
         try {
             List<UsuarioDto> usuarioDtos = usuarioService.listarUsuarios().stream().filter(s-> !s.isActivo())
                     .map(UsuarioDto::new).toList();
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok().body(usuarioDtos);
         }
         catch (Exception e) {
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
-            return ResponseEntity.badRequest().body(e.getMessage());
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se ha podido obtener el listado de usuarios, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
         }
     }
 
@@ -175,16 +175,16 @@ public class UsuarioController {
                 user.setActivo(true);
                 user.setFechaCreacion(Timestamp.valueOf(LocalDateTime.now()));
                 usuarioService.modificarUsuario(user);
-                registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+                registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
                 return ResponseEntity.ok().body("Usuario reactivado correctamente");
             }
             registroDto.setActividad("Insertar usuario: "+usuario.getUsername());
             usuarioService.insertarUsuario(new Usuario(usuario,rol.get(),sexo.get()));
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok().body("Usuario insertado correctamente");
         }
         catch (Exception e){
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado", e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -205,16 +205,16 @@ public class UsuarioController {
             if (rol.isPresent() && sexo.isPresent() && usuario.isActivo() == true) {
                 Usuario user = new Usuario(usuario,rol.get(),sexo.get());
                 usuarioService.modificarUsuario(new Usuario(usuario, rol.get(), sexo.get()));
-                registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+                registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
                 return ResponseEntity.ok().body("Usuario modificado correctamente");
             }
             else {
-                registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
+                registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado","Realizado un intento de modificar un usurio no activo");
                 return ResponseEntity.badRequest().body("Usuario no modificado");
             }
         }
         catch (Exception e){
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -226,11 +226,11 @@ public class UsuarioController {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Eliminar un usuario por ID");
         try {
             usuarioService.eliminarUsuario(id);
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok("Usuario eliminado");
         }
         catch (Exception e){
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazadp");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -242,13 +242,13 @@ public class UsuarioController {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener si un usuario está activo o no");
         try {
             if (usuarioService.usuarioActivo(usuario.getEmail(), usuario.getUsername()).isPresent()) {
-                registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+                registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
                 return ResponseEntity.ok().body("El usuario está activo");
             }
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado","El usuario no està activo");
             return ResponseEntity.ok("El usuario no está activo");
         }catch (Exception e){
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }

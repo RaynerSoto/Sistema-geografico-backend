@@ -7,6 +7,7 @@ import jakarta.validation.ValidatorFactory;
 
 public class Validacion {
 
+    //Validador de elementos
     public static String comprobacionValidador(Object elemento){
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         if (validator.validate(elemento).isEmpty() == false){

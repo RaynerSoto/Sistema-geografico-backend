@@ -27,8 +27,9 @@ public class RegistroUtils {
         return registroDto;
     }
 
-    public void insertarRegistros(RegistroDto registroDto,UsuarioDto usuarioDto,String estadoActual){
+    public void insertarRegistros(RegistroDto registroDto,UsuarioDto usuarioDto,String estadoActual,String mensaje){
         Registro registro = null;
+        registroDto.setMessage(mensaje);
         Estado estado = estadoService.obtenerEstado(estadoActual).get();
         if (usuarioDto != null){
             registro = new Registro(registroDto,usuarioDto.getUuid(),estado);

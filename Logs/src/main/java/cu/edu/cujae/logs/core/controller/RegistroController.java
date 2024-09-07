@@ -80,11 +80,11 @@ public class RegistroController {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado completo de los registros");
         try {
             List<RegistroDto> registroDtoList = registroService.listadoRegistros();
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok(registroDtoList);
         }catch (Exception e){
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
-            return ResponseEntity.badRequest().body(e);
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se puede listar los registros del sistema. Mensaje de error: "+ e.getMessage());
         }
     }
 
@@ -95,11 +95,11 @@ public class RegistroController {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Listado de actividades de un usuario");
         try {
             List<Registro> registros = registroService.listarRegistros();
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok(registros);
         }catch (Exception e){
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
-            return ResponseEntity.badRequest().body(e);
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se puede aaceeder al registro del usuario. Mensaje de error: " + e.getMessage());
         }
     }
 }

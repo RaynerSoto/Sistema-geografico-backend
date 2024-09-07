@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import cu.edu.cujae.logs.core.mapper.Registro;
 import cu.edu.cujae.logs.core.mapper.Usuario;
 import cu.edu.cujae.logs.core.utils.FechaFormato;
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -40,6 +41,8 @@ public class RegistroDto {
     @NotNull(message = "La fecha de creación no puede ser null")
     private String fechaCreacion;
 
+    private String message;
+
     public RegistroDto(Registro registro, Usuario user){
         this.uuid = registro.getUuid();
         if (user != null)
@@ -50,5 +53,6 @@ public class RegistroDto {
         this.ip = registro.getIp();
         this.estado = registro.getEstado().getNombre();
         this.fechaCreacion = FechaFormato.formateoFecha(registro.getFecha());
+        this.message = registro.getMessage();
     }
 }

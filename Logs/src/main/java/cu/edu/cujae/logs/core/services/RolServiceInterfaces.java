@@ -12,6 +12,8 @@ public interface RolServiceInterfaces{
 
     List<Rol> consultarRol();
 
+    List<Rol> consultarRolNoSuperAdministrador();
+
     void modificarRol(Rol rol, Long id) throws Exception;
 
     void eliminarRol(Long id) throws Exception;

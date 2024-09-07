@@ -51,6 +51,9 @@ public class Registro {
     @Temporal(TemporalType.TIMESTAMP)
     private Timestamp fecha;
 
+    @Column(name = "mensaje")
+    private String message;
+
     public Registro(Registro registro) {
         this.uuid = registro.getUuid();
         this.idUsuario = registro.getIdUsuario();
@@ -58,6 +61,7 @@ public class Registro {
         this.ip = registro.getIp();
         this.estado = registro.getEstado();
         this.fecha = Timestamp.valueOf(LocalDateTime.now());
+        this.message = registro.getMessage();
     }
 
     public Registro(RegistroDto registroDto, Usuario nombreUsuario, Estado estado) {

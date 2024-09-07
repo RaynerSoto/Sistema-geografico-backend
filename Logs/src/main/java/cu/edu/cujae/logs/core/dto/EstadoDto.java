@@ -25,7 +25,7 @@ public class EstadoDto {
 
     @Size(min = 4,max = 100,message = "La descrpción del Estado debe estar entre 4 y 100 caracteres")
     @NotBlank(message = "La descrpción del Estado no puede estar vacío")
-    @NotNull(message = "La descrpción del Estado no puede ser null")
+    @NotNull(message = "La descripción del Estado no puede ser null")
     private String descripcion;
 
     public EstadoDto(Estado estado) {

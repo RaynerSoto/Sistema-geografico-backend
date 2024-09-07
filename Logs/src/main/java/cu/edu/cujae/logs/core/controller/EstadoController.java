@@ -46,12 +46,12 @@ public class EstadoController {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Listado de estados del sistema");
         try {
             List<EstadoDto> estados = estadoService.listarEstados().stream().map(EstadoDto::new).toList();
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok().body(estados);
         }
         catch (Exception e){
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
-            return ResponseEntity.badRequest().body(e.getMessage());
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se puede acceder a la lista de estados del sistema. Código de error: "+e.getMessage());
         }
     }
 }

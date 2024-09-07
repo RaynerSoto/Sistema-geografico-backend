@@ -48,12 +48,12 @@ public class SexoController {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado completo de los sexos");
         try {
             List<SexoDto> sexos = sexoService.listarSexos().stream().map(SexoDto::new).toList();
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado");
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok().body(sexos);
         }
         catch (Exception e) {
-            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado");
-            return ResponseEntity.badRequest().body(e.getMessage());
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se ha podido obtener el listado de sexos, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
         }
     }
 }
