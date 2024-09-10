@@ -16,7 +16,7 @@ public class RegistroDto {
     private Long uuid;
 
     //Referencia al nombre de usuario
-    private String usuario;
+    private String potentialUser;
 
     @Size(min = 6,max = 100,message = "La actividad dedbe estar entre 6 y 100 caracteres")
     @NotBlank(message = "La actividad no puede estar vacío")
@@ -42,14 +42,14 @@ public class RegistroDto {
     }
 
     public RegistroDto(String username, String actividad, String ip, String estado) {
-        this.usuario = username;
+        this.potentialUser = username;
         this.actividad = actividad;
         this.ip = ip;
         this.estado = estado;
     }
 
     public RegistroDto(String username, String actividad, String ip, String estado,String mensaje) {
-        this.usuario = username;
+        this.potentialUser = username;
         this.actividad = actividad;
         this.ip = ip;
         this.estado = estado;

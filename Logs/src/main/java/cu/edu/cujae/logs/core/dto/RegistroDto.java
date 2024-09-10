@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import cu.edu.cujae.logs.core.mapper.Registro;
 import cu.edu.cujae.logs.core.mapper.Usuario;
 import cu.edu.cujae.logs.core.utils.FechaFormato;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -21,7 +20,7 @@ public class RegistroDto {
     private Long uuid;
 
     //Referencia al nombre de usuario
-    private String usuario;
+    private String potentialUser;
 
     @Size(min = 6,max = 100,message = "La actividad dedbe estar entre 6 y 100 caracteres")
     @NotBlank(message = "La actividad no puede estar vacío")
@@ -46,9 +45,9 @@ public class RegistroDto {
     public RegistroDto(Registro registro, Usuario user){
         this.uuid = registro.getUuid();
         if (user != null)
-            this.usuario = user.getUsername();
+            this.potentialUser = user.getUsername();
         else
-            this.usuario = null;
+            this.potentialUser = null;
         this.actividad = registro.getActividad();
         this.ip = registro.getIp();
         this.estado = registro.getEstado().getNombre();

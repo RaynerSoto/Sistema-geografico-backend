@@ -37,14 +37,14 @@ public class RegistroService implements RegistroServiceInterfaces {
 
     @Override
     public List<Registro> listarRegistrosPoUsuario(Long usuario) {
-        return registroRepository.findAll().stream().filter(s -> s.getIdUsuario() == usuario).toList();
+        return registroRepository.findAll().stream().filter(s -> s.getPotentialUserId() == usuario).toList();
     }
 
     @Override
     public List<RegistroDto> listadoRegistros() {
         return registroRepository.findAll().stream()
                 .map(registro -> {
-                    return new RegistroDto(registro,usuarioService.buscarUsuarioReturnedNull(registro.getIdUsuario()));
+                    return new RegistroDto(registro,usuarioService.buscarUsuarioReturnedNull(registro.getPotentialUserId()));
                 }).toList();
     }
 }

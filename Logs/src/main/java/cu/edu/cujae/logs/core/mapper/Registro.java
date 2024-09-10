@@ -27,7 +27,7 @@ public class Registro {
     private Long uuid;
 
     @Column(name = "idusuario")
-    private Long idUsuario;
+    private Long potentialUserId;
 
     @NotNull(message = "La actividad no puede ser null")
     @Size(min = 6,max = 100,message = "La actividad dedbe estar entre 6 y 100 caracteres")
@@ -56,7 +56,7 @@ public class Registro {
 
     public Registro(Registro registro) {
         this.uuid = registro.getUuid();
-        this.idUsuario = registro.getIdUsuario();
+        this.potentialUserId = registro.getPotentialUserId();
         this.actividad = registro.getActividad();
         this.ip = registro.getIp();
         this.estado = registro.getEstado();
@@ -66,7 +66,7 @@ public class Registro {
 
     public Registro(RegistroDto registroDto, Usuario nombreUsuario, Estado estado) {
         this.uuid = registroDto.getUuid();
-        this.idUsuario = nombreUsuario.getUuid();
+        this.potentialUserId = nombreUsuario.getUuid();
         this.actividad = registroDto.getActividad();
         this.ip = registroDto.getIp();
         this.estado = estado;
@@ -76,7 +76,7 @@ public class Registro {
 
     public Registro(RegistroDto registroDto, Estado estado) {
         this.uuid = registroDto.getUuid();
-        this.idUsuario = null;
+        this.potentialUserId = null;
         this.actividad = registroDto.getActividad();
         this.ip = registroDto.getIp();
         this.estado = estado;
@@ -86,7 +86,7 @@ public class Registro {
 
     public Registro(Optional<Registro> registro) {
         this.uuid = registro.get().getUuid();
-        this.idUsuario = registro.get().getIdUsuario();
+        this.potentialUserId = registro.get().getPotentialUserId();
         this.actividad = registro.get().getActividad();
         this.ip = registro.get().getIp();
         this.estado = registro.get().getEstado();
@@ -94,9 +94,9 @@ public class Registro {
         this.message = registro.get().getMessage();
     }
 
-    public Registro(RegistroDto registroDto,Long idUsuario,Estado Estado){
+    public Registro(RegistroDto registroDto, Long potentialUserId, Estado Estado){
         this.uuid = registroDto.getUuid();
-        this.idUsuario = idUsuario;
+        this.potentialUserId = potentialUserId;
         this.actividad = registroDto.getActividad();
         this.ip = registroDto.getIp();
         this.estado = Estado;

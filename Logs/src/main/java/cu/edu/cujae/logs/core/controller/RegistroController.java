@@ -53,9 +53,9 @@ public class RegistroController {
         try {
             if ((username.isBlank() || username.isEmpty() || username.equals(null)) == false){
                 try {
-                    if(username.equals(registro.getUsuario()) == false)
+                    if(username.equals(registro.getPotentialUser()) == false)
                         throw new Exception("No es posible registrar la actividad");
-                    Optional<Usuario> usuario = usuarioService.buscarUsuarioPorUsernameActivo(registro.getUsuario());
+                    Optional<Usuario> usuario = usuarioService.buscarUsuarioPorUsernameActivo(registro.getPotentialUser());
                     Optional<Estado> estado = estadoService.obtenerEstado(registro.getEstado());
                     Registro regis = new Registro(registro, usuario.get(), estado.get());
                     registroService.insertarRegistro(regis);

@@ -8,6 +8,8 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.sql.Timestamp;
 import java.util.Optional;
 
 @Data
@@ -52,10 +54,10 @@ public class UsuarioDto {
     private boolean activo;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private String fechaCreacion;
+    private Timestamp fechaCreacion;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private String fechaEliminacion;
+    private Timestamp fechaEliminacion;
 
     public UsuarioDto(Usuario usuario) {
         this.uuid = usuario.getUuid();
@@ -66,8 +68,8 @@ public class UsuarioDto {
         this.sexo = usuario.getSexo().getNombre();
         this.activo = usuario.isActivo();
         this.password = usuario.getPassword();
-        this.fechaCreacion = FechaFormato.formateoFecha(usuario.getFechaCreacion());
-        this.fechaEliminacion = FechaFormato.formateoFecha(usuario.getFechaEliminacion());
+        this.fechaCreacion = usuario.getFechaCreacion();
+        this.fechaEliminacion = usuario.getFechaEliminacion();
     }
 
     public UsuarioDto(Optional<Usuario> usuario) {
@@ -79,7 +81,7 @@ public class UsuarioDto {
         this.sexo = usuario.get().getSexo().getNombre();
         this.activo = usuario.get().isActivo();
         this.password = usuario.get().getPassword();
-        this.fechaCreacion = FechaFormato.formateoFecha(usuario.get().getFechaCreacion());
-        this.fechaEliminacion = FechaFormato.formateoFecha(usuario.get().getFechaEliminacion());
+        this.fechaCreacion = usuario.get().getFechaCreacion();
+        this.fechaEliminacion = usuario.get().getFechaEliminacion();
     }
 }
