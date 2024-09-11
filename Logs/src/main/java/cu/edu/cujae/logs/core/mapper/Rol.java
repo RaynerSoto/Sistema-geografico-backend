@@ -33,7 +33,7 @@ public class Rol {
     private String rol;
 
 
-    @OneToMany(mappedBy = "rol", fetch = FetchType.LAZY, cascade = CascadeType.REFRESH)
+    @OneToMany(mappedBy = "rol", fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH,CascadeType.DETACH})
     private List<Usuario> usuarioList;
 
     public Rol(RolEnums rolEnums){

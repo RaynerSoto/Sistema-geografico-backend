@@ -58,7 +58,7 @@ public class Usuario implements UserDetails{
     private String email;
 
     @NotNull(message = "El rol no puede ser nulo")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.DETACH, CascadeType.MERGE})
     @JoinColumn(name = "rolID")
     private Rol rol;
 
