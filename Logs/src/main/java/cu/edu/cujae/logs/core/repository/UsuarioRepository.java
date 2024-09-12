@@ -36,4 +36,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     Optional<Usuario> findByUuidEquals(Long id);
 
     Optional<Usuario> findByEmailEqualsAndUsernameEqualsIgnoreCaseAndNameEqualsAndSexoEquals(String email, String username, String name, Sexo sexo);
+
+    Optional<Usuario> findUsuarioByUsernameEqualsIgnoreCaseAndActivoIsFalse(String username);
 }

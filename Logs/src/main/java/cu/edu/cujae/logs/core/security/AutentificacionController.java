@@ -59,7 +59,6 @@ public class AutentificacionController {
             registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok(new TokenDto(JWTtoken));
         }catch (Exception e){
-            System.out.println(e);
             registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
             return ResponseEntity.badRequest().body("No se pudo autentificar el usuario: "+usuarioLoginDto.getUsername());
         }

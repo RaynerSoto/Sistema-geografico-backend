@@ -32,7 +32,9 @@ public interface UsuarioServiceInterfaces {
 
     void validarUsuarioInsertar(String email, String username) throws Exception;
 
-    void validarUsuarioModificar(String email, String username,Long id) throws Exception;
+    Optional<Usuario> usuarioInactivoUsername(String username);
+
+    void validarUsuarioModificar(String email, String username, Long id) throws Exception;
 
     Optional<Usuario> buscarUsuarioPorUsernameActivo(String username) throws Exception;
 
@@ -41,4 +43,6 @@ public interface UsuarioServiceInterfaces {
     Usuario obtenerUsuarioPorUsernameAndPassword(String username,String password);
 
     Optional<Usuario> obtenerUsuarioEmailUsernameName(String email, String username, String name, Sexo sexo) throws SearchException;
+
+    Optional<Usuario> obtenerUsuarioUsernameInactivo(String username) throws Exception;
 }

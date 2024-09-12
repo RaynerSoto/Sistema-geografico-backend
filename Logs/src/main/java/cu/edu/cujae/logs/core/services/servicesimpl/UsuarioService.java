@@ -56,6 +56,12 @@ public class UsuarioService implements UsuarioServiceInterfaces {
     }
 
     @Override
+    public Optional<Usuario> obtenerUsuarioUsernameInactivo(String username) throws Exception {
+        return Optional.ofNullable(usuarioRepository.findUsuarioByUsernameEqualsIgnoreCaseAndActivoIsFalse(username).orElseThrow(
+                () -> new SearchException("Usuario no encontrado")));
+    }
+
+    @Override
     public Page<Usuario> listarUsuarios(Pageable pageable) throws Exception{
         return usuarioRepository.findAll(pageable);
     }
@@ -125,12 +131,17 @@ public class UsuarioService implements UsuarioServiceInterfaces {
 
     @Override
     public void validarUsuarioInsertar(String email, String username) throws Exception {
-        if (usuarioActivoUsername(username).isPresent()) {
+        if (usuarioActivoUsername(username).isPresent() || usuarioInactivoUsername(username).isPresent()) {
             throw new Exception("El nombre de usuario está en uso");
         }
         else if (usuarioActivoEmail(email).isPresent()) {
             throw new Exception("El email está en uso");
         }
+    }
+
+    @Override
+    public Optional<Usuario> usuarioInactivoUsername(String username){
+        return usuarioRepository.findUsuarioByUsernameEqualsIgnoreCaseAndActivoIsFalse(username);
     }
 
     public void validarUsuarioModificar(String email, String username,Long id) throws Exception{

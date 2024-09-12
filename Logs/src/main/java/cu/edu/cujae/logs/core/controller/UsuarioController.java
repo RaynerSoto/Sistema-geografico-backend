@@ -2,7 +2,6 @@ package cu.edu.cujae.logs.core.controller;
 
 import cu.edu.cujae.logs.core.dto.RegistroDto;
 import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
-import cu.edu.cujae.logs.core.dto.usuario.UsuarioDtoInsert;
 import cu.edu.cujae.logs.core.mapper.Rol;
 import cu.edu.cujae.logs.core.mapper.Sexo;
 import cu.edu.cujae.logs.core.mapper.Usuario;
@@ -159,26 +158,17 @@ public class UsuarioController {
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
     ,summary = "Permite insertar un usuario")
     @PostMapping("/")
-    public ResponseEntity<String> insertarUsuario(@RequestBody UsuarioDtoInsert usuario,HttpServletRequest request) {
-        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Insertar o reactivar usuario: "+usuario.getUsername());
+    public ResponseEntity<String> insertarUsuario(@RequestBody UsuarioDto usuario,HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Insertar usuario: "+usuario.getUsername());
         try {
             usuario.setActivo(true);
+            if(usuario.getUsername().contains(" "))
+                throw new Exception("Los nombres de usuarios no puede contener espacios");
             Validacion.validarUnsupportedOperationException(usuario);
             Optional<Rol> rol = rolRepository.consultarRol(usuario.getRol());
             Optional<Sexo> sexo = sexoService.consultarSexo(usuario.getSexo());
             usuarioService.validarUsuarioInsertar(usuario.getEmail(),usuario.getUsername());
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-            if (usuario.isReactivado() == true){
-                registroDto.setActividad("Reactivar usuario: "+usuario.getUsername());
-                Usuario user = usuarioService.obtenerUsuarioEmailUsernameName(usuario.getEmail(),usuario.getUsername(),usuario.getName(),sexo.get()).get();
-                user.setFechaEliminacion(null);
-                user.setActivo(true);
-                user.setFechaCreacion(Timestamp.valueOf(LocalDateTime.now()));
-                usuarioService.modificarUsuario(user);
-                registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
-                return ResponseEntity.ok().body("Usuario reactivado correctamente");
-            }
-            registroDto.setActividad("Insertar usuario: "+usuario.getUsername());
             usuarioService.insertarUsuario(new Usuario(usuario,rol.get(),sexo.get()));
             registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok().body("Usuario insertado correctamente");
@@ -191,8 +181,58 @@ public class UsuarioController {
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
+            ,summary = "Permite reactivar un usuario completo")
+    @PutMapping("/")
+    public ResponseEntity<String> reactivarUsuarioCompleto(@RequestBody UsuarioDto usuario,HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Insertar o reactivar usuario: "+usuario.getUsername());
+        try {
+            usuario.setActivo(true);
+            Validacion.validarUnsupportedOperationException(usuario);
+            Optional<Rol> rol = rolRepository.consultarRol(usuario.getRol());
+            Optional<Sexo> sexo = sexoService.consultarSexo(usuario.getSexo());
+            usuarioService.validarUsuarioInsertar(usuario.getEmail(),usuario.getUsername());
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+            registroDto.setActividad("Reactivar usuario: "+usuario.getUsername());
+            Usuario user = usuarioService.obtenerUsuarioEmailUsernameName(usuario.getEmail(),usuario.getUsername(),usuario.getName(),sexo.get()).get();
+            user.setFechaEliminacion(null);
+            user.setActivo(true);
+            user.setFechaCreacion(Timestamp.valueOf(LocalDateTime.now()));
+            usuarioService.modificarUsuario(user);
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
+            return ResponseEntity.ok().body("Usuario reactivado correctamente");
+        }
+        catch (Exception e){
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado", e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") }
+            ,summary = "Permite reactivar un usuario a travès del nombre de usuario")
+    @PutMapping("/{username}")
+    public ResponseEntity<String> reactivarUsuarioUsername(@PathVariable(name = "username") String usuario,HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Reactivar usuario: "+usuario);
+        try {
+            registroDto.setActividad("Reactivar usuario: "+usuario);
+            Usuario user = usuarioService.obtenerUsuarioUsernameInactivo(usuario).get();
+            user.setFechaEliminacion(null);
+            user.setActivo(true);
+            user.setFechaCreacion(Timestamp.valueOf(LocalDateTime.now()));
+            usuarioService.modificarUsuario(user);
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
+            return ResponseEntity.ok().body("Usuario reactivado correctamente");
+        }
+        catch (Exception e){
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado", e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") }
     ,summary = "Permite actualizar un usuario")
-    @PutMapping("/{id}")
+    @PutMapping("/modificar/{id}")
     public ResponseEntity<String> actualizarUsuario(@RequestBody UsuarioDto usuario,@PathVariable Long id,HttpServletRequest request) {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Modificar usuario con id: "+id);
         try {

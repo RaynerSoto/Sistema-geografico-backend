@@ -47,7 +47,7 @@ public class Usuario implements UserDetails{
     @NotNull(message = "El nombre completo no puede ser nulo")
     @Size(min = 2,max = 100,message = "El nombre completo debe tener entre 2 y 100 caracteres")
     @NotBlank(message = "El nombre completo no puede ser vacío")
-    @Column(name = "nombre",nullable = false, length = 100,unique = true)
+    @Column(name = "nombre",nullable = false, length = 100)
     private String name;
 
     @NotNull(message = "El correo no puede ser nulo")

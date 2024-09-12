@@ -52,16 +52,6 @@ ALTER TABLE public.usuarios OWNER TO postgres;
 INSERT INTO public.usuarios VALUES (1, true, 'raynersoto01@gmail.com', '2024-09-02 11:10:50.967448', NULL, 'Rayner Alejandro Soto Martínez', '$2a$10$IL3H7xfMROZZuYrvSS.aaeB0BvhHJk5gBs24VfQFyV80EhUG9Ka1i', 'Rayner', 1, 1);
 INSERT INTO public.usuarios VALUES (2, true, 'dianimerci2001@gmail.com', '2024-09-02 11:11:58.328096', NULL, 'Dianelis de las Mercedes Estenoz Vazquez', '$2a$10$QLdtdlhmFTrdWe6nvSR2xuiMX39EUeQti/t6Mj52S6LB8N6dR.Mg6', 'Dianelis', 1, 2);
 
-
---
--- TOC entry 2715 (class 2606 OID 24965)
--- Name: usuarios uk_io49vjba68pmbgpy9vtw8vm81; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.usuarios
-    ADD CONSTRAINT uk_io49vjba68pmbgpy9vtw8vm81 UNIQUE (nombre);
-
-
 --
 -- TOC entry 2717 (class 2606 OID 24967)
 -- Name: usuarios uk_kfsp0s1tflm1cwlj8idhqsad0; Type: CONSTRAINT; Schema: public; Owner: postgres
