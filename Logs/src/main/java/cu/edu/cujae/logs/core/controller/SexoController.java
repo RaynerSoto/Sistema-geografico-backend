@@ -1,7 +1,11 @@
 package cu.edu.cujae.logs.core.controller;
 
+import cu.edu.cujae.logs.core.dto.Generic;
 import cu.edu.cujae.logs.core.dto.RegistroDto;
 import cu.edu.cujae.logs.core.dto.SexoDto;
+import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
+import cu.edu.cujae.logs.core.mapper.Sexo;
+import cu.edu.cujae.logs.core.mapper.Usuario;
 import cu.edu.cujae.logs.core.services.EstadoServiceInterfaces;
 import cu.edu.cujae.logs.core.services.RegistroServiceInterfaces;
 import cu.edu.cujae.logs.core.services.SexoServiceInterfaces;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -56,4 +61,25 @@ public class SexoController {
             return ResponseEntity.badRequest().body("No se ha podido obtener el listado de sexos, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
         }
     }
+
+    @PreAuthorize(value = "hasAnyRole('Super Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Devuelve el listados de los sexos con sus usuarios")
+    @GetMapping("/sexosUsuariosList")
+    public ResponseEntity<?> listarSexosUsuariosList(HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listados de los sexos con sus usuarios");
+        try {
+            List<Generic> generics = new ArrayList<>();
+            List<Sexo> sexos = sexoService.listarSexos().stream().toList();
+            for (Sexo sexo : sexos){
+                generics.add(new Generic(new SexoDto(sexo),sexo.getUsuarioList().stream().map(UsuarioDto::new).toList()));
+            }
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
+            return ResponseEntity.ok().body(generics);
+        }
+        catch (Exception e) {
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se ha podido obtener el reporte, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
+        }
+    }
+
 }
