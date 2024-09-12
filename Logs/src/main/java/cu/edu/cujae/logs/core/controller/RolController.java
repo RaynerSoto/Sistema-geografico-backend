@@ -39,17 +39,20 @@ public class RolController {
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite insertar un rol")
     @PostMapping("/denegado/")
     @Deprecated
-    public ResponseEntity<?> crearRol(@RequestBody RolDto rol) {
+    public ResponseEntity<?> crearRol(@RequestBody RolDto rol,HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Insertar Rol");
         try{
             Validacion.validarUnsupportedOperationException(rol);
             if (rolServiceInterfaces.consultarRolNombre(rol.getNombre()).isPresent() == false){
                 rolServiceInterfaces.insertarRol(new Rol(rol));
+                registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
                 return ResponseEntity.ok("Insertado correctamente");
             } else {
-                return ResponseEntity.badRequest().body("El rol ya existe");
+                throw new Exception("El rol ya existe");
             }
         }
         catch(Exception e){
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -69,12 +72,43 @@ public class RolController {
         }
     }
 
+    @PreAuthorize(value = "hasAnyRole('Super Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver todos los nombres de los roles")
+    @GetMapping("/roles")
+    public ResponseEntity<?> listarRolesNombre(HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado de los nombres de los roles");
+        try {
+            List<String>roles = rolServiceInterfaces.consultarRol().stream().map(Rol::getRol).toList();
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
+            return ResponseEntity.ok(roles);
+        }catch (Exception e){
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("Compruebe la conexiòn con la base datos o consulte con el servicio tècnico");
+        }
+    }
+
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },
+            summary = "Permite ver solamente los roles que no son Super Administradores")
+    @GetMapping("/RolNoSuperAdmin")
+    public ResponseEntity<?> listarRolesNoSuperAdministradores(HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener los roles que no son super administradores");
+        try {
+            List<RolDto> rolDtos = rolServiceInterfaces.consultarRolNoSuperAdministrador().stream().map(RolDto::new).toList();
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
+            return ResponseEntity.ok(rolDtos);
+        }catch (Exception e){
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },
             summary = "Permite ver solamente los nombres de los roles que no son Super Administradores")
-    @GetMapping("/nombresRol")
-    public ResponseEntity<?> listarRolesNoSuperAdministradores(HttpServletRequest request) {
-        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener los nombres de los roles");
+    @GetMapping("/nombresRolNoSuperAdminNombre")
+    public ResponseEntity<?> listarRolesNoSuperAdministradoresNombre(HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener los nombres de los roles que no son super administradores");
         try {
             List<String> rolDtos = rolServiceInterfaces.consultarRolNoSuperAdministrador().stream().map(s-> s.getRol()).toList();
             registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
