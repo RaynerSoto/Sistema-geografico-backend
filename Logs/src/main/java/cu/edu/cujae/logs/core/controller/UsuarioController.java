@@ -184,7 +184,7 @@ public class UsuarioController {
             ,summary = "Permite reactivar un usuario completo")
     @PutMapping("/")
     public ResponseEntity<String> reactivarUsuarioCompleto(@RequestBody UsuarioDto usuario,HttpServletRequest request) {
-        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Insertar o reactivar usuario: "+usuario.getUsername());
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Reactivar usuario completo: "+usuario.getUsername());
         try {
             usuario.setActivo(true);
             Validacion.validarUnsupportedOperationException(usuario);
@@ -212,10 +212,31 @@ public class UsuarioController {
             ,summary = "Permite reactivar un usuario a travès del nombre de usuario")
     @PutMapping("/{username}")
     public ResponseEntity<String> reactivarUsuarioUsername(@PathVariable(name = "username") String usuario,HttpServletRequest request) {
-        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Reactivar usuario: "+usuario);
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Reactivar usuario por su nombre de usuario: "+usuario);
         try {
             registroDto.setActividad("Reactivar usuario: "+usuario);
             Usuario user = usuarioService.obtenerUsuarioUsernameInactivo(usuario).get();
+            user.setFechaEliminacion(null);
+            user.setActivo(true);
+            user.setFechaCreacion(Timestamp.valueOf(LocalDateTime.now()));
+            usuarioService.modificarUsuario(user);
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
+            return ResponseEntity.ok().body("Usuario reactivado correctamente");
+        }
+        catch (Exception e){
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado", e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") }
+            ,summary = "Permite reactivar un usuario a travès del nombre de usuario")
+    @PutMapping("/{id}")
+    public ResponseEntity<String> reactivarUsuarioUsername(@PathVariable(name = "id") Long usuarioID,HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Reactivar usuario por su id de usuario: "+usuarioID);
+        try {
+            Usuario user = usuarioService.buscarUsuario(usuarioID);
             user.setFechaEliminacion(null);
             user.setActivo(true);
             user.setFechaCreacion(Timestamp.valueOf(LocalDateTime.now()));
