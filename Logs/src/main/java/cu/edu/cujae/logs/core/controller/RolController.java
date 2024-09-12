@@ -1,9 +1,12 @@
 package cu.edu.cujae.logs.core.controller;
 
 
+import cu.edu.cujae.logs.core.dto.Generic;
 import cu.edu.cujae.logs.core.dto.RegistroDto;
+import cu.edu.cujae.logs.core.dto.usuario.UsuarioDto;
 import cu.edu.cujae.logs.core.mapper.Rol;
 import cu.edu.cujae.logs.core.dto.RolDto;
+import cu.edu.cujae.logs.core.mapper.Usuario;
 import cu.edu.cujae.logs.core.utils.RegistroUtils;
 import cu.edu.cujae.logs.core.utils.TokenUtils;
 import cu.edu.cujae.logs.core.utils.Validacion;
@@ -185,4 +188,44 @@ public class RolController {
             return ResponseEntity.badRequest().body("No se ha podido encontrar el rol buscado");
         }
     }
+
+    @PreAuthorize(value = "hasAnyRole('Super Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver las relación entre el rol, la cantidad de usuarios y que usuarios son exactamente")
+    @GetMapping("/reportes/reportesRolesCantidadUsuariosUsers")
+    public ResponseEntity<?> reportesRolesUsuariosCantidad(HttpServletRequest request){
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Observar un listado de los roles con la cantidad de usuarios y que usuarios son");
+        try{
+            List<Rol> roles = rolServiceInterfaces.consultarRol();
+            List<Generic> generics = new ArrayList<>();
+            for(Rol rol : roles){
+                generics.add(new Generic(new RolDto(rol),rol.getUsuarioList().size(), rol.getUsuarioList().stream().map(UsuarioDto::new).toList()));
+            }
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
+            return ResponseEntity.ok(generics);
+        }catch (Exception e){
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se ha podido obtener acceso al reporte solicitado. Contacto con el servicio técnico");
+        }
+    }
+
+    @PreAuthorize(value = "hasAnyRole('Super Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver las relación entre el rol y la cantidad de usuarios")
+    @GetMapping("/reportes/reportesRolesCantidadUsuarios")
+    public ResponseEntity<?> reportesRolesUsuarios(HttpServletRequest request){
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Observar un listado de los roles con la cantidad de usuarios y que usuarios son");
+        try {
+           List<Rol> roles = rolServiceInterfaces.consultarRol();
+           List<Generic> generics = new ArrayList<>();
+           for(Rol rol : roles){
+               generics.add(new Generic(new RolDto(rol),rol.getUsuarioList().size()));
+           }
+           registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
+           return ResponseEntity.ok(generics);
+       }catch (Exception e){
+           registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+           return ResponseEntity.badRequest().body("No se ha podido obtener acceso al reporte solicitado. Contacto con el servicio técnico");
+       }
+    }
+
+
 }
