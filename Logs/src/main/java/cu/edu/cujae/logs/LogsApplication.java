@@ -26,8 +26,6 @@ public class LogsApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        sexoService.iniciar();
-        estadoService.iniciar();
-        rolService.iniciar();
+        System.out.println("Comienza la aplicación");
     }
 }

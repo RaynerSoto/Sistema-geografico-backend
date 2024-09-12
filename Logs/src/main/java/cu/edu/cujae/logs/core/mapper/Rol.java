@@ -32,8 +32,7 @@ public class Rol {
     @Column(name = "rolNombre", nullable = false, length = 100, unique = true,updatable = true)
     private String rol;
 
-
-    @OneToMany(mappedBy = "rol", fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH,CascadeType.DETACH})
+    @OneToMany(mappedBy = "rol", fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH,CascadeType.DETACH,CascadeType.MERGE})
     private List<Usuario> usuarioList;
 
     public Rol(RolEnums rolEnums){

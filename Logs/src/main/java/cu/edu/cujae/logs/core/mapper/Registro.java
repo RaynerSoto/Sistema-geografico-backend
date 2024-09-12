@@ -22,7 +22,8 @@ import java.util.Optional;
 public class Registro {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "registro_seq")
+    @SequenceGenerator(name = "registro_seq", sequenceName = "registro_sequence",initialValue = 1,allocationSize = 1)
     @Column(name = "registroID", unique = true, nullable = false)
     private Long uuid;
 

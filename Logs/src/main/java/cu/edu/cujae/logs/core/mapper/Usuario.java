@@ -29,8 +29,8 @@ import java.util.Optional;
 public class Usuario implements UserDetails{
     @Id
     @Column(name = "usuarioID",nullable = false, length = 36, unique = true)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name = "user_seq", sequenceName = "USER_SEQUENCE")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "user_seq")
+    @SequenceGenerator(name = "user_seq", sequenceName = "usuario_sequence",initialValue = 1,allocationSize = 1)
     private Long uuid;
 
     @NotNull(message = "El nombre de usuario no puede ser nulo")
