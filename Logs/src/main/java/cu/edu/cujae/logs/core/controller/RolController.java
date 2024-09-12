@@ -190,10 +190,10 @@ public class RolController {
     }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver las relación entre el rol, la cantidad de usuarios y que usuarios son exactamente")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver un listado de los roles, con la cantidad de usuarios y que usuarios son")
     @GetMapping("/reportes/reportesRolesCantidadUsuariosUsers")
     public ResponseEntity<?> reportesRolesUsuariosCantidad(HttpServletRequest request){
-        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Observar un listado de los roles con la cantidad de usuarios y que usuarios son");
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Observar un listado de los roles, con la cantidad de usuarios y que usuarios son");
         try{
             List<Rol> roles = rolServiceInterfaces.consultarRol();
             List<Generic> generics = new ArrayList<>();
@@ -209,7 +209,7 @@ public class RolController {
     }
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador')")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver las relación entre el rol y la cantidad de usuarios")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver un listado de los roles con la cantidad de usuarios y que usuarios son")
     @GetMapping("/reportes/reportesRolesCantidadUsuarios")
     public ResponseEntity<?> reportesRolesUsuarios(HttpServletRequest request){
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Observar un listado de los roles con la cantidad de usuarios y que usuarios son");
@@ -227,5 +227,23 @@ public class RolController {
        }
     }
 
+    @PreAuthorize(value = "hasAnyRole('Super Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver un listado de los roles y sus usuarios")
+    @GetMapping("/reportes/reportesRolesUsuarios")
+    public ResponseEntity<?> reportesRolesUsuariosList(HttpServletRequest request){
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Observar un listado de los roles y sus usuarios");
+        try {
+            List<Rol> roles = rolServiceInterfaces.consultarRol();
+            List<Generic> generics = new ArrayList<>();
+            for(Rol rol : roles){
+                generics.add(new Generic(new RolDto(rol),rol.getUsuarioList().stream().map(Usuario::new).toList()));
+            }
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
+            return ResponseEntity.ok(generics);
+        }catch (Exception e){
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se ha podido obtener acceso al reporte solicitado. Contacto con el servicio técnico");
+        }
+    }
 
 }
