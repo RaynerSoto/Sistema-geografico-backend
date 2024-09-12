@@ -231,8 +231,8 @@ public class UsuarioController {
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
-            ,summary = "Permite reactivar un usuario a travès del nombre de usuario")
-    @PutMapping("/{id}")
+            ,summary = "Permite reactivar un usuario a travès del id de usuario")
+    @PutMapping("/ID/{id}")
     public ResponseEntity<String> reactivarUsuarioUsername(@PathVariable(name = "id") Long usuarioID,HttpServletRequest request) {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Reactivar usuario por su id de usuario: "+usuarioID);
         try {

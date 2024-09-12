@@ -43,7 +43,7 @@ public class Registro {
     private String ip;
 
     @NotNull(message = "El estado no puede ser null")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH,CascadeType.MERGE,CascadeType.DETACH})
     @JoinColumn(name = "estadoID")
     private Estado estado;
 

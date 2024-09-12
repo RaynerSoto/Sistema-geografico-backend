@@ -58,12 +58,12 @@ public class Usuario implements UserDetails{
     private String email;
 
     @NotNull(message = "El rol no puede ser nulo")
-    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.DETACH, CascadeType.MERGE})
+    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.DETACH, CascadeType.MERGE,CascadeType.REFRESH})
     @JoinColumn(name = "rolID")
     private Rol rol;
 
     @NotNull(message = "El sexo no puede ser nulo")
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.DETACH, CascadeType.MERGE,CascadeType.REFRESH})
     @JoinColumn(name = "sexoID")
     private Sexo sexo;
 
