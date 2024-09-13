@@ -21,7 +21,8 @@ import java.util.List;
 public class Empleado {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "empleado_seq")
+    @SequenceGenerator(name = "empleado_seq", sequenceName = "empleado_sequence",initialValue = 1,allocationSize = 1)
     @Column(name = "idpersonal", nullable = false, updatable = false, unique = true)
     private Long uuid;
 

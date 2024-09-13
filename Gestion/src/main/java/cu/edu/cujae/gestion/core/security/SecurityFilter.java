@@ -31,7 +31,7 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         if (request.getHeader("Authorization") == null) {
-            throw new ServletException("Error de autorizaciòn");
+            filterChain.doFilter(request,response);
         }
         else {
             TokenDto tokenDto = TokenUtils.getTokenDto(request);

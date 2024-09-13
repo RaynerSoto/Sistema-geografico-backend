@@ -211,7 +211,12 @@
             <artifactId>fastexcel</artifactId>
             <version>0.18.1</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/org.flywaydb/flyway-core -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>9.22.3</version>
+        </dependency>
     </dependencies>
 
     <build>

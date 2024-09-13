@@ -20,6 +20,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -63,16 +64,21 @@ public class ExcelController {
     }
 
     @PostMapping("/")
-    @Operation(summary = "Extraer e insertar datos de un Excel",
+    @Operation(
+            summary = "Extraer e insertar datos de un Excel",
             description = "Permite obtener todos los datos que encontramos en un Excel",
-            security = { @SecurityRequirement(name = "bearer-key") })
+            security = {@SecurityRequirement(name = "bearer-key")}
+    )
+    @ApiResponse(responseCode = "200", description = "Fichero recibido",
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = String.class)))
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
-    public ResponseEntity<?> cargarUnExcel(@RequestParam("file") @NotNull MultipartFile file, HttpServletRequest request) {
+    public ResponseEntity<?> cargarUnExcel(@Parameter(description = "File to be uploaded", required = true)
+                                               @RequestParam("file") @NotNull MultipartFile file, HttpServletRequest request) {
         String actividad = "Extraer datos del Excel";
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
             if (file.isEmpty()) {
-                registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(), actividad, IpUtils.hostIpV4Http(request), "Rechazado", "Archivo vacío o no recibido");
                 throw new Exception("Archivo vacío o no recibido");
             } else {
                 File fichero;

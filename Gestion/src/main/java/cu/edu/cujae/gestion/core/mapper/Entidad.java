@@ -24,7 +24,8 @@ import java.util.List;
 public class Entidad {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "entidad_seq")
+    @SequenceGenerator(name = "entidad_seq", sequenceName = "entidad_sequence",initialValue = 1,allocationSize = 1)
     @NotNull(message = "El id de la entidad no puede ser nulo")
     @Column(name = "identidad", nullable = false, updatable = false, unique = true)
     private Long uuid;
