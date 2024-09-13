@@ -61,25 +61,4 @@ public class MunicipioController {
             return ResponseEntity.badRequest().body("No se ha podido obtener el listado de municipios, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
         }
     }
-
-    @GetMapping("/Provincia")
-    @Operation(summary = "Listado de municipios por provincia",
-            description = "Permite obtener el listado de todos los municipios pertenecientes a una provincia",security = { @SecurityRequirement(name = "bearer-key") })
-    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
-    public ResponseEntity<?> getAllMunicipiosXProvincia(@PathVariable String provincia, HttpServletRequest request) {
-        String actividad = "Listar todos los municipios pertenecientes a una provincia";
-        TokenDto tokenDto = TokenUtils.getTokenDto(request);
-        try {
-            List<MunicipioDto> municipioDtos = municipioServices.listadoMunicipios().stream()
-                    .map(MunicipioDto::new)
-                    .filter(municipioDto -> municipioDto.getProvincia().equalsIgnoreCase(provincia))
-                    .sorted(Comparator.comparing(MunicipioDto::getUuid))
-                    .toList();
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado",null);
-            return ResponseEntity.ok(municipioDtos);
-        }catch (Exception e){
-            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado",e.getMessage());
-            return ResponseEntity.badRequest().body("No se ha podido obtener el listado de municipios de una provincia, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
-        }
-    }
 }

@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 
+// Revisado todo funcional all 100%
 @RestController
 @RequestMapping("/api/v1/login/sexo")
 @SecurityRequirement(name = "bearer-key")

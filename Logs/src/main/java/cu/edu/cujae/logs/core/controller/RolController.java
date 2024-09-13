@@ -21,6 +21,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
+// Revisado todo 100% funcional
 @RestController
 @RequestMapping("/api/v1/login/rol")
 @SecurityRequirement(name = "bearer-key")
@@ -236,7 +237,7 @@ public class RolController {
             List<Rol> roles = rolServiceInterfaces.consultarRol();
             List<Generic> generics = new ArrayList<>();
             for(Rol rol : roles){
-                generics.add(new Generic(new RolDto(rol),rol.getUsuarioList().stream().map(Usuario::new).toList()));
+                generics.add(new Generic(new RolDto(rol),rol.getUsuarioList().stream().map(UsuarioDto::new).toList()));
             }
             registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok(generics);

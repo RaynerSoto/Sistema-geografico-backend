@@ -34,7 +34,7 @@ public class Usuario implements UserDetails{
     private Long uuid;
 
     @NotNull(message = "El nombre de usuario no puede ser nulo")
-    @Size(min = 4,max = 50,message = "El nombre de usuario se encuentra en un rango de 4 y 50 caracteres")
+    @Size(min = 4,max = 500,message = "El nombre de usuario se encuentra en un rango de 4 y 500 caracteres")
     @NotBlank(message = "El nombre de usuario no puede ser vacío")
     @Column(name = "username",nullable = false, length = 100,unique = true,updatable = false)
     private String username;
@@ -58,12 +58,12 @@ public class Usuario implements UserDetails{
     private String email;
 
     @NotNull(message = "El rol no puede ser nulo")
-    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.DETACH, CascadeType.MERGE,CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "rolID")
     private Rol rol;
 
     @NotNull(message = "El sexo no puede ser nulo")
-    @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.DETACH, CascadeType.MERGE,CascadeType.REFRESH})
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sexoID")
     private Sexo sexo;
 
@@ -101,8 +101,8 @@ public class Usuario implements UserDetails{
         this.rol = rol;
         this.sexo = sexo;
         this.password = usuarioDto.getPassword();
-        this.fechaCreacion = Timestamp.valueOf(LocalDateTime.now());
-        this.fechaEliminacion = null;
+        this.fechaCreacion = usuarioDto.getFechaCreacion();
+        this.fechaEliminacion = usuarioDto.getFechaEliminacion();
     }
 
     public Usuario(Optional<Usuario> usuario){

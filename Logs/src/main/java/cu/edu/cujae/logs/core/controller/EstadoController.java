@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+//Revisión completada
 @RestController
 @RequestMapping(value = "/api/v1/login/estado")
 @SecurityRequirement(name = "bearer-key")

@@ -30,6 +30,11 @@ public class SecurityFilter extends OncePerRequestFilter {
         TokenDto token = TokenUtils.requestToken(request);
         String requesUri = request.getRequestURI();
         System.out.println(requesUri);
+        System.out.println(request.getHeader("Referer"));
+        System.out.println(request.getHeader("Origin"));
+        System.out.println(request.getRemotePort());
+        System.out.println(request.getServerPort());
+        System.out.println(request.getContextPath());
         if (token.getToken() != null){
             Validacion.validarUnsupportedOperationException(token);
             token.setToken(token.getToken().replace("Bearer ", "").replaceAll(" ","").replaceAll("\"",""));

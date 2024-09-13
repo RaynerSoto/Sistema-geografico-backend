@@ -27,6 +27,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+// Funcionamiento probado
 @RestController
 @RequestMapping("/api/v1/login/usuario")
 @SecurityRequirement(name = "bearer-key")
@@ -154,12 +155,39 @@ public class UsuarioController {
         }
     }
 
-    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
+    @PreAuthorize(value = "hasAnyRole('Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
     ,summary = "Permite insertar un usuario")
     @PostMapping("/")
     public ResponseEntity<String> insertarUsuario(@RequestBody UsuarioDto usuario,HttpServletRequest request) {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Insertar usuario: "+usuario.getUsername());
+        try {
+            usuario.setActivo(true);
+            if(usuario.getUsername().contains(" "))
+                throw new Exception("Los nombres de usuarios no puede contener espacios");
+            Validacion.validarUnsupportedOperationException(usuario);
+            Optional<Rol> rol = rolRepository.consultarRol(usuario.getRol());
+            if (rol.get().getRol().equalsIgnoreCase("Super Administrador"))
+                throw new Exception("No tiene permitido dicha funcionalidad");
+            Optional<Sexo> sexo = sexoService.consultarSexo(usuario.getSexo());
+            usuarioService.validarUsuarioInsertar(usuario.getEmail(),usuario.getUsername());
+            usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
+            usuarioService.insertarUsuario(new Usuario(usuario,rol.get(),sexo.get()));
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
+            return ResponseEntity.ok().body("Usuario insertado correctamente");
+        }
+        catch (Exception e){
+            registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Rechazado", e.getMessage());
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PreAuthorize(value = "hasAnyRole('Super Administrador')")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") }
+            ,summary = "Permite insertar un usuario super administrador")
+    @PostMapping("/todosRoles")
+    public ResponseEntity<String> insertarUsuarioSuperAdministrador(@RequestBody UsuarioDto usuario,HttpServletRequest request) {
+        RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Insertar usuario Super Administrador: "+usuario.getUsername());
         try {
             usuario.setActivo(true);
             if(usuario.getUsername().contains(" "))
@@ -183,6 +211,7 @@ public class UsuarioController {
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
             ,summary = "Permite reactivar un usuario completo")
     @PutMapping("/")
+    @Deprecated
     public ResponseEntity<String> reactivarUsuarioCompleto(@RequestBody UsuarioDto usuario,HttpServletRequest request) {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Reactivar usuario completo: "+usuario.getUsername());
         try {
@@ -193,6 +222,8 @@ public class UsuarioController {
             usuarioService.validarUsuarioInsertar(usuario.getEmail(),usuario.getUsername());
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
             registroDto.setActividad("Reactivar usuario: "+usuario.getUsername());
+            if (usuarioService.obtenerUsuarioUsernameInactivo(usuario.getUsername()).isPresent())
+                throw new Exception("No existe ese nombre usuario para reactivar");
             Usuario user = usuarioService.obtenerUsuarioEmailUsernameName(usuario.getEmail(),usuario.getUsername(),usuario.getName(),sexo.get()).get();
             user.setFechaEliminacion(null);
             user.setActivo(true);
@@ -206,6 +237,7 @@ public class UsuarioController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") }
@@ -260,12 +292,20 @@ public class UsuarioController {
             Validacion.validarUnsupportedOperationException(usuario);
             usuario.setUuid(id);
             usuario.setPassword(passwordEncoder.encode(usuario.getPassword()));
-            Optional<Rol> rol = rolRepository.consultarRolNombre(usuario.getRol());
+            Optional<Rol> rol = rolRepository.consultarRol(usuario.getRol());
+            Usuario valor = usuarioService.buscarUsuario(id);
+            if (valor.isActivo() == false)
+                throw new Exception("No se puede modificar un usuario que eliminado");
+            usuario.setActivo(valor.isActivo());
+            usuario.setFechaCreacion(valor.getFechaCreacion());
+            usuario.setFechaEliminacion(valor.getFechaEliminacion());
+            if (rol.get().getRol().equalsIgnoreCase("Super Administrador") || valor.getRol().getRol().equalsIgnoreCase("Super Administrador"))
+                throw new Exception("Operación no soportada");
             Optional<Sexo> sexo = sexoService.consultarSexo(usuario.getSexo());
             usuarioService.validarUsuarioModificar(usuario.getEmail(),usuario.getUsername(),usuario.getUuid());
             if (rol.isPresent() && sexo.isPresent() && usuario.isActivo() == true) {
                 Usuario user = new Usuario(usuario,rol.get(),sexo.get());
-                usuarioService.modificarUsuario(new Usuario(usuario, rol.get(), sexo.get()));
+                usuarioService.modificarUsuario(user);
                 registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
                 return ResponseEntity.ok().body("Usuario modificado correctamente");
             }
@@ -286,6 +326,9 @@ public class UsuarioController {
     public ResponseEntity<String> eliminarUsuario(@PathVariable Long id,HttpServletRequest request) {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Eliminar un usuario por ID");
         try {
+            if(usuarioService.buscarUsuario(id).getRol().getRol().equalsIgnoreCase("Super Administrador") == true){
+                throw new Exception("Operacion no soportada");
+            }
             usuarioService.eliminarUsuario(id);
             registroUtils.insertarRegistros(registroDto,tokenUtils.userToken(request),"Aceptado",null);
             return ResponseEntity.ok("Usuario eliminado");

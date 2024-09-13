@@ -52,6 +52,8 @@ public class AutentificacionController {
             System.out.println("Registro");
             System.out.println(request.getRemoteHost());//Obtener IP versión V4
             Usuario usuario = usuarioService.obtenerUsuarioPorUsernameAndPassword(usuarioLoginDto.getUsername(), usuarioLoginDto.getPassword());
+            if (usuario.isActivo() == false)
+                throw new Exception("No es posible autentificar al usuario por no estar activo");
             usuario = new Usuario(usuario, usuarioLoginDto.getPassword());
             Authentication authenticationToken = new UsernamePasswordAuthenticationToken(usuario.getUsername(),usuario.getPassword());;
             var usuarioAutentificado = authenticationManager.authenticate(authenticationToken);

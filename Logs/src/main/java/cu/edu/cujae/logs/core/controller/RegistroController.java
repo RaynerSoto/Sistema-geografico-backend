@@ -11,6 +11,7 @@ import cu.edu.cujae.logs.core.services.RegistroServiceInterfaces;
 import cu.edu.cujae.logs.core.services.UsuarioServiceInterfaces;
 import cu.edu.cujae.logs.core.utils.RegistroUtils;
 import cu.edu.cujae.logs.core.utils.TokenUtils;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+// Todo funcional
 @RestController
 @RequestMapping("/api/v1/login/registro")
 //@SecurityRequirement(name = "bearer-key")
@@ -46,11 +48,15 @@ public class RegistroController {
         this.tokenUtils = tokenUtils;
     }
 
+    @Hidden
     //@PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor','null')")
+    @CrossOrigin(origins = "http://localhost:8087")
     @Operation(summary = "Registra la actividad del usuario")
-    @PostMapping("/")
-    public ResponseEntity<?> registro(@RequestBody RegistroDto registro,@RequestHeader String username) {
+    @PostMapping("/insertar")
+    public ResponseEntity<?> registro(@RequestBody RegistroDto registro,@RequestHeader String username,@RequestHeader String ip,@RequestHeader long puerto,HttpServletRequest request) {
         try {
+            if (ip.equals("localhost") == false && puerto != 8087)
+                throw new Exception("Error en la petición");
             if ((username.isBlank() || username.isEmpty() || username.equals(null)) == false){
                 try {
                     if(username.equals(registro.getPotentialUser()) == false)
@@ -75,7 +81,7 @@ public class RegistroController {
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver el listado de actividades de todos los usuarios")
-    @GetMapping("/")
+    @GetMapping("/listar")
     public ResponseEntity<?> listarRegistros(HttpServletRequest request) {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Obtener el listado completo de los registros");
         try {
@@ -90,7 +96,8 @@ public class RegistroController {
 
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador')")
     @Operation(security = { @SecurityRequirement(name = "bearer-key") },summary = "Permite ver el listado de actividades de usuario")
-    @GetMapping("/{id}")
+    @GetMapping("/denegado/prueba")
+    @Deprecated
     public ResponseEntity<?> listarRegistros(@PathVariable Long id, HttpServletRequest request) {
         RegistroDto registroDto = registroUtils.registroHttpUtils(request,"Listado de actividades de un usuario");
         try {

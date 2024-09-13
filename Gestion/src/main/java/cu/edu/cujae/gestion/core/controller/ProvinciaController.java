@@ -1,6 +1,7 @@
 package cu.edu.cujae.gestion.core.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import cu.edu.cujae.gestion.core.dto.MunicipioDto;
 import cu.edu.cujae.gestion.core.dto.ProvinciaDto;
 import cu.edu.cujae.gestion.core.dto.TokenDto;
 import cu.edu.cujae.gestion.core.dto.UsuarioDto;
@@ -65,12 +66,12 @@ public class ProvinciaController {
         }
     }
 
-    @GetMapping("/nombre")
-    @Operation(summary = "Obtener provincias por nombre",
+    @GetMapping("/{nombre}")
+    @Operation(summary = "Datos de una provincia según su nombre",
             description = "Obtener todos los datos de la provincia según su nombre",security = { @SecurityRequirement(name = "bearer-key") })
     @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
     public ResponseEntity<?> getProvinciaNombre(@PathVariable String nombre, HttpServletRequest request) {
-        String actividad = "Obtener todos los datos de la provincia según su nombre";
+        String actividad = "Obtener todos los datos de la provincia según su nombre: "+nombre;
         TokenDto tokenDto = TokenUtils.getTokenDto(request);
         try {
             ProvinciaDto provinciaDto = new ProvinciaDto(provinciaService.buscarProvinciaPorNombre(nombre));
@@ -78,7 +79,27 @@ public class ProvinciaController {
             return ResponseEntity.ok(provinciaDto);
         }catch (Exception e){
             registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado",e.getMessage());
-            return ResponseEntity.badRequest().body("No se ha podido obtener el listado de provincias, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
+            return ResponseEntity.badRequest().body("No se ha podido los datos de la provincia: "+nombre);
+        }
+    }
+
+    @GetMapping("/buscar/{provincia}")
+    @Operation(summary = "Listado de municipios de una provincia",
+            description = "Permite obtener el listado de todos los municipios pertenecientes a una provincia",security = { @SecurityRequirement(name = "bearer-key") })
+    @PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor')")
+    public ResponseEntity<?> getAllMunicipiosXProvincia(@PathVariable String provincia, HttpServletRequest request) {
+        String actividad = "Listar todos los municipios pertenecientes a la provincia: "+provincia;
+        TokenDto tokenDto = TokenUtils.getTokenDto(request);
+        try {
+            List<MunicipioDto> municipioDtos = provinciaService.buscarProvinciaPorNombre(provincia).get().getListadoMunicipios().stream()
+                    .map(MunicipioDto::new)
+                    .sorted(Comparator.comparing(MunicipioDto::getUuid))
+                    .toList();
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Aceptado",null);
+            return ResponseEntity.ok(municipioDtos);
+        }catch (Exception e){
+            registroUtils.insertarRegistro(mapper.convertValue(tokenService.tokenExists(tokenDto).getBody(), UsuarioDto.class).getUsername(),actividad,IpUtils.hostIpV4Http(request),"Rechazado",e.getMessage());
+            return ResponseEntity.badRequest().body("No se ha podido obtener el listado de municipios de una provincia, compruebe su conexiòn a la base de datos o contacto con el servicio tècnico");
         }
     }
 }

@@ -29,7 +29,10 @@ spring:
     multipart:
       max-file-size: 10MB   # Tamaño máximo de un archivo individual
       max-request-size: 20MB # Tamaño máximo de la solicitud completa (incluyendo todos los archivos)
-      
+  flyway:
+    baseline-on-migrate: true
+    enabled: true
+    locations: classpath:db/migration
 eureka:
   instance:
     hostname: localhost
