@@ -50,13 +50,10 @@ public class RegistroController {
 
     @Hidden
     //@PreAuthorize(value = "hasAnyRole('Super Administrador','Administrador','Gestor','null')")
-    @CrossOrigin(origins = "http://localhost:8087")
     @Operation(summary = "Registra la actividad del usuario")
-    @PostMapping("/insertar")
-    public ResponseEntity<?> registro(@RequestBody RegistroDto registro,@RequestHeader String username,@RequestHeader String ip,@RequestHeader long puerto,HttpServletRequest request) {
+    @PostMapping("/")
+    public ResponseEntity<?> registro(@RequestBody RegistroDto registro,@RequestHeader String username) {
         try {
-            if (ip.equals("localhost") == false && puerto != 8087)
-                throw new Exception("Error en la petición");
             if ((username.isBlank() || username.isEmpty() || username.equals(null)) == false){
                 try {
                     if(username.equals(registro.getPotentialUser()) == false)

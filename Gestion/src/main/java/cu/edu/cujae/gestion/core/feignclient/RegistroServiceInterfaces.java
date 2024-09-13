@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public interface RegistroServiceInterfaces {
 
     @PostMapping(path = "/api/v1/login/registro/")
-    public void insertarRegistro(@RequestBody RegistroDto registro,@RequestHeader String username,@RequestHeader String ip,@RequestHeader long puerto);
+    public void insertarRegistro(@RequestBody RegistroDto registro,@RequestHeader String username);
 }

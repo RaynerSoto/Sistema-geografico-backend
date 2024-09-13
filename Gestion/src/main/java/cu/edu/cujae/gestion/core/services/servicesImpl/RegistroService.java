@@ -17,6 +17,6 @@ public class RegistroService implements RegistroServiceInterface {
     }
 
     public void insertarRegistro(RegistroDto registroDto,String username){
-        registroServiceInterfaces.insertarRegistro(registroDto,username,"localhost",8087);
+        registroServiceInterfaces.insertarRegistro(registroDto,username);
     }
 }
